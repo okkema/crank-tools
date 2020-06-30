@@ -1,0 +1,31 @@
+.results {
+    border: 1px solid;
+}
+
+td.centered {
+    text-align: center;
+    vertical-align: middle;
+}
+
+td.centered mat-form-field {
+    margin-bottom: -1.25em;
+    text-align: center;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.sideways {
+    transform: rotate(-90deg);
+}
+
+td.green {
+    background-color: #55d45b;
+}
+
+td.blue {
+    background-color: #498aad;
+}
+
+td.red {
+    background-color: #9c404c;
+}

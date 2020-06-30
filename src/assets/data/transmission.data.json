@@ -1,0 +1,7 @@
+[
+    {
+        "key": "gear-ratios",
+        "name": "Gear Ratios",
+        "help": "The number of revolutions of the wheel per revolution of the cranks."
+    }
+]

@@ -1,1 +1,16 @@
-<mat-toolbar>Crank Tools</mat-toolbar>
+<div class="container">
+    <mat-toolbar>
+        <button mat-icon-button type="button" (click)="nav.toggle()" [style.margin-left.px]="-4">
+            <mat-icon *ngIf="!showNav; else closeNav">menu</mat-icon>
+            <ng-template #closeNav>
+                <mat-icon>close</mat-icon>
+            </ng-template>
+        </button>
+        <span [style.margin-left.px]="16">Crank Tools</span>
+        <span fxFlex></span>
+        <button mat-icon-button type="button" (click)="help.toggle()" [matTooltipClass]="'tooltip'" [matTooltip]="showHelp ? 'Hide help' : 'Show help'" [color]="showHelp ? 'accent' : null">
+            <mat-icon>help</mat-icon>
+        </button>
+    </mat-toolbar>
+    <app-navigation fxFlex></app-navigation>
+</div>

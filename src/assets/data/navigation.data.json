@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Service Scheduler",
+        "image": "./assets/img/service.png",
+        "route": "/service"
+    },
+    {
+        "name": "Register & Receipts",
+        "image": "./assets/img/register.png",
+        "route": "/register"
+    },
+    {
+        "name": "Inventory Management",
+        "image": "./assets/img/inventory.png",
+        "route": "/inventory"
+    },
+    {
+        "name": "Customer Database",
+        "image": "./assets/img/customers.png",
+        "route": "/customers"
+    },
+    {
+        "name": "Transmission Analysis",
+        "image": "./assets/img/parts/cassette.png",
+        "route": "/transmission"
+    },
+    {
+        "name": "Wheel Builder",
+        "image": "./assets/img/parts/wheel.png",
+        "route": "/wheels"
+    },
+    {
+        "name": "Settings",
+        "image": "./assets/img/settings.png",
+        "route": "/settings"
+    },
+    {
+        "name": "About",
+        "image": "./assets/img/about.png",
+        "route": "/about"
+    }
+]
