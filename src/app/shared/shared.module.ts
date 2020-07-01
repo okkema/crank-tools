@@ -9,6 +9,8 @@ import { MaterialModule } from './material.module';
 import { DirectivesModule } from './directives/directives.module';
 // SERVICES
 import { ServicesModule } from './services/services.module';
+// LAYOUT
+import { LayoutModule } from '@angular/cdk/layout';
 
 const modules: any[] = [
   CommonModule,
@@ -17,6 +19,7 @@ const modules: any[] = [
   MaterialModule,
   DirectivesModule,
   ServicesModule,
+  LayoutModule,
 ];
 
 @NgModule({

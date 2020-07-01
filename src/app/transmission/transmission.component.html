@@ -9,7 +9,7 @@
     <hr>
     <mat-card-content>
         <form [formGroup]="form">
-            <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
                 <mat-form-field appearance="outline" [style.margin-bottom.em]="-1.25">
                     <mat-label>Measurement</mat-label>
                     <mat-select formControlName="measurement">
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <hr>
-            <div fxLayoutAlign="row" fxLayoutAlign="start center" [style.margin-bottom.px]="16">
+            <div fxHide.lt-md fxLayoutAlign="row" fxLayoutAlign="start center" [style.margin-bottom.px]="16">
                 <span class="sideways">Chainrings</span>
                 <div fxLayout="column" fxLayoutAlign="start center">
                     <span [style.margin.px]="16">Cogs</span>
@@ -50,6 +50,36 @@
                                 </td>
                                 <td *ngFor="let result of results[i]; let j = index;" class="results centered" [ngClass]="results[i][j]?.background">
                                     {{ results[i][j]?.value | number:'.2-2' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div fxHide.gt-sm fxLayoutAlign="row" fxLayoutAlign="start center" [style.margin-bottom.px]="16">
+                <span class="sideways">Cogs</span>
+                <div fxLayout="column" fxLayoutAlign="start center">
+                    <span [style.margin.px]="16">Chainrings</span>
+                    <table [style.border-collapse]="'collapse'">
+                        <thead>
+                            <tr formArrayName="chainrings">
+                                <td></td>
+                                <td *ngFor="let chainring of chainrings.controls; let i = index;" class="centered" [matTooltip]="'Number of teeth per chainring'" [matTooltipClass]="'tooltip'" [matTooltipDisabled]="!showHelp">
+                                    <mat-form-field appearance="outline" [style.width.px]="50">
+                                        <input matInput OnlyNumbers maxlength="2" [formControlName]="i" (keyup)="calculate()">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="cogs">
+                            <tr *ngFor="let cog of cogs.controls; let i = index;">
+                                <td class="centered" [matTooltip]="'Number of teeth per cog'" [matTooltipClass]="'tooltip'" [matTooltipDisabled]="!showHelp" [matTooltipPosition]="'right'">
+                                    <mat-form-field appearance="outline" [style.width.px]="50">
+                                        <input matInput OnlyNumbers maxlength="2" [formControlName]="i" (keyup)="calculate()">
+                                    </mat-form-field>
+                                </td>
+                                <td *ngFor="let result of results; let j = index;" class="results centered" [ngClass]="results[j][i]?.background">
+                                    {{ results[j][i]?.value | number:'.2-2' }}
                                 </td>
                             </tr>
                         </tbody>

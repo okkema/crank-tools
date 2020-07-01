@@ -1,5 +1,5 @@
-<mat-sidenav-container fxFlex>
-    <mat-sidenav #sidenav mode="side" [disableClose]="true" [opened]="true" [autoFocus]="false">
+<mat-sidenav-container fxFlex [hasBackdrop]="false">
+    <mat-sidenav #sidenav [mode]="nav.isMobile ? 'over' : 'side'" [disableClose]="!nav.isMobile" [opened]="!nav.isMobile" [autoFocus]="false">
         <mat-nav-list [style.padding-top]="0" (click)="nav.close()">
             <a *ngFor="let item of navigation" mat-list-item routerLink="{{ item.route }}" routerLinkActive="active">
                 <img [style.margin-right.px]="0" matListIcon src="{{ item.image }}" class="nav-icon">
