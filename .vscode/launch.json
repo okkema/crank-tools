@@ -10,7 +10,8 @@
             "request": "launch",
             "reAttach": true,
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
+            "preLaunchTask": "npm: start"
         },
         {
             "name": "Chrome",

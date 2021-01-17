@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from './shared/services/data.service';
-import Navigation from './navigation/navigation.model';
 import { HelpService } from './shared/services/help.service';
 import { NavigationService } from './navigation/navigation.service';
 

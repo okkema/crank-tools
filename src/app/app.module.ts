@@ -21,6 +21,7 @@ import { ServiceModule } from './service';
 import { RegisterModule } from './register';
 import { WheelsModule } from './wheels';
 import { SettingsModule } from './settings';
+import { StaffModule } from './staff';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,6 +39,7 @@ import { SettingsModule } from './settings';
     RegisterModule,
     WheelsModule,
     SettingsModule,
+    StaffModule,
     AppRoutingModule,
   ],
   bootstrap: [AppComponent]
