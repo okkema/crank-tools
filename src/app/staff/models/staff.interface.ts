@@ -6,6 +6,6 @@ export interface IStaff {
     phone: string;
     password: string;
 
-    setPassword(password: string): void;
-    checkPassword(password): boolean;
+    setPassword(password: string): Promise<void>;
+    checkPassword(password): Promise<boolean>;
 }

@@ -1,4 +1,5 @@
 import { IStaff } from "./staff.interface";
+import { hash, compare, genSalt } from "bcryptjs";
 
 export class Staff implements IStaff {
     id: number;
@@ -8,12 +9,12 @@ export class Staff implements IStaff {
     phone: string;
     password: string;
 
-    setPassword(password: string): void {
-        throw new Error("Method not implemented.");
+    async setPassword(password: string): Promise<void> {
+        this.password = await hash(password, await genSalt());
     }
     
-    checkPassword(password: any): boolean {
-        throw new Error("Method not implemented.");
+    async checkPassword(password: any): Promise<boolean> {
+        return compare(password, this.password);
     }
 
 }
