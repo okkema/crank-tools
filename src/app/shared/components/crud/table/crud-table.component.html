@@ -1,0 +1,27 @@
+<ngx-datatable
+class="striped"
+[rows]="rows | async"
+[columns]="columns"
+[headerHeight]="40"
+>
+<ngx-datatable-column *ngFor="let col of columns; let i = index" [name]="col.name">
+    <ng-template ngx-datatable-header-template>
+        {{ col.name | titlecase }}
+    </ng-template>
+    <ng-template let-value="value" ngx-datatable-cell-template>
+        {{ value }}
+    </ng-template>
+ </ngx-datatable-column>
+<ngx-datatable-column name="Actions">
+    <ng-template let-column="column" ngx-datatable-header-template>
+        <button mat-flat-button color="primary" (click)="openDialog()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </ng-template>
+    <ng-template let-value="value" ngx-datatable-cell-template>
+        <button mat-flat-button color="accent">
+            <mat-icon>info</mat-icon>
+        </button>
+    </ng-template>
+</ngx-datatable-column>
+</ngx-datatable>

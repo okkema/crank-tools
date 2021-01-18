@@ -7,7 +7,7 @@ import { HelpService } from '../shared/services/help.service';
 @Component({
   selector: 'app-transmission',
   templateUrl: './transmission.component.html',
-  styleUrls: ['./transmission.component.css']
+  styleUrls: ['./transmission.component.scss']
 })
 export class TransmissionComponent implements OnInit {
 

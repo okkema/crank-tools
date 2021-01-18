@@ -6,6 +6,7 @@ const DATABASE_VERSION: number = 1;
 
 /**
  * Version history:
+ * 
  * 1 - Add staff object store
  */
 export const dbConfig: DBConfig  = {
