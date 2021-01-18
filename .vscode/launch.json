@@ -11,7 +11,7 @@
             "reAttach": true,
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}",
-            "preLaunchTask": "npm: start"
+            // "preLaunchTask": "npm: start"
         },
         {
             "name": "Chrome",

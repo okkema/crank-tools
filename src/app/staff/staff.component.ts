@@ -20,7 +20,8 @@ export class StaffComponent implements OnInit {
     { name: FIELD_NAMES.email },
     { name: FIELD_NAMES.phone }
   ];
-  read = this.staffService.readAll;
+  read = () => this.staffService.readAll();
+  title = "Staff Directory";
 
   constructor(
     private staffService: StaffService,

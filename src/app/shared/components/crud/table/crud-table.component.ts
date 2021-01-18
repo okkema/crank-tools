@@ -10,9 +10,14 @@ import { CrudDialogComponent } from '../dialog/crud-dialog.component';
 })
 export class CrudTableComponent implements OnInit {
 
+  @Input() title: string;
   @Input() rows: Observable<any>;
   @Input() columns: any[];
+
+  @Input() create: Function;
   @Input() read: Function;
+  @Input() update: Function;
+  @Input() delete: Function;
 
   constructor(
     private dialog: MatDialog,

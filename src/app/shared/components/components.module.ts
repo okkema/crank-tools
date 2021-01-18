@@ -4,6 +4,9 @@ import { CrudDialogComponent } from './crud/dialog/crud-dialog.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { LayoutModule } from '@angular/cdk/layout';
 
 const dialogs = [
   CrudDialogComponent,
@@ -18,6 +21,9 @@ const modules = [
   CommonModule,
   MaterialModule,
   NgxDatatableModule,
+  ReactiveFormsModule,
+  FlexLayoutModule,
+  LayoutModule,
 ];
 
 @NgModule({
