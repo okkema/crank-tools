@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { ICrudColumn } from '../shared/components/crud/models/column.interface';
 import { FIELD_NAMES, IStaff } from './models';
 import { StaffService } from './service';
-import { ColumnMode } from '@swimlane/ngx-datatable';
-import { MatDialog } from '@angular/material/dialog';
-import { CrudDialogComponent } from '../shared/components/crud/dialog/crud-dialog.component';
 
 @Component({
   selector: 'app-staff',
@@ -13,12 +11,12 @@ import { CrudDialogComponent } from '../shared/components/crud/dialog/crud-dialo
 })
 export class StaffComponent implements OnInit {
 
-  columns = [
-    { name: FIELD_NAMES.id }, 
-    { name: FIELD_NAMES.name }, 
-    { name: FIELD_NAMES.title },
-    { name: FIELD_NAMES.email },
-    { name: FIELD_NAMES.phone }
+  columns: ICrudColumn[] = [
+    { name: FIELD_NAMES.id, sortable: true }, 
+    { name: FIELD_NAMES.name, sortable: true }, 
+    { name: FIELD_NAMES.title, sortable: true },
+    { name: FIELD_NAMES.email, sortable: true },
+    { name: FIELD_NAMES.phone, sortable: true }
   ];
   read = () => this.staffService.readAll();
   title = "Staff Directory";

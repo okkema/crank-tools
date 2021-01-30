@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IStaffService } from './staff.service.interface';
 import { IStaff, StaffMetadata } from '../models';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -27,7 +27,29 @@ export class StaffService implements IStaffService{
   }
 
   readAll(): Observable<IStaff[]> {
-    return this.dbService.getAll(StaffMetadata.store);
+    return of([
+      {
+        id: 1,
+        name: 'Ben',
+        title: 'Mechanic',
+        email: 'ben@okkema.org',
+        phone: '1234567890',
+        password: 'qwerty',
+        setPassword: null,
+        checkPassword: null
+      },
+      {
+        id: 2,
+        name: 'Sam',
+        title: 'Mechanic',
+        email: 'sam@okkema.org',
+        phone: '0987654321',
+        password: 'qwerty',
+        setPassword: null,
+        checkPassword: null
+      },
+    ]);
+    // return this.dbService.getAll(StaffMetadata.store);
   }
 
   update(staff: IStaff): Observable<IStaff> {
