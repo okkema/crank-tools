@@ -13,16 +13,19 @@ import { MatSidenav } from '@angular/material/sidenav';
   animations: [
     trigger('toggle', [
       state('opened', style({
-        display: 'block',
+        width: '200px',
+        opacity: 1,
+        'margin-left': '16px'
       })),
       state('closed', style({
-        display: 'none',
+        opacity: 0,
+        'margin-left': '-168px'
       })),
       transition('opened => closed', [
-        animate('1s'),
+        animate('0.25s ease-in-out'),
       ]),
       transition('closed => opened', [
-        animate('1s'),
+        animate('0.25s ease-in-out'),
       ]),
     ]),
   ],
@@ -33,6 +36,10 @@ export class NavigationComponent implements OnInit, AfterViewInit {
 
   public navigation: Navigation[];
   public showNav: boolean;
+
+  get showNavText(): string {
+    return this.showNav ? 'opened' : 'closed';
+  }
 
   constructor(
     private data: DataService,

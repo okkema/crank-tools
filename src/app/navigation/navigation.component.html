@@ -1,13 +1,13 @@
-<mat-sidenav-container fxFlex [hasBackdrop]="false">
+<mat-sidenav-container fxFlex [hasBackdrop]="showNav" (click)="nav.close()">
     <mat-sidenav #sidenav [mode]="nav.isMobile ? 'over' : 'side'" [disableClose]="!nav.isMobile" [opened]="!nav.isMobile" [autoFocus]="false">
-        <mat-nav-list [style.padding-top]="0" (click)="nav.close()">
+        <mat-nav-list [style.padding-top]="0">
             <a *ngFor="let item of navigation" mat-list-item routerLink="{{ item.route }}" routerLinkActive="active">
                 <img [style.margin-right.px]="0" matListIcon src="{{ item.image }}" class="nav-icon">
-                <span *ngIf="showNav" [style.margin-left.px]="16">{{ item.name }}</span>
+                <span [@toggle]="showNavText">{{ item.name }}</span>
             </a>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content [style.padding.px]="16" (click)="nav.close()">
+    <mat-sidenav-content [style.padding.px]="16">
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
