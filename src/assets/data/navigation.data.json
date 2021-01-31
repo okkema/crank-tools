@@ -30,18 +30,23 @@
         "route": "/wheels"
     },
     {
-        "name": "Settings",
+        "name": "Staff Directory",
+        "image": "./assets/img/user.png",
+        "route": "/staff"
+    },
+    {
+        "name": "Settings & Config",
         "image": "./assets/img/settings.png",
         "route": "/settings"
+    },
+    {
+        "name": "Cloud Sync",
+        "image": "./assets/img/database.png",
+        "route": "/cloud"
     },
     {
         "name": "About",
         "image": "./assets/img/about.png",
         "route": "/about"
-    },
-    {
-        "name": "Staff",
-        "image": "./assets/img/about.png",
-        "route": "/staff"
     }
 ]

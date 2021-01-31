@@ -2,12 +2,12 @@
     <mat-sidenav #sidenav [mode]="nav.isMobile ? 'over' : 'side'" [disableClose]="!nav.isMobile" [opened]="!nav.isMobile" [autoFocus]="false">
         <mat-nav-list [style.padding-top]="0">
             <a *ngFor="let item of navigation" mat-list-item routerLink="{{ item.route }}" routerLinkActive="active">
-                <img [style.margin-right.px]="0" matListIcon src="{{ item.image }}" class="nav-icon">
-                <span [@toggle]="showNavText">{{ item.name }}</span>
+                <img [style.margin-right.px]="nav.isMobile ? 16 : 0" matListIcon src="{{ item.image }}" class="nav-icon">
+                <span [@toggle]="nav.isMobile ? null : showNavText">{{ item.name }}</span>
             </a>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content [style.padding.px]="16">
+    <mat-sidenav-content [style.padding.px]="16" [style.margin-left.px]="nav.isMobile ? 0 : 60">
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
