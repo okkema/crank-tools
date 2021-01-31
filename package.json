@@ -25,7 +25,6 @@
     "@angular/service-worker": "^9.1.13",
     "@fullcalendar/angular": "^5.5.0",
     "@fullcalendar/daygrid": "^5.5.0",
-    "@swimlane/ngx-datatable": "^19.0.0",
     "bcryptjs": "^2.4.3",
     "ngx-indexed-db": "^6.1.2",
     "rxjs": "~6.5.4",

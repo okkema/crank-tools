@@ -5,6 +5,9 @@ import { CrudDialogComponent } from '../dialog/crud-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { FormGroup } from '@angular/forms';
+import { ICrudColumn, ICrudDialogData } from '../models';
+import { IFormBase } from '../models/form-base.interface';
 
 @Component({
   selector: 'app-crud-table',
@@ -15,9 +18,9 @@ export class CrudTableComponent implements OnInit {
 
   @Input() title: string;
   @Input() rows: Observable<any>;
-  @Input() columns: any[];
+  @Input() columns: ICrudColumn[];
   @Input() showActions: boolean = true;
-
+  @Input() controls: IFormBase<any>[];
   @Input() create: Function;
   @Input() read: Function;
   @Input() update: Function;
@@ -46,9 +49,16 @@ export class CrudTableComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  openDialog(): void {
+  openDialog(row?: any): void {
+    const data: ICrudDialogData = {
+      controls: this.controls,
+      row: row,
+      create: this.create,
+      update: this.update,
+      delete: this.delete,
+    };
     const dialogRef = this.dialog.open(CrudDialogComponent, {
-      width: '500px',
+      data: data,
     });
   }
 

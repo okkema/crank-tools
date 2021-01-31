@@ -1,1 +1,28 @@
-<p>crud-dialog works!</p>
+<form [formGroup]="form" fxLayout="column">
+    <mat-form-field *ngFor="let control of controls">
+        <mat-label *ngIf="!!control.label; else keyLabel">{{ control.label }}</mat-label>
+        <ng-template #keyLabel>
+            <mat-label>{{ control.key | titlecase }}</mat-label>
+        </ng-template>
+        <div [ngSwitch]="control.controlType">
+            <input *ngSwitchCase="'textbox'" matInput [type]="control.type" [formControlName]="control.key" [id]="control.key">
+            <mat-select *ngSwitchCase="'select'" [formControlName]="control.key" [id]="control.key">
+                <mat-option *ngFor="let option of control.options" [value]="option.key">{{ option.value }}</mat-option>
+            </mat-select>
+        </div>
+        <mat-error *ngIf="form.controls[control.key].invalid">{{ errorMessage(control.key) }}</mat-error>
+    </mat-form-field>
+    <div fxLayoutGap="5px" fxLayoutAlign="end">
+        <button mat-flat-button color="warn" (click)="delete(row)">
+            <mat-icon>info</mat-icon>
+        </button>
+        <button *ngIf="row; else new" mat-flat-button color="accent" (click)="update(row)">
+            <mat-icon>info</mat-icon>
+        </button>
+        <ng-template #new>
+            <button mat-flat-button color="accent" (click)="create()">
+                <mat-icon>info</mat-icon>
+            </button>
+        </ng-template>
+    </div>
+</form>
