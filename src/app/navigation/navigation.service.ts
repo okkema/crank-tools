@@ -7,9 +7,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class NavigationService {
 
+  public isMobile: boolean;
   private subject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private sidenav: MatSidenav;
-  public isMobile: boolean;
 
   public get show(): Observable<boolean> {
     return this.subject.asObservable();

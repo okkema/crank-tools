@@ -11,21 +11,17 @@ import { StaffService } from './service';
 })
 export class StaffComponent implements OnInit, ICrudTable {
 
-  icon = "./assets/img/user.png";
-  title = "Staff Directory";
+  icon = './assets/img/user.png';
+  title = 'Staff Directory';
 
   columns: ICrudColumn[] = [
-    { name: FIELD_NAMES.id, sortable: true }, 
-    { name: FIELD_NAMES.name, sortable: true }, 
+    { name: FIELD_NAMES.id, sortable: true },
+    { name: FIELD_NAMES.name, sortable: true },
     { name: FIELD_NAMES.title, sortable: true },
     { name: FIELD_NAMES.email, sortable: true },
     { name: FIELD_NAMES.phone, sortable: true }
   ];
   showActions: boolean;
-  create = (staff: IStaff) => this.staffService.create(staff);
-  read = () => this.staffService.readAll();
-  update = (staff: IStaff) => this.staffService.update(staff);
-  delete = (staff: IStaff) => this.staffService.delete(staff);
   controls: IFormBase<any>[] = [
     {
       controlType: 'textbox',
@@ -56,11 +52,16 @@ export class StaffComponent implements OnInit, ICrudTable {
       key: FIELD_NAMES.password,
       hint: 'Only if you want to change password!',
     }
-  ]
-  
+  ];
+
   constructor(
     private staffService: StaffService,
   ) { }
+
+  create = (staff: IStaff) => this.staffService.create(staff);
+  read = () => this.staffService.readAll();
+  update = (staff: IStaff) => this.staffService.update(staff);
+  delete = (staff: IStaff) => this.staffService.delete(staff);
 
   ngOnInit(): void { }
 

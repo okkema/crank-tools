@@ -67,8 +67,8 @@ export class TransmissionComponent implements OnInit {
     const measurement: string = this.form.get('measurement').value;
     for (let i = 0; i < this.maxChainrings; i++) {
       for (let j = 0; j < this.maxCogs; j++) {
-        const chainring: number = Number(this.chainrings.controls[i].value);
-        const cog: number = Number(this.cogs.controls[j].value);
+        const chainring = Number(this.chainrings.controls[i].value);
+        const cog = Number(this.cogs.controls[j].value);
         if (chainring && cog) {
           const value: number = chainring / cog;
           switch (measurement) {

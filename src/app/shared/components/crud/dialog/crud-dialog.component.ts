@@ -32,8 +32,8 @@ export class CrudDialogComponent implements OnInit {
     this.delete = data.delete;
     this.row = Object.assign({}, data.row);
     this.isNew = !data.row;
-    if (this.row) this.form.patchValue(this.row);
-    else this.form.reset();
+    if (this.row) {this.form.patchValue(this.row);}
+    else {this.form.reset();}
     this.form.valueChanges.subscribe(x => Object.keys(x).reduce((prev, curr, index) => {
       prev[curr] = x[curr];
       return prev;
@@ -44,15 +44,15 @@ export class CrudDialogComponent implements OnInit {
   }
 
   errorMessage(key: string): string {
-    if (this.form.controls[key].hasError('required')) return 'The field is required.';
-    if (this.form.controls[key].hasError('email')) return 'The field must be a valid email.';
+    if (this.form.controls[key].hasError('required')) {return 'The field is required.';}
+    if (this.form.controls[key].hasError('email')) {return 'The field must be a valid email.';}
   }
 
   createForm(): FormGroup {
     return this.fb.group(this.controls.reduce((prev, curr, index) => {
       curr.validators = [];
-      if (curr.required) curr.validators.push(Validators.required);
-      if (curr.type === 'email') curr.validators.push(Validators.email);
+      if (curr.required) {curr.validators.push(Validators.required);}
+      if (curr.type === 'email') {curr.validators.push(Validators.email);}
       prev[curr.key] = this.fb.control(!!curr.value ? curr.value : '', curr.validators);
       return prev;
     }, {}));
@@ -60,14 +60,14 @@ export class CrudDialogComponent implements OnInit {
 
   onCreate(): void {
     this.create(this.row).subscribe(res => {
-      if (res) this.dialogRef.close();
+      if (res) {this.dialogRef.close();}
     }, err => console.error);
   }
 
   onUpdate(): void {
     this.update(this.row).subscribe(res => {
-      if (res) this.dialogRef.close();
-    }, err => console.error)
+      if (res) {this.dialogRef.close();}
+    }, err => console.error);
   }
 
   onDelete(): void {
@@ -78,7 +78,7 @@ export class CrudDialogComponent implements OnInit {
     }).then(x => {
       if (x.isConfirmed) {
         this.delete(this.row).subscribe(res => {
-          if (res) this.dialogRef.close();
+          if (res) {this.dialogRef.close();}
         }, err => console.error);
       }
     });

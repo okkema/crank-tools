@@ -1,3 +1,3 @@
-import { StaffModule } from "./staff.module";
+import { StaffModule } from './staff.module';
 
-export { StaffModule }
+export { StaffModule };

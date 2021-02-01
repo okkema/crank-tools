@@ -1,5 +1,5 @@
-import { Observable } from "rxjs";
-import { IFormBase } from "./form-base.interface";
+import { Observable } from 'rxjs';
+import { IFormBase } from './form-base.interface';
 
 export interface ICrudDialogData {
     controls: IFormBase<any>[];

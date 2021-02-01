@@ -1,6 +1,6 @@
-import { Observable } from "rxjs";
-import { ICrudColumn } from ".";
-import { IFormBase } from "../../dialog/models";
+import { Observable } from 'rxjs';
+import { ICrudColumn } from '.';
+import { IFormBase } from '../../dialog/models';
 
 export interface ICrudTable {
   icon: string;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IStaffService } from './staff.service.interface';
-import { IStaff, Staff, StaffMetadata } from '../models';
+import { IStaff, Staff, STAFF_METADATA } from '../models';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class StaffService implements IStaffService{
 
   create(staff: IStaff): Observable<IStaff> {
     staff = new Staff(staff);
-    return this.dbService.add(StaffMetadata.store, staff)
+    return this.dbService.add(STAFF_METADATA.store, staff)
       .pipe(map(id => {
         staff.id = id;
         return staff;
@@ -24,28 +24,24 @@ export class StaffService implements IStaffService{
   }
 
   read(staff: IStaff): Observable<IStaff> {
-    return this.dbService.getByID(StaffMetadata.store, staff.id)
-      .pipe(map(staff => new Staff(staff)));
+    return this.dbService.getByID(STAFF_METADATA.store, staff.id)
+      .pipe(map(x => new Staff(x)));
   }
 
   readAll(): Observable<IStaff[]> {
-    return this.dbService.getAll(StaffMetadata.store)
+    return this.dbService.getAll(STAFF_METADATA.store)
       .pipe(map(staff => staff.map(x => new Staff(x))));
   }
 
   update(staff: IStaff): Observable<IStaff> {
     staff = new Staff(staff);
-    return this.dbService.update(StaffMetadata.store, staff)
-      .pipe(map(x => {
-        return staff;
-      }));
+    return this.dbService.update(STAFF_METADATA.store, staff)
+      .pipe(map(x => staff));
   }
-  
+
   delete(staff: IStaff): Observable<IStaff> {
-    return this.dbService.delete(StaffMetadata.store, staff.id)
-      .pipe(map(x => {
-        return staff
-      }));
+    return this.dbService.delete(STAFF_METADATA.store, staff.id)
+      .pipe(map(x => staff));
   }
 
 }

@@ -1,5 +1,5 @@
-import { Observable } from "rxjs";
-import { IStaff } from "../models";
+import { Observable } from 'rxjs';
+import { IStaff } from '../models';
 
 export interface IStaffService {
     create(staff: IStaff): Observable<IStaff>;

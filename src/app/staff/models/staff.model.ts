@@ -1,5 +1,5 @@
-import { IStaff } from "./staff.interface";
-import { hashSync, genSaltSync, compareSync } from "bcryptjs";
+import { IStaff } from './staff.interface';
+import { hashSync, genSaltSync, compareSync } from 'bcryptjs';
 
 export class Staff implements IStaff {
     id: number;
@@ -17,10 +17,10 @@ export class Staff implements IStaff {
     }
 
     setPassword(): void {
-        if (!!this.password) this._password = hashSync(this.password, genSaltSync());
+        if (!!this.password) {this._password = hashSync(this.password, genSaltSync());}
         delete this.password;
     }
-    
+
     checkPassword(password: any): boolean {
         return compareSync(password, this._password);
     }

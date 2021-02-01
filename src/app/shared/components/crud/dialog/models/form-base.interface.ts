@@ -6,6 +6,6 @@ export interface IFormBase<T> {
   required?: boolean;
   controlType: 'textbox' | 'select';
   type: 'text' | 'email' | 'tel' | 'password';
-  options?: {key: string, value: string}[];
+  options?: {key: string; value: string}[];
   validators?: any[];
 }

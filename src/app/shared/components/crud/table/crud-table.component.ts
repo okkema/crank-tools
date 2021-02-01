@@ -13,17 +13,17 @@ import { IFormBase, ICrudDialogData } from '../dialog/models';
   templateUrl: './crud-table.component.html',
   styleUrls: ['./crud-table.component.scss']
 })
-export class CrudTableComponent implements OnInit {
+export class CrudTableComponent implements OnInit, AfterViewInit {
 
   @Input() icon: string;
   @Input() title: string;
   @Input() columns: ICrudColumn[];
-  @Input() showActions: boolean = true;
+  @Input() showActions = true;
   @Input() controls: IFormBase<any>[];
   @Input() create: (value) => Observable<any>;
   @Input() read: (value?) => Observable<any>;
   @Input() update: (value) => Observable<any>;
-  @Input() delete: (any) => Observable<any>;
+  @Input() delete: (value) => Observable<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -52,20 +52,20 @@ export class CrudTableComponent implements OnInit {
   openDialog(row?: any): void {
     const data: ICrudDialogData = {
       controls: this.controls,
-      row: row,
+      row,
       create: this.create,
       update: this.update,
       delete: this.delete,
     };
     const dialogRef = this.dialog.open(CrudDialogComponent, {
-      data: data,
+      data,
     });
     dialogRef.afterClosed().subscribe(() => this.onRead());
   }
 
   get tableColumns(): string[] {
     const columns = this.columns.map(x => x.name);
-    if (this.showActions) columns.push("actions");
+    if (this.showActions) {columns.push('actions');}
     return columns;
   }
 

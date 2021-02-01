@@ -1,6 +1,6 @@
-import { ObjectStoreMeta } from "ngx-indexed-db";
+import { ObjectStoreMeta } from 'ngx-indexed-db';
 
-const STORE_NAME: string = 'staff';
+const STORE_NAME = 'staff';
 export const FIELD_NAMES: any = {
   id: 'id',
   name: 'name',
@@ -8,9 +8,9 @@ export const FIELD_NAMES: any = {
   email: 'email',
   phone: 'phone',
   password: 'password',
-}
+};
 
-export const StaffMetadata: ObjectStoreMeta = {
+export const staffMetadata: ObjectStoreMeta = {
     store: STORE_NAME,
       storeConfig: { keyPath: FIELD_NAMES.id, autoIncrement: true },
       storeSchema: [
