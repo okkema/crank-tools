@@ -10,7 +10,7 @@ export const FIELD_NAMES: any = {
   password: 'password',
 };
 
-export const staffMetadata: ObjectStoreMeta = {
+export const STAFF_METADATA: ObjectStoreMeta = {
     store: STORE_NAME,
       storeConfig: { keyPath: FIELD_NAMES.id, autoIncrement: true },
       storeSchema: [
