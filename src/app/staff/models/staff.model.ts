@@ -1,5 +1,5 @@
 import { IStaff } from "./staff.interface";
-import { hash, compare, genSalt } from "bcryptjs";
+import { hashSync, genSaltSync, compareSync } from "bcryptjs";
 
 export class Staff implements IStaff {
     id: number;
@@ -9,12 +9,20 @@ export class Staff implements IStaff {
     phone: string;
     password: string;
 
-    async setPassword(password: string): Promise<void> {
-        this.password = await hash(password, await genSalt());
+    _password: string;
+
+    public constructor(init?: Partial<IStaff>) {
+        Object.assign(this, init);
+        this.setPassword();
+    }
+
+    setPassword(): void {
+        if (!!this.password) this._password = hashSync(this.password, genSaltSync());
+        delete this.password;
     }
     
-    async checkPassword(password: any): Promise<boolean> {
-        return compare(password, this.password);
+    checkPassword(password: any): boolean {
+        return compareSync(password, this._password);
     }
 
 }

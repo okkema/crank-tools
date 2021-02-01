@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CrudTableComponent } from './crud/table/crud-table.component';
 import { CrudDialogComponent } from './crud/dialog/crud-dialog.component';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +19,6 @@ const components = [
 const modules = [
   CommonModule,
   MaterialModule,
-  NgxDatatableModule,
   ReactiveFormsModule,
   FlexLayoutModule,
   LayoutModule,

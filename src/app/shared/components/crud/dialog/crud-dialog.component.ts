@@ -1,8 +1,9 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ICrudDialogData } from '../models';
-import { IFormBase } from '../models/form-base.interface';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
+import { ICrudDialogData, IFormBase } from './models';
 
 @Component({
   selector: 'app-crud-dialog',
@@ -14,22 +15,29 @@ export class CrudDialogComponent implements OnInit {
   controls: IFormBase<any>[];
   form: FormGroup;
   row: any;
-  create: Function;
-  update: Function;
-  delete: Function;
+  create: (value) => Observable<any>;
+  update: (value) => Observable<any>;
+  delete: (value) => Observable<any>;
+  isNew: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ICrudDialogData,
     private fb: FormBuilder,
+    private dialogRef: MatDialogRef<CrudDialogComponent>
   ) {
     this.controls = data.controls;
     this.form = this.createForm();
     this.create = data.create;
     this.update = data.update;
     this.delete = data.delete;
-    this.row = data.row;
+    this.row = Object.assign({}, data.row);
+    this.isNew = !data.row;
     if (this.row) this.form.patchValue(this.row);
     else this.form.reset();
+    this.form.valueChanges.subscribe(x => Object.keys(x).reduce((prev, curr, index) => {
+      prev[curr] = x[curr];
+      return prev;
+    }, this.row));
   }
 
   ngOnInit(): void {
@@ -48,6 +56,32 @@ export class CrudDialogComponent implements OnInit {
       prev[curr.key] = this.fb.control(!!curr.value ? curr.value : '', curr.validators);
       return prev;
     }, {}));
+  }
+
+  onCreate(): void {
+    this.create(this.row).subscribe(res => {
+      if (res) this.dialogRef.close();
+    }, err => console.error);
+  }
+
+  onUpdate(): void {
+    this.update(this.row).subscribe(res => {
+      if (res) this.dialogRef.close();
+    }, err => console.error)
+  }
+
+  onDelete(): void {
+    Swal.fire({
+      title: 'Confirm delete?',
+      showConfirmButton: true,
+      showCancelButton: true,
+    }).then(x => {
+      if (x.isConfirmed) {
+        this.delete(this.row).subscribe(res => {
+          if (res) this.dialogRef.close();
+        }, err => console.error);
+      }
+    });
   }
 
 }

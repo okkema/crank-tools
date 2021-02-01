@@ -10,18 +10,19 @@
                 <mat-option *ngFor="let option of control.options" [value]="option.key">{{ option.value }}</mat-option>
             </mat-select>
         </div>
+        <mat-hint>{{ control.hint }}</mat-hint>
         <mat-error *ngIf="form.controls[control.key].invalid">{{ errorMessage(control.key) }}</mat-error>
     </mat-form-field>
     <div fxLayoutGap="5px" fxLayoutAlign="end">
-        <button mat-flat-button color="warn" (click)="delete(row)">
-            <mat-icon>info</mat-icon>
+        <button *ngIf="isNew; else edit" mat-flat-button color="accent" (click)="onCreate()" [disabled]="form.invalid">
+            <mat-icon>save</mat-icon>
         </button>
-        <button *ngIf="row; else new" mat-flat-button color="accent" (click)="update(row)">
-            <mat-icon>info</mat-icon>
-        </button>
-        <ng-template #new>
-            <button mat-flat-button color="accent" (click)="create()">
-                <mat-icon>info</mat-icon>
+        <ng-template #edit>
+            <button mat-flat-button color="warn" (click)="onDelete()">
+                <mat-icon>remove_circle</mat-icon>
+            </button>
+            <button mat-flat-button color="accent" (click)="onUpdate()" [disabled]="form.invalid">
+                <mat-icon>save</mat-icon>
             </button>
         </ng-template>
     </div>

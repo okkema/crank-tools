@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ICrudTable } from '../shared/components/crud/models';
-import { ICrudColumn } from '../shared/components/crud/models/column.interface';
-import { IFormBase } from '../shared/components/crud/models/form-base.interface';
+import { ICrudTable, ICrudColumn } from '../shared/components/crud/table/models';
+import { IFormBase } from '../shared/components/crud/dialog/models';
 import { FIELD_NAMES, IStaff } from './models';
 import { StaffService } from './service';
 
@@ -12,7 +11,9 @@ import { StaffService } from './service';
 })
 export class StaffComponent implements OnInit, ICrudTable {
 
+  icon = "./assets/img/user.png";
   title = "Staff Directory";
+
   columns: ICrudColumn[] = [
     { name: FIELD_NAMES.id, sortable: true }, 
     { name: FIELD_NAMES.name, sortable: true }, 
@@ -48,6 +49,12 @@ export class StaffComponent implements OnInit, ICrudTable {
       type: 'tel',
       key: FIELD_NAMES.phone,
       required: true,
+    },
+    {
+      controlType: 'textbox',
+      type: 'password',
+      key: FIELD_NAMES.password,
+      hint: 'Only if you want to change password!',
     }
   ]
   

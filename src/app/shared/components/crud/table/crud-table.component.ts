@@ -5,9 +5,8 @@ import { CrudDialogComponent } from '../dialog/crud-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { FormGroup } from '@angular/forms';
-import { ICrudColumn, ICrudDialogData } from '../models';
-import { IFormBase } from '../models/form-base.interface';
+import { ICrudColumn } from './models';
+import { IFormBase, ICrudDialogData } from '../dialog/models';
 
 @Component({
   selector: 'app-crud-table',
@@ -16,15 +15,15 @@ import { IFormBase } from '../models/form-base.interface';
 })
 export class CrudTableComponent implements OnInit {
 
+  @Input() icon: string;
   @Input() title: string;
-  @Input() rows: Observable<any>;
   @Input() columns: ICrudColumn[];
   @Input() showActions: boolean = true;
   @Input() controls: IFormBase<any>[];
-  @Input() create: Function;
-  @Input() read: Function;
-  @Input() update: Function;
-  @Input() delete: Function;
+  @Input() create: (value) => Observable<any>;
+  @Input() read: (value?) => Observable<any>;
+  @Input() update: (value) => Observable<any>;
+  @Input() delete: (any) => Observable<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -38,10 +37,11 @@ export class CrudTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     this.rows = this.read();
-     this.rows.subscribe(data => {
-      this.dataSource.data = data;
-    });
+    this.onRead();
+  }
+
+  onRead(): void {
+    this.read().subscribe(data => this.dataSource.data = data);
   }
 
   ngAfterViewInit() {
@@ -60,6 +60,7 @@ export class CrudTableComponent implements OnInit {
     const dialogRef = this.dialog.open(CrudDialogComponent, {
       data: data,
     });
+    dialogRef.afterClosed().subscribe(() => this.onRead());
   }
 
   get tableColumns(): string[] {

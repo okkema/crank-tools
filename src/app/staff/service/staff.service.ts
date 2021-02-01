@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IStaffService } from './staff.service.interface';
-import { IStaff, StaffMetadata } from '../models';
+import { IStaff, Staff, StaffMetadata } from '../models';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,6 +15,7 @@ export class StaffService implements IStaffService{
   ) { }
 
   create(staff: IStaff): Observable<IStaff> {
+    staff = new Staff(staff);
     return this.dbService.add(StaffMetadata.store, staff)
       .pipe(map(id => {
         staff.id = id;
@@ -23,39 +24,20 @@ export class StaffService implements IStaffService{
   }
 
   read(staff: IStaff): Observable<IStaff> {
-    return this.dbService.getByID(StaffMetadata.store, staff.id);
+    return this.dbService.getByID(StaffMetadata.store, staff.id)
+      .pipe(map(staff => new Staff(staff)));
   }
 
   readAll(): Observable<IStaff[]> {
-    return of([
-      {
-        id: 1,
-        name: 'Ben',
-        title: 'Mechanic',
-        email: 'ben@okkema.org',
-        phone: '1234567890',
-        password: 'qwerty',
-        setPassword: null,
-        checkPassword: null
-      },
-      {
-        id: 2,
-        name: 'Sam',
-        title: 'Mechanic',
-        email: 'sam@okkema.org',
-        phone: '0987654321',
-        password: 'qwerty',
-        setPassword: null,
-        checkPassword: null
-      },
-    ]);
-    // return this.dbService.getAll(StaffMetadata.store);
+    return this.dbService.getAll(StaffMetadata.store)
+      .pipe(map(staff => staff.map(x => new Staff(x))));
   }
 
   update(staff: IStaff): Observable<IStaff> {
-    return this.dbService.update(StaffMetadata.store, staff, staff.id)
+    staff = new Staff(staff);
+    return this.dbService.update(StaffMetadata.store, staff)
       .pipe(map(x => {
-        return x?.[0];
+        return staff;
       }));
   }
   
