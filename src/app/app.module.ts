@@ -17,6 +17,7 @@ import { WheelsModule } from './wheels';
 import { SettingsModule } from './settings';
 import { StaffModule } from './staff';
 import { CloudModule } from './cloud';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { CloudModule } from './cloud';
     BrowserModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
+    SweetAlert2Module.forRoot(),
     SharedModule,
     NavigationModule,
     AboutModule,

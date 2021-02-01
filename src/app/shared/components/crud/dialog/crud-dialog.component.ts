@@ -75,6 +75,7 @@ export class CrudDialogComponent implements OnInit {
       title: 'Confirm delete?',
       showConfirmButton: true,
       showCancelButton: true,
+      heightAuto: false,
     }).then(x => {
       if (x.isConfirmed) {
         this.delete(this.row).subscribe(res => {

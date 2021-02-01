@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ICrudColumn } from './models';
 import { IFormBase, ICrudDialogData } from '../dialog/models';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crud-table',
