@@ -1,6 +1,4 @@
-// ANGULAR
 import { NgModule } from '@angular/core';
-// MATERIAL
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';

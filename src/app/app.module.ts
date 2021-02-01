@@ -1,18 +1,12 @@
-// ANGULAR
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// ENVIRONMENT
 import { environment } from '../environments/environment';
-// APP
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-// SHARED
 import { SharedModule } from './shared/shared.module';
-// NAVIGATION
 import { NavigationModule } from './navigation';
-// MODULES
 import { AboutModule } from './about';
 import { TransmissionModule } from './transmission';
 import { CustomersModule } from './customers';
@@ -22,6 +16,7 @@ import { RegisterModule } from './register';
 import { WheelsModule } from './wheels';
 import { SettingsModule } from './settings';
 import { StaffModule } from './staff';
+import { CloudModule } from './cloud';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,6 +35,7 @@ import { StaffModule } from './staff';
     WheelsModule,
     SettingsModule,
     StaffModule,
+    CloudModule,
     AppRoutingModule,
   ],
   bootstrap: [AppComponent]

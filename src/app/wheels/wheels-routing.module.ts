@@ -1,7 +1,5 @@
-// ANGULAR
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// COMPONENTS
 import { WheelsComponent } from './wheels.component';
 
 const routes: Routes = [

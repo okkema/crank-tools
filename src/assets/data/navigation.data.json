@@ -40,7 +40,7 @@
         "route": "/settings"
     },
     {
-        "name": "Cloud Sync & Export",
+        "name": "Cloud Sync & Backup",
         "image": "./assets/img/database.png",
         "route": "/cloud"
     },
