@@ -1,4 +1,4 @@
-import { IFormHint, IFormValidator } from ".";
+import { IFormHint, IFormValidator } from '.';
 
 export interface IFormBase<T> {
   value?: T;
