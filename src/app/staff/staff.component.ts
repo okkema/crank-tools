@@ -3,6 +3,7 @@ import { ICrudTable, ICrudColumn } from '../shared/components/crud/table/models'
 import { IFormBase } from '../shared/components/crud/dialog/models';
 import { FIELD_NAMES, IStaff } from './models';
 import { StaffService } from './service';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-staff',
@@ -50,7 +51,16 @@ export class StaffComponent implements OnInit, ICrudTable {
       controlType: 'textbox',
       type: 'password',
       key: FIELD_NAMES.password,
-      hint: 'Only if you want to change password!',
+      hint: {
+        value: 'Only if you want to change password!',
+        onUpdate: true,
+      },
+      validators: [
+        {
+          validator: Validators.required,
+          onCreate: true,
+        }
+      ]
     }
   ];
 

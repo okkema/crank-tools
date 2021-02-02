@@ -1,3 +1,5 @@
 import { ICrudDialogData } from './data.interface';
 import { IFormBase } from './form-base.interface';
-export { ICrudDialogData, IFormBase };
+import { IFormHint } from './hint.interface';
+import { IFormValidator } from './validator.interface';
+export { ICrudDialogData, IFormBase, IFormHint, IFormValidator };

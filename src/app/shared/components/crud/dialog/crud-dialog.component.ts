@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
-import { ICrudDialogData, IFormBase } from './models';
+import { ICrudDialogData, IFormBase, IFormValidator } from './models';
 
 @Component({
   selector: 'app-crud-dialog',
@@ -26,12 +26,12 @@ export class CrudDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<CrudDialogComponent>
   ) {
     this.controls = data.controls;
-    this.form = this.createForm();
     this.create = data.create;
     this.update = data.update;
     this.delete = data.delete;
     this.row = Object.assign({}, data.row);
     this.isNew = !data.row;
+    this.form = this.createForm();
     if (this.row) {this.form.patchValue(this.row);}
     else {this.form.reset();}
     this.form.valueChanges.subscribe(x => Object.keys(x).reduce((prev, curr, index) => {
@@ -50,12 +50,21 @@ export class CrudDialogComponent implements OnInit {
 
   createForm(): FormGroup {
     return this.fb.group(this.controls.reduce((prev, curr, index) => {
-      curr.validators = [];
-      if (curr.required) {curr.validators.push(Validators.required);}
-      if (curr.type === 'email') {curr.validators.push(Validators.email);}
-      prev[curr.key] = this.fb.control(!!curr.value ? curr.value : '', curr.validators);
+      const validators = this.parseValidators(curr);
+      prev[curr.key] = this.fb.control(!!curr.value ? curr.value : '', validators);
       return prev;
     }, {}));
+  }
+
+  parseValidators(control: IFormBase<any>): any[] {
+    const validators = [];
+    control?.validators?.forEach(x => {
+      if (this.isNew && !!x.onCreate) {validators.push(x.validator);}
+      else if (!this.isNew && !!x.onUpdate) {validators.push(x.validator);}
+    });
+    if (control.required) {validators.push(Validators.required);}
+    if (control.type === 'email') {validators.push(Validators.email);}
+    return validators;
   }
 
   onCreate(): void {
@@ -83,6 +92,13 @@ export class CrudDialogComponent implements OnInit {
         }, err => console.error);
       }
     });
+  }
+
+  showHint(control: IFormBase<any>): boolean {
+    if (!control.hint) {return false;}
+    if (this.isNew && !!control.hint.onCreate) {return true;}
+    if (!this.isNew && !!control.hint.onUpdate) {return true;}
+    return false;
   }
 
 }
