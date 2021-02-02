@@ -70,4 +70,9 @@ export class CrudTableComponent implements OnInit, AfterViewInit {
     return columns;
   }
 
+  filterData(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = value.trim().toLowerCase();
+  }
+
 }
