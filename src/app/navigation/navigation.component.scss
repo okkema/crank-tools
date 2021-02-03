@@ -1,3 +1,5 @@
+@import '../../theme.scss';
+
 .active, .active:focus, .active:hover {
-    background-color: #7b1fa2;
+    background-color: mat-color($dark-primary);
 }
