@@ -4,5 +4,8 @@
         <mat-card-title [style.margin-bottom]="0" [style.margin-left.px]="16" >Cloud Sync & Backup</mat-card-title>
     </div>
     <hr>
-    <mat-card-content></mat-card-content>
+    <mat-card-content>
+        <button (click)="export()">Export</button>
+        <input type="file" accept=".zip" (change)="import($event.target.files[0])">
+    </mat-card-content>
 </mat-card>

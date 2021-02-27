@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CloudService } from './service/cloud.service';
 
 @Component({
   selector: 'app-cloud',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CloudComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private cloudService: CloudService,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  export() {
+    this.cloudService.export();
+  }
+
+  import(files) {
+    this.cloudService.import(files);
   }
 
 }
