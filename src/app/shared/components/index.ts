@@ -1,4 +1,4 @@
-import { ComponentsModule } from "./components.module";
+import { ComponentsModule } from './components.module';
 
 export {
     ComponentsModule,

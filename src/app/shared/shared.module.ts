@@ -4,6 +4,7 @@ import { DataModule } from './data';
 import { HelpModule } from './help';
 import { DatabaseModule } from './database';
 import { ComponentsModule } from './components';
+import { AlertModule } from './alert';
 
 const modules: any[] = [
   DatabaseModule,
@@ -11,6 +12,7 @@ const modules: any[] = [
   DirectivesModule,
   DataModule,
   HelpModule,
+  AlertModule,
 ];
 
 @NgModule({
