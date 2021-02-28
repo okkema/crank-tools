@@ -1,8 +1,8 @@
 import { IStaff } from './staff.interface';
 import { hashSync, genSaltSync, compareSync } from 'bcryptjs';
+import { BaseModel } from 'src/app/shared/base/model';
 
-export class Staff implements IStaff {
-    id: number;
+export class Staff extends BaseModel<IStaff> implements IStaff {
     name: string;
     title: string;
     email: string;
@@ -12,7 +12,7 @@ export class Staff implements IStaff {
     _password: string;
 
     public constructor(init?: Partial<IStaff>) {
-        Object.assign(this, init);
+        super(init);
         this.setPassword();
     }
 
