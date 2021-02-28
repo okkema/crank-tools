@@ -3,12 +3,12 @@ import { DirectivesModule } from './directives';
 import { DataModule } from './data';
 import { HelpModule } from './help';
 import { DatabaseModule } from './database';
-import { ComponentsModule } from './components';
+import { CrudModule } from './crud';
 import { AlertModule } from './alert';
 
 const modules: any[] = [
   DatabaseModule,
-  ComponentsModule,
+  CrudModule,
   DirectivesModule,
   DataModule,
   HelpModule,

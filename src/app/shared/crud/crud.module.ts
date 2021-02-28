@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CrudTableComponent } from './crud/table';
-import { CrudDialogComponent } from './crud/dialog';
+import { CrudTableComponent } from './table';
+import { CrudDialogComponent } from './dialog';
 import { MaterialModule } from '../material';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,4 +30,4 @@ const modules = [
   exports: [...modules, ...components],
   entryComponents: [...dialogs]
 })
-export class ComponentsModule { }
+export class CrudModule { }

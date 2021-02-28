@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ICrudTable, ICrudColumn } from '../shared/components/crud/table/models';
-import { IFormBase } from '../shared/components/crud/dialog/models';
+import { ICrudTable, ICrudColumn } from '../shared/crud/table/models';
+import { IFormBase } from '../shared/crud/dialog/models';
 import { FIELD_NAMES, IStaff } from './models';
 import { StaffService } from './service';
 import { Validators } from '@angular/forms';
