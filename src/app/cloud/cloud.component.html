@@ -5,7 +5,8 @@
     </div>
     <hr>
     <mat-card-content>
-        <button (click)="export()">Export</button>
-        <input type="file" accept=".zip" (change)="import($event.target.files[0])">
+        <button mat-flat-button color="primary" (click)="export()">Export</button>
+        <button mat-flat-button color="primary" (click)="file.click()">Import</button>
+        <input #file hidden type="file" accept=".zip" (change)="import($event.target.files[0])">
     </mat-card-content>
 </mat-card>

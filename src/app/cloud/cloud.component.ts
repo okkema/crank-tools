@@ -19,8 +19,7 @@ export class CloudComponent implements OnInit {
     this.cloudService.export();
   }
 
-  import(files) {
-    this.cloudService.import(files);
+  import(file: File) {
+    this.cloudService.import(file);
   }
-
 }

@@ -1,4 +1,4 @@
 export interface ICloudService {
-    export();
-    import(files);
+    export(): Promise<boolean>;
+    import(file: File);
 }

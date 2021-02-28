@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
 import { IStaffService } from './staff.service.interface';
-import { IStaff, Staff, STAFF_METADATA } from '../models';
+import { IStaff, Staff, STAFF_METADATA, staffSchema } from '../models';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { ICloudSync } from '../../cloud/models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StaffService implements IStaffService{
+export class StaffService implements IStaffService, ICloudSync<IStaff> {
+
+  filename = 'staff.json';
+  schema = staffSchema.array;
 
   constructor(
     private dbService: NgxIndexedDBService
-  ) { }
+    ) { }
+
+  dump = () => this.readAll().toPromise();
+
+  load = (staff: IStaff[]) => this.updateAll(staff).pipe(map(x => true)).toPromise();
 
   create(staff: IStaff): Observable<IStaff> {
     staff = new Staff(staff);
@@ -37,6 +45,12 @@ export class StaffService implements IStaffService{
     staff = new Staff(staff);
     return this.dbService.update(STAFF_METADATA.store, staff)
       .pipe(map(x => staff));
+  }
+
+  updateAll(staff: IStaff[]): Observable<IStaff[]> {
+    return this.dbService.clear(STAFF_METADATA.store)
+      .pipe(map(x => staff.map(s => this.update(s))))
+      .pipe(mergeMap(z => forkJoin(z)));
   }
 
   delete(staff: IStaff): Observable<IStaff> {

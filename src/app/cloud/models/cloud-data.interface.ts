@@ -1,6 +1,6 @@
 import { ArraySchema } from 'joi';
 
-export interface CloudData {
+export interface ICloudData {
     promise: Promise<any>;
     filename: string;
     schema: ArraySchema;
