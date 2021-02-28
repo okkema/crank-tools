@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HelpService } from './shared/services/help.service';
+import { HelpService } from './shared/help';
 import { NavigationService } from './navigation/navigation.service';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { DataService } from '../shared/services/data.service';
+import { DataService } from '../shared/data';
 import { Measurement, Result } from './models';
-import { HelpService } from '../shared/services/help.service';
+import { HelpService } from '../shared/help';
 
 @Component({
   selector: 'app-transmission',

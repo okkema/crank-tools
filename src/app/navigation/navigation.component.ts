@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { DataService } from '../shared/services/data.service';
+import { DataService } from '../shared/data';
 import Navigation from './navigation.model';
 import { NavigationService } from './navigation.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';

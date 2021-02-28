@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { DataService } from './data.service';
-import { HelpService } from './help.service';
 
 @NgModule({
   imports: [
@@ -9,7 +8,6 @@ import { HelpService } from './help.service';
   ],
   providers: [
     DataService,
-    HelpService,
-  ],
+  ]
 })
-export class ServicesModule { }
+export class DataModule { }

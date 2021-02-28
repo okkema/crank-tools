@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CrudTableComponent } from './crud/table/crud-table.component';
-import { CrudDialogComponent } from './crud/dialog/crud-dialog.component';
-import { MaterialModule } from '../material.module';
+import { CrudTableComponent } from './crud/table';
+import { CrudDialogComponent } from './crud/dialog';
+import { MaterialModule } from '../material';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
