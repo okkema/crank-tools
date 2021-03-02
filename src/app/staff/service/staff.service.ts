@@ -3,13 +3,13 @@ import { IStaff, Staff, STAFF_METADATA, staffSchema } from '../models';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICloudSync } from '../../cloud/models';
+import { ICloudSyncService } from '../../cloud/models';
 import { CrudService } from 'src/app/shared/crud/service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StaffService extends CrudService<IStaff> implements ICloudSync<IStaff> {
+export class StaffService extends CrudService<IStaff> implements ICloudSyncService<IStaff> {
 
   filename = 'staff.json';
   schema = staffSchema.array;

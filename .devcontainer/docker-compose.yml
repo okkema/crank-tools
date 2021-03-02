@@ -1,0 +1,13 @@
+version: '3'
+services: 
+  app:
+    image: 'crank-tools:devcontainer'
+    container_name: 'crank-tools'
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+      args: 
+        VARIANT: 14
+    command: 'sleep infinity'
+    volumes:
+      - '..:/workspace:cached'

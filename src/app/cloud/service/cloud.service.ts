@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ICloudService } from './cloud.service.interface';
 import * as JSZip from 'jszip';
 import { StaffService } from 'src/app/staff/service';
 import { saveAs } from 'file-saver';
-import { ICloudData } from '../models';
+import { ICloudData, ICloudSyncService, TOKEN } from '../models';
 import staffSchema from 'src/app/staff/models/staff.schema';
 
 @Injectable({
@@ -11,24 +11,15 @@ import staffSchema from 'src/app/staff/models/staff.schema';
 })
 export class CloudService implements ICloudService {
 
-  private data: ICloudData[] = [
-    {
-      filename: 'staff.json',
-      promise: this.staffService.readAll().toPromise(),
-      schema: staffSchema.array,
-    },
-  ];
-
   constructor(
-    private staffService: StaffService
+    @Inject(TOKEN) private services: ICloudSyncService<any>[]
   ) { }
 
   export(): Promise<boolean> {
-    return Promise.all(this.data.map(x => x.promise)).then(x => {
+    return Promise.all(this.services.map(x => x.dump)).then(dump => {
       const zip = new JSZip();
-      this.data.map((data, index) => {
-        data.data = x[index];
-        zip.file(data.filename, JSON.stringify(data.data));
+      this.services.map((service, index) => {
+        zip.file(service.filename, JSON.stringify(dump[index]));
       });
       return zip.generateAsync({type: 'blob'});
     }).then(blob => saveAs(blob, 'crank-tools.zip'))
@@ -37,16 +28,16 @@ export class CloudService implements ICloudService {
   }
 
   import(file: File) {
-    JSZip.loadAsync(file).then(zip => Promise.all(this.data.map(x => zip.file(x.filename).async('string')))
-      .then(x => {
-        this.data.map(async (data, index) => {
-          const validation = data.schema.validate(JSON.parse(x[index]));
+    JSZip.loadAsync(file).then(zip => Promise.all(this.services.map(x => zip.file(x.filename).async('string')))
+      .then(data => {
+        this.services.forEach(async (service, index) => {
+          const validation = service.schema.validate(JSON.parse(data[index]));
           if (validation.error) {
             console.log(validation.error);
+            return;
           }
-          const test = await this.staffService.load(validation.value);
+          const success = await service.load(validation.value);
         });
-        return this.data;
       }));
   }
 }
