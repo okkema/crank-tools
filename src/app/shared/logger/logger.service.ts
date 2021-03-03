@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { ILogger } from './logger.interface';
-import { LOGGER_PROVIDER } from './logger.token';
+import { LOGGER_PUBLISHER } from './publishers';
 
 @Injectable({
   providedIn: 'root'
@@ -8,22 +8,22 @@ import { LOGGER_PROVIDER } from './logger.token';
 export class LoggerService implements ILogger {
 
   constructor(
-    @Inject(LOGGER_PROVIDER) private providers: ILogger[],
-  ) { }
+    @Inject(LOGGER_PUBLISHER) private publishers: ILogger[],
+  ) {}
 
   debug(message: string): void {
-    this.providers.forEach(x => x.debug(message));
+    this.publishers.forEach(x => x.debug(message));
   }
 
   info(message: string): void {
-    this.providers.forEach(x => x.info(message));
+    this.publishers.forEach(x => x.info(message));
   }
 
   warn(message: string): void {
-    this.providers.forEach(x => x.warn(message));
+    this.publishers.forEach(x => x.warn(message));
   }
 
   error(message: string): void {
-    this.providers.forEach(x => x.error(message));
+    this.publishers.forEach(x => x.error(message));
   }
 }

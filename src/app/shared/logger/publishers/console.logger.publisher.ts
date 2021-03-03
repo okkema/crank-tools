@@ -5,7 +5,7 @@ import { ILogger } from '../logger.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class ConsoleLoggerProvider implements ILogger {
+export class ConsoleLoggerPublisher implements ILogger {
 
   constructor() { }
 
