@@ -3,7 +3,7 @@ import { SharedModule } from '../shared';
 import { StaffComponent } from './staff.component';
 import { StaffRoutingModule } from './staff-routing.module';
 import { StaffService } from './service';
-import { TOKEN } from '../cloud/models';
+import { CLOUD_SYNC } from '../cloud/sync';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { TOKEN } from '../cloud/models';
   ],
   providers: [
     StaffService,
-    { provide: TOKEN, useClass: StaffService, multi: true }
+    { provide: CLOUD_SYNC, useClass: StaffService, multi: true }
   ]
 })
 export class StaffModule { }

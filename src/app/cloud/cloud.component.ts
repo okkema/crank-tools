@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CloudService } from './service/cloud.service';
+import { Component, OnInit } from '@angular/core';
+import { CloudService } from './cloud.service';
 
 @Component({
   selector: 'app-cloud',

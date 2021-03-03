@@ -5,6 +5,7 @@ import { HelpModule } from './help';
 import { DatabaseModule } from './database';
 import { CrudModule } from './crud';
 import { AlertModule } from './alert';
+import { LoggerModule } from './logger';
 
 const modules: any[] = [
   DatabaseModule,
@@ -13,6 +14,7 @@ const modules: any[] = [
   DataModule,
   HelpModule,
   AlertModule,
+  LoggerModule,
 ];
 
 @NgModule({
