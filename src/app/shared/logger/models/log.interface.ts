@@ -1,4 +1,4 @@
-import { LogLevel } from "./log.level.enum";
+import { LogLevel } from './log.level.enum';
 
 export interface ILog {
     id?: number;
