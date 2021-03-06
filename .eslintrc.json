@@ -36,7 +36,8 @@
             "type": "attribute",
             "prefix": "camelCase"
           }
-        ]
+        ],
+        "max-len": "off"
       }
     },
     {

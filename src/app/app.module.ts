@@ -4,7 +4,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
-import { RoutingModule } from './routing.module';
+import { AppRoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './navigation';
 import { AboutModule } from './about';
@@ -38,7 +38,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SettingsModule,
     StaffModule,
     CloudModule,
-    RoutingModule,
+    AppRoutingModule,
   ],
   bootstrap: [AppComponent]
 })

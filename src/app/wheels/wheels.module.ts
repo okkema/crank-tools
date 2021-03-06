@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared';
 import { WheelsComponent } from './wheels.component';
-import { WheelsRoutingModule } from './wheels-routing.module';
+import { WheelsRoutingModule } from './routing.module';
 
 @NgModule({
   declarations: [
