@@ -3,7 +3,7 @@ import { ICloudService } from './cloud.service.interface';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { ICloudSync, CLOUD_SYNC } from './sync';
-import { LoggerService } from '../shared/logger';
+import { LoggerService } from '../../shared/logger';
 
 @Injectable({
   providedIn: 'root'

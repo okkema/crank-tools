@@ -16,7 +16,6 @@ import { RegisterModule } from './register';
 import { WheelsModule } from './wheels';
 import { SettingsModule } from './settings';
 import { StaffModule } from './staff';
-import { CloudModule } from './cloud';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
@@ -37,7 +36,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     WheelsModule,
     SettingsModule,
     StaffModule,
-    CloudModule,
     AppRoutingModule,
   ],
   bootstrap: [AppComponent]

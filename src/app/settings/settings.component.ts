@@ -9,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
           <mat-card-title [style.margin-bottom]="0" [style.margin-left.px]="16" >Settings</mat-card-title>
       </div>
       <hr>
-      <mat-card-content></mat-card-content>
+      <mat-card-content>
+        <app-cloud></app-cloud>
+      </mat-card-content>
     </mat-card>
   `,
 })

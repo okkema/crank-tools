@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared';
-import { CloudRoutingModule } from './cloud-routing.module';
+import { SharedModule } from '../../shared';
 import { CloudComponent } from './cloud.component';
 
 @NgModule({
@@ -9,7 +8,9 @@ import { CloudComponent } from './cloud.component';
   ],
   imports: [
     SharedModule,
-    CloudRoutingModule,
+  ],
+  exports: [
+    CloudComponent,
   ]
 })
 export class CloudModule { }

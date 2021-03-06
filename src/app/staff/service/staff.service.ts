@@ -3,7 +3,7 @@ import { IStaff, Staff, STAFF_METADATA, staffSchema } from '../models';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICloudSync } from '../../cloud/sync';
+import { ICloudSync } from '../../settings/cloud/sync';
 import { CrudService } from '../../shared/crud/service';
 
 @Injectable({

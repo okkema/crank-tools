@@ -3,7 +3,7 @@ import { SharedModule } from '../shared';
 import { StaffComponent } from './staff.component';
 import { StaffRoutingModule } from './staff-routing.module';
 import { StaffService } from './service';
-import { CLOUD_SYNC } from '../cloud/sync';
+import { CLOUD_SYNC } from '../settings/cloud/sync';
 
 @NgModule({
   declarations: [
