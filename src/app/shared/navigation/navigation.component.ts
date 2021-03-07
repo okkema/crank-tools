@@ -13,12 +13,12 @@ import { MatSidenav } from '@angular/material/sidenav';
       <mat-sidenav #sidenav [mode]="nav.isMobile ? 'over' : 'side'" [disableClose]="!nav.isMobile" [opened]="!nav.isMobile" [autoFocus]="false">
         <mat-nav-list [style.padding-top]="0">
           <a *ngFor="let item of nav.routes" mat-list-item routerLink="{{ item.path }}" routerLinkActive="active">
-            <mat-icon [style.margin-right.px]="nav.isMobile ? 16 : 0" class="nav-icon">{{ item?.data?.icon }}</mat-icon>
-            <span [@toggle]="nav.isMobile ? null : showNavText">{{ item?.data?.title }}</span>
+            <mat-icon [style.margin-right.px]="nav.isMobile ? 16 : 0">{{ item.data.icon }}</mat-icon>
+            <span [@toggle]="nav.isMobile ? null : showNavText">{{ item.data.title }}</span>
           </a>
         </mat-nav-list>
       </mat-sidenav>
-      <mat-sidenav-content [style.padding.px]="16" [style.margin-left.px]="nav.isMobile ? 0 : 60">
+      <mat-sidenav-content [style.padding.px]="16">
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
@@ -26,7 +26,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   animations: [
     trigger('toggle', [
       state('opened', style({
-        width: '200px',
+        // width: '200px',
         opacity: 1,
         'margin-left': '16px'
       })),
