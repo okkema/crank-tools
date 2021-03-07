@@ -2,12 +2,17 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared';
 import { SettingsComponent } from './settings.component';
 import { CloudModule } from './cloud';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { IPageRoute } from '../../shared/base/page';
 
-const routes: Routes = [
+const routes: IPageRoute[] = [
   {
     component: SettingsComponent,
     path: 'settings',
+    data: {
+      title: 'Settings',
+      icon: 'settings',
+    }
   },
 ];
 

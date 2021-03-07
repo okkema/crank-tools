@@ -3,16 +3,21 @@ import { SharedModule } from '../../shared';
 import { ServiceComponent } from './service.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { IPageRoute } from '../../shared/base/page';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
 ]);
 
-const routes: Routes = [
+const routes: IPageRoute[] = [
   {
     component: ServiceComponent,
     path: 'service',
+    data: {
+      title: 'Service',
+      icon: 'construction'
+    }
   },
 ];
 

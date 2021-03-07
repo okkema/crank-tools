@@ -1,7 +1,19 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared';
 import { TransmissionComponent } from './transmission.component';
-import { TransmissionRoutingModule } from './transmission-routing.module';
+import { IPageRoute } from '../../shared/base/page';
+import { RouterModule } from '@angular/router';
+
+const routes: IPageRoute[] = [
+  {
+    component: TransmissionComponent,
+    path: 'transmission',
+    data: {
+      title: 'Transmission',
+      icon: 'settings_suggest'
+    }
+  },
+];
 
 @NgModule({
   declarations: [
@@ -9,7 +21,10 @@ import { TransmissionRoutingModule } from './transmission-routing.module';
   ],
   imports: [
     SharedModule,
-    TransmissionRoutingModule,
+    RouterModule.forRoot(routes),
   ],
+  exports: [
+    RouterModule,
+  ]
 })
 export class TransmissionModule { }

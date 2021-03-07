@@ -11,17 +11,15 @@ import { MatSidenav } from '@angular/material/sidenav';
   template: `
     <mat-sidenav-container fxFlex [hasBackdrop]="showNav" (click)="nav.close()">
       <mat-sidenav #sidenav [mode]="nav.isMobile ? 'over' : 'side'" [disableClose]="!nav.isMobile" [opened]="!nav.isMobile" [autoFocus]="false">
-          <!-- <div *ngFor="let item of nav.routes">{{ item.path }}</div> -->
-          <mat-nav-list [style.padding-top]="0">
-              <a *ngFor="let item of nav.routes" mat-list-item routerLink="{{ item.path }}" routerLinkActive="active">
-              <!-- <mat-icon [style.margin-right.px]="nav.isMobile ? 16 : 0">{{ item.component.icon }}</mat-icon> -->
-                  <!-- <img [style.margin-right.px]="nav.isMobile ? 16 : 0" matListIcon src="{{ item.image }}" class="nav-icon"> -->
-                  <span [@toggle]="nav.isMobile ? null : showNavText">{{ item.path }}</span>
-              </a>
-          </mat-nav-list>
+        <mat-nav-list [style.padding-top]="0">
+          <a *ngFor="let item of nav.routes" mat-list-item routerLink="{{ item.path }}" routerLinkActive="active">
+            <mat-icon [style.margin-right.px]="nav.isMobile ? 16 : 0" class="nav-icon">{{ item?.data?.icon }}</mat-icon>
+            <span [@toggle]="nav.isMobile ? null : showNavText">{{ item?.data?.title }}</span>
+          </a>
+        </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content [style.padding.px]="16" [style.margin-left.px]="nav.isMobile ? 0 : 60">
-          <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
   `,

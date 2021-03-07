@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { IPageRoute } from '../../shared/base/page';
 import { SharedModule } from '../../shared';
 import { AboutComponent } from './about.component';
 
-const routes: Routes = [
+const routes: IPageRoute[] = [
   {
     component: AboutComponent,
     path: 'about',
+    data: {
+      title: 'About',
+      icon: 'info',
+    }
   },
 ];
 

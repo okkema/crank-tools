@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, Route } from '@angular/router';
+import { IPageRoute } from '../base/page';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Router, Route } from '@angular/router';
 export class NavigationService {
 
   public isMobile: boolean;
-  public routes: Route[] = [];
+  public routes: IPageRoute[] = [];
   private subject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private sidenav: MatSidenav;
 
@@ -44,7 +45,7 @@ export class NavigationService {
 
   getRoutes(parent: string, config: Route[]): void {
     for (const route of config) {
-      if (route.path !== '**') { this.routes.push(route); }
+      if (route.path !== '**') { this.routes.push(route as IPageRoute); }
       if (route.children) {
         const path = route.path ? `${parent}/${route.path}` : parent;
         this.getRoutes(path, route.children);
