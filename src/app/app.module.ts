@@ -6,16 +6,16 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
-import { NavigationModule } from './navigation';
-import { AboutModule } from './about';
-import { TransmissionModule } from './transmission';
-import { CustomersModule } from './customers';
-import { InventoryModule } from './inventory';
-import { ServiceModule } from './service';
-import { RegisterModule } from './register';
-import { WheelsModule } from './wheels';
-import { SettingsModule } from './settings';
-import { StaffModule } from './staff';
+import { NavigationModule } from './shared/navigation';
+import { AboutModule } from './pages/about';
+import { TransmissionModule } from './pages/transmission';
+import { CustomersModule } from './pages/customers';
+import { InventoryModule } from './pages/inventory';
+import { ServiceModule } from './pages/service';
+import { RegisterModule } from './pages/register';
+import { WheelsModule } from './pages/wheels';
+import { SettingsModule } from './pages/settings';
+import { StaffModule } from './pages/staff';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({

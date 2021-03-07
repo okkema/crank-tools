@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HelpService } from './shared/help';
-import { NavigationService } from './navigation/navigation.service';
+import { NavigationService } from './shared/navigation';
 
 @Component({
   selector: 'app-root',

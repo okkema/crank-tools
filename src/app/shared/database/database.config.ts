@@ -1,5 +1,5 @@
 import { DBConfig } from 'ngx-indexed-db';
-import { STAFF_METADATA } from '../../staff/models';
+import { STAFF_METADATA } from '../../pages/staff/models';
 import { LOG_METADATA } from '../logger/models';
 
 const DATABASE_NAME = 'crank-tools';
