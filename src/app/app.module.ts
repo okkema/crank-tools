@@ -5,8 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './routing.module';
-import { SharedModule } from './shared/shared.module';
-import { NavigationModule } from './shared/navigation';
+import { NavigationModule } from './components/navigation';
 import { AboutModule } from './pages/about';
 import { TransmissionModule } from './pages/transmission';
 import { CustomersModule } from './pages/customers';
@@ -17,6 +16,8 @@ import { WheelsModule } from './pages/wheels';
 import { SettingsModule } from './pages/settings';
 import { StaffModule } from './pages/staff';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { ToolbarModule } from './components/toolbar';
+import { SharedModule } from './shared';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     BrowserAnimationsModule,
     SweetAlert2Module.forRoot(),
     SharedModule,
+    ToolbarModule,
     NavigationModule,
     AboutModule,
     TransmissionModule,

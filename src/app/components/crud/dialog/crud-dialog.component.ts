@@ -9,7 +9,7 @@ import { ICrudDialogData, IFormBase, IFormValidator } from './models';
   selector: 'app-crud-dialog',
   template: `
     <form [formGroup]="form" fxLayout="column" fxLayoutGap="10px" [style.width.%]="100">
-      <mat-form-field *ngFor="let control of controls" [style.width.px]="300">
+      <mat-form-field *ngFor="let control of controls" [style.width.px]="300" appearance="fill">
         <mat-label *ngIf="!!control.label; else keyLabel">{{ control.label }}</mat-label>
         <ng-template #keyLabel>
           <mat-label>{{ control.key | titlecase }}</mat-label>

@@ -1,7 +1,7 @@
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { IBaseModel } from '../../base/model';
+import { IBaseModel } from '../../../shared/base/model';
 import { ICrudService } from './crud.service.interface';
 
 export abstract class CrudService<T extends IBaseModel> implements ICrudService<T> {

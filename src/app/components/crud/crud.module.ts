@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CrudTableComponent } from './table';
 import { CrudDialogComponent } from './dialog';
-import { MaterialModule } from '../material';
+import { MaterialModule } from '../../shared/material';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -27,7 +27,7 @@ const modules = [
 @NgModule({
   declarations: [...components],
   imports: [...modules],
-  exports: [...modules, ...components],
+  exports: [...components],
   entryComponents: [...dialogs]
 })
 export class CrudModule { }

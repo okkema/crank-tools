@@ -4,7 +4,7 @@ import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ICloudSync } from '../../settings/cloud/sync';
-import { CrudService } from '../../../shared/crud/service';
+import { CrudService } from '../../../components/crud/service';
 
 @Injectable({
   providedIn: 'root'

@@ -5,6 +5,7 @@ import { StaffService } from './service';
 import { CLOUD_SYNC } from '../settings/cloud/sync';
 import { RouterModule } from '@angular/router';
 import { IPageRoute } from '../../shared/base/page';
+import { CrudModule } from 'src/app/components/crud';
 
 const routes: IPageRoute[] = [
   {
@@ -23,6 +24,7 @@ const routes: IPageRoute[] = [
   ],
   imports: [
     SharedModule,
+    CrudModule,
     RouterModule.forRoot(routes),
   ],
   exports: [

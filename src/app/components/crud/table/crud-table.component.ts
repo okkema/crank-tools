@@ -14,13 +14,13 @@ import { IFormBase, ICrudDialogData } from '../dialog/models';
     <mat-card>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row" fxLayoutAlign="start center">
-          <img mat-card-avatar [src]="icon">
+          <mat-icon mat-card-avatar [style.font-size.px]="40">{{ icon }}</mat-icon>
           <mat-card-title [style.margin-bottom]="0" [style.margin-left.px]="16" >{{ title }}</mat-card-title>
         </div>
-        <mat-form-field [style.width.px]="300">
+        <mat-form-field [style.width.px]="300" appearance="fill">
           <mat-label>Filter</mat-label>
-          <input matInput type="text" #filter (keyup)="filterData($event)">
-          <mat-icon matSuffix>search</mat-icon>
+          <input matInput type="text" #filter="matInput" (keyup)="filterData($event)">
+          <mat-icon matSuffix [color]="filter.focused ? 'primary' : ''">search</mat-icon>
         </mat-form-field>
       </div>
       <hr>

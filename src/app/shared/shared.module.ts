@@ -3,13 +3,21 @@ import { DirectivesModule } from './directives';
 import { DataModule } from './data';
 import { HelpModule } from './help';
 import { DatabaseModule } from './database';
-import { CrudModule } from './crud';
 import { AlertModule } from './alert';
 import { LoggerModule } from './logger';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from './material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { LayoutModule } from '@angular/cdk/layout';
 
 const modules: any[] = [
+  CommonModule,
+  MaterialModule,
+  ReactiveFormsModule,
+  FlexLayoutModule,
+  LayoutModule,
   DatabaseModule,
-  CrudModule,
   DirectivesModule,
   DataModule,
   HelpModule,

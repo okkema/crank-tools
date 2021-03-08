@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, Route } from '@angular/router';
-import { IPageRoute } from '../base/page';
+import { IPageRoute } from '../../shared/base/page';
 
 @Injectable({
   providedIn: 'root'
