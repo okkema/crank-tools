@@ -7,12 +7,53 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ICrudColumn } from './models';
 import { IFormBase, ICrudDialogData } from '../dialog/models';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crud-table',
-  templateUrl: './crud-table.component.html',
-  styleUrls: ['./crud-table.component.scss']
+  template: `
+    <mat-card>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <img mat-card-avatar [src]="icon">
+          <mat-card-title [style.margin-bottom]="0" [style.margin-left.px]="16" >{{ title }}</mat-card-title>
+        </div>
+        <mat-form-field [style.width.px]="300">
+          <mat-label>Filter</mat-label>
+          <input matInput type="text" #filter (keyup)="filterData($event)">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <hr>
+      <mat-card-content>
+        <mat-table matSort [dataSource]="dataSource">
+          <ng-container *ngFor="let col of columns; let i = index;" [matColumnDef]="col.name">
+            <div *ngIf="col.sortable; else notSortable">
+              <mat-header-cell mat-sort-header *matHeaderCellDef>{{ col.name | titlecase }}</mat-header-cell>
+            </div>
+            <ng-template #notSortable>
+              <mat-header-cell *matHeaderCellDef>{{ col.name | titlecase }}</mat-header-cell>
+            </ng-template>
+            <mat-cell *matCellDef="let row"> {{ row[col.name] }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef fxLayoutAlign="end center">
+              <button mat-flat-button color="primary" (click)="openDialog()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" fxLayoutAlign="end center">
+              <button mat-flat-button color="primary" (click)="openDialog(row)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+          <mat-row *matRowDef="let rows; columns: tableColumns"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  `
 })
 export class CrudTableComponent implements OnInit, AfterViewInit {
 

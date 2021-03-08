@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-// import { DataService } from '../shared/data';
 import Navigation from './navigation.model';
 import { NavigationService } from './navigation.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -11,9 +10,9 @@ import { MatSidenav } from '@angular/material/sidenav';
   template: `
     <mat-sidenav-container fxFlex [hasBackdrop]="showNav" (click)="nav.close()">
       <mat-sidenav #sidenav [mode]="nav.isMobile ? 'over' : 'side'" [disableClose]="!nav.isMobile" [opened]="!nav.isMobile" [autoFocus]="false">
-        <mat-nav-list [style.padding-top]="0">
-          <a *ngFor="let item of nav.routes" mat-list-item routerLink="{{ item.path }}" routerLinkActive="active">
-            <mat-icon [style.margin-right.px]="nav.isMobile ? 16 : 0">{{ item.data.icon }}</mat-icon>
+        <mat-nav-list [style.padding-top]="0" [style.min-width.px]="56">
+          <a *ngFor="let item of nav.routes" mat-list-item routerLink="{{ item.path }}" routerLinkActive #link="routerLinkActive">
+            <mat-icon [color]="link.isActive ? 'primary' : ''" [style.margin-right.px]="nav.isMobile ? 16 : 0">{{ item.data.icon }}</mat-icon>
             <span [@toggle]="nav.isMobile ? null : showNavText">{{ item.data.title }}</span>
           </a>
         </mat-nav-list>
@@ -26,7 +25,6 @@ import { MatSidenav } from '@angular/material/sidenav';
   animations: [
     trigger('toggle', [
       state('opened', style({
-        // width: '200px',
         opacity: 1,
         'margin-left': '16px'
       })),
@@ -35,10 +33,10 @@ import { MatSidenav } from '@angular/material/sidenav';
         'margin-left': '-168px'
       })),
       transition('opened => closed', [
-        animate('0.25s ease-in-out'),
+        animate('0.1s ease-in-out'),
       ]),
       transition('closed => opened', [
-        animate('0.25s ease-in-out'),
+        animate('0.1s ease-in-out'),
       ]),
     ]),
   ],
@@ -55,15 +53,11 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    // private data: DataService,
     private breakpoints: BreakpointObserver,
     public nav: NavigationService,
   ) {}
 
-  public ngOnInit(): void {
-    // this.data.loadJSON<Navigation[]>('navigation.data.json').subscribe(data => {
-    //   this.navigation = data;
-    // });
+  ngOnInit(): void {
     this.breakpoints.observe([
       Breakpoints.Small,
       Breakpoints.XSmall,
@@ -74,7 +68,7 @@ export class NavigationComponent implements OnInit, AfterViewInit {
     this.nav.show.subscribe(x => this.showNav = x);
   }
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.nav.set(this.sidenav);
   }
 

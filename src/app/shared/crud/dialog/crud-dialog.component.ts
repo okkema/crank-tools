@@ -7,8 +7,37 @@ import { ICrudDialogData, IFormBase, IFormValidator } from './models';
 
 @Component({
   selector: 'app-crud-dialog',
-  templateUrl: './crud-dialog.component.html',
-  styleUrls: ['./crud-dialog.component.scss']
+  template: `
+    <form [formGroup]="form" fxLayout="column" fxLayoutGap="10px" [style.width.%]="100">
+      <mat-form-field *ngFor="let control of controls" [style.width.px]="300">
+        <mat-label *ngIf="!!control.label; else keyLabel">{{ control.label }}</mat-label>
+        <ng-template #keyLabel>
+          <mat-label>{{ control.key | titlecase }}</mat-label>
+        </ng-template>
+        <div [ngSwitch]="control.controlType">
+          <input *ngSwitchCase="'textbox'" matInput [type]="control.type" [formControlName]="control.key" [id]="control.key" [style.width.%]="100">
+          <mat-select *ngSwitchCase="'select'" [formControlName]="control.key" [id]="control.key">
+            <mat-option *ngFor="let option of control.options" [value]="option.key">{{ option.value }}</mat-option>
+          </mat-select>
+        </div>
+        <mat-hint *ngIf="showHint(control)">{{ control.hint.value }}</mat-hint>
+        <mat-error *ngIf="form.controls[control.key].invalid">{{ errorMessage(control.key) }}</mat-error>
+      </mat-form-field>
+      <div fxLayoutAlign="space-between">
+        <button *ngIf="isNew; else edit" mat-flat-button color="accent" (click)="onCreate()" [disabled]="form.invalid">
+          <mat-icon>save</mat-icon>
+        </button>
+        <ng-template #edit>
+          <button mat-flat-button color="accent" (click)="onUpdate()" [disabled]="form.invalid">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button mat-flat-button color="warn" (click)="onDelete()">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </ng-template>
+      </div>
+    </form>
+  `
 })
 export class CrudDialogComponent implements OnInit {
 
