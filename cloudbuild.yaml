@@ -1,9 +1,0 @@
-steps:
-    - name: 'node'
-      entrypoint: 'npm'
-      args: ['install']
-    - name: 'node'
-      entrypoint: 'npm'
-      args: ['run', 'build']
-    - name: 'gcr.io/cloud-builders/gsutil'
-      args: ['-m', 'cp', '-r', './dist/crank-tools/*', 'gs://crank.tools']
