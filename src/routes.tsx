@@ -1,18 +1,12 @@
-import { PedalBike, QuestionMark } from "@mui/icons-material"
-import { Container } from "@mui/material"
+import { QuestionMark } from "@mui/icons-material"
 import type { Route } from "./App"
+import About from "./about/About"
 
 const routes: Route[] = [
   {
-    title: "Transmission",
-    path: "/",
-    element: <Container>Transmission</Container>,
-    icon: <PedalBike />,
-  },
-  {
     title: "About",
-    path: "/about",
-    element: <Container>About</Container>,
+    path: "/",
+    element: <About />,
     icon: <QuestionMark />,
   },
 ]
