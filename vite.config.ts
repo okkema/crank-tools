@@ -9,4 +9,6 @@ export default defineConfig({
     port: 5000,
   },
   assetsInclude: ["README.md"],
+  clearScreen: false,
+  envPrefix: "PUBLIC_",
 })
