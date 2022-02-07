@@ -55,7 +55,7 @@ const App = ({ routes, title = "Crank Tools" }: AppProps): JSX.Element => {
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
-        <Box onClick={() => setOpen(false)} width="250px" height="100%">
+        <Box onClick={() => setOpen(false)} height="100%">
           <Box
             display="flex"
             alignItems="center"

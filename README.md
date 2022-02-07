@@ -5,7 +5,7 @@
 ## Features
 
 - [x] About Page
-- [ ] Transmission Analysis
+- [x] Transmission Analysis
 - [ ] Customer Database
 - [ ] Service Scheduler
 - [ ] Inventory Management
