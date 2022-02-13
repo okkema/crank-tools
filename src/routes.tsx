@@ -1,7 +1,8 @@
-import { PedalBike, QuestionMark } from "@mui/icons-material"
+import { PedalBike, QuestionMark, Storage } from "@mui/icons-material"
 import type { Route } from "./App"
 import About from "./about/About"
 import TransmissionAnalysis from "./transmission/TransmissionAnalysis"
+import CustomerDatabase from "./customer/CustomerDatabase"
 
 const routes: Route[] = [
   {
@@ -9,6 +10,12 @@ const routes: Route[] = [
     path: "/transmission",
     element: <TransmissionAnalysis />,
     icon: <PedalBike />,
+  },
+  {
+    title: "Customer Database",
+    path: "/customer",
+    element: <CustomerDatabase />,
+    icon: <Storage />,
   },
   {
     title: "About",

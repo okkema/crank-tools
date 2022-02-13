@@ -6,7 +6,7 @@
 
 - [x] About Page
 - [x] Transmission Analysis
-- [ ] Customer Database
+- [x] Customer Database
 - [ ] Service Scheduler
 - [ ] Inventory Management
 - [ ] Register and Receipts
