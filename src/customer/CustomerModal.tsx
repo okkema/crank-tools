@@ -8,7 +8,6 @@ import {
   TextField,
 } from "@mui/material"
 import { ChangeEventHandler } from "react"
-import { Customer } from "./CustomerDatabase"
 
 export type CustomerModalProps = {
   open: boolean

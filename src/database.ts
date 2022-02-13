@@ -1,5 +1,4 @@
 import Dexie, { Table } from "dexie"
-import type { Customer } from "./customer/CustomerDatabase"
 
 class Database extends Dexie {
   customers!: Table<Customer>

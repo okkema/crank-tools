@@ -1,4 +1,4 @@
-import { Box, Container, IconButton } from "@mui/material"
+import { IconButton } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
@@ -6,13 +6,6 @@ import CustomerModal from "./CustomerModal"
 import { v4 as uuid } from "uuid"
 import database from "../database"
 import { AddCircle, Delete, Edit } from "@mui/icons-material"
-
-export type Customer = {
-  id: string
-  name: string
-  email: string
-  phone: string
-}
 
 const DEFAULT: Customer = {
   id: "",
@@ -94,7 +87,6 @@ const CustomerDatabase = (): JSX.Element => {
           <IconButton onClick={() => handleEdit(row)} color="primary">
             <Edit />
           </IconButton>
-          ,
         </>
       ),
       disableColumnMenu: true,
@@ -105,10 +97,8 @@ const CustomerDatabase = (): JSX.Element => {
   ]
 
   return (
-    <Container>
-      <Box paddingTop={2}>
-        <DataGrid rows={rows} columns={columns} autoHeight />
-      </Box>
+    <>
+      <DataGrid rows={rows} columns={columns} autoHeight />
       <CustomerModal
         open={open}
         customer={values}
@@ -116,7 +106,7 @@ const CustomerDatabase = (): JSX.Element => {
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
-    </Container>
+    </>
   )
 }
 
