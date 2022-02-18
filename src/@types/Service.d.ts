@@ -10,6 +10,6 @@ type Service = {
   id: string
   details: ServiceDetail[]
   status: ServiceStatus
-  bike?: string | Bike
+  date: string
   customer?: string | Customer
 }

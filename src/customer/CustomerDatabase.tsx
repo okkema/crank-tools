@@ -1,38 +1,22 @@
 import { IconButton } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { useFormik } from "formik"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import CustomerModal from "./CustomerModal"
-import { v4 as uuid } from "uuid"
-import database from "../database"
 import { AddCircle, Delete, Edit } from "@mui/icons-material"
-
-const DEFAULT: Customer = {
-  id: "",
-  name: "",
-  email: "",
-  phone: "",
-}
+import useCustomers from "./useCustomers"
 
 const CustomerDatabase = (): JSX.Element => {
-  // rows
-  const [rows, setRows] = useState<Customer[]>([])
-  const fetchRows = async () => {
-    const customers = await database.customers.toArray()
-    setRows(customers)
-  }
-  useEffect(() => {
-    fetchRows()
-  }, [])
+  // customers
+  const { customers, loading, put, remove } = useCustomers()
 
   // dialog
   const [open, setOpen] = useState(false)
   const { values, handleChange, setValues, handleSubmit } = useFormik<Customer>(
     {
-      initialValues: DEFAULT,
-      onSubmit: async (customer) => {
-        if (!customer.id) customer.id = uuid()
-        await database.customers.put(customer, customer.id)
+      initialValues: {} as Customer,
+      onSubmit: (customer) => {
+        put(customer)
         setOpen(false)
       },
     },
@@ -40,13 +24,10 @@ const CustomerDatabase = (): JSX.Element => {
 
   // handlers
   const handleAdd = () => {
-    setValues(DEFAULT)
+    setValues({} as Customer)
     setOpen(true)
   }
-  const handleDelete = async (customer: Customer) => {
-    await database.customers.delete(customer.id)
-    fetchRows()
-  }
+  const handleDelete = remove
   const handleEdit = (customer: Customer) => {
     setValues(customer)
     setOpen(true)
@@ -98,7 +79,12 @@ const CustomerDatabase = (): JSX.Element => {
 
   return (
     <>
-      <DataGrid rows={rows} columns={columns} autoHeight />
+      <DataGrid
+        rows={customers}
+        columns={columns}
+        loading={loading}
+        autoHeight
+      />
       <CustomerModal
         open={open}
         customer={values}

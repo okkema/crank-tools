@@ -41,7 +41,7 @@ const ServiceDetail = ({ details }: ServiceDetailProps) => {
     setTotal(calculateTotal(rows))
   }, [JSON.stringify(rows)])
 
-  // dialog
+  // modal
   const [open, setOpen] = useState(false)
   const { values, handleChange, setValues, handleSubmit } =
     useFormik<ServiceDetail>({

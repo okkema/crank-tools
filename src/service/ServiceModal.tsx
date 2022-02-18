@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  MenuItem,
   Stack,
   TextField,
 } from "@mui/material"
@@ -36,7 +37,14 @@ const ServiceModal = ({
             label="Customer"
             onChange={onChange}
             name="customer"
-          />
+            select
+          >
+            {customers.map(({ id, name }) => (
+              <MenuItem key={id} value={id}>
+                {name}
+              </MenuItem>
+            ))}
+          </TextField>
         </Stack>
       </DialogContent>
       <DialogActions>
