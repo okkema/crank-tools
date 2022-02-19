@@ -10,10 +10,11 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  LinearProgress,
 } from "@mui/material"
 import { Menu } from "@mui/icons-material"
 import { useLocation, Link, Route, Routes } from "react-router-dom"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 
 export type Route = {
   title: string
@@ -81,12 +82,14 @@ const App = ({ routes, title = "Crank Tools" }: AppProps): JSX.Element => {
           </List>
         </Box>
       </Drawer>
-      <Routes>
-        {routes.map((route) => {
-          const { path, element } = route
-          return <Route key={path} path={path} element={element} />
-        })}
-      </Routes>
+      <Suspense fallback={<LinearProgress />}>
+        <Routes>
+          {routes.map((route) => {
+            const { path, element } = route
+            return <Route key={path} path={path} element={element} />
+          })}
+        </Routes>
+      </Suspense>
     </>
   )
 }

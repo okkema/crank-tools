@@ -1,8 +1,11 @@
 import { PedalBike, QuestionMark, Storage } from "@mui/icons-material"
 import type { Route } from "./App"
-import About from "./about/About"
-import TransmissionAnalysis from "./transmission/TransmissionAnalysis"
-import CustomerDatabase from "./customer/CustomerDatabase"
+import { lazy } from "react"
+const About = lazy(() => import("./about/About"))
+const CustomerDatabase = lazy(() => import("./customer/CustomerDatabase"))
+const TransmissionAnalysis = lazy(
+  () => import("./transmission/TransmissionAnalysis"),
+)
 
 const routes: Route[] = [
   {

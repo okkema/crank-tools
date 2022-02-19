@@ -1,18 +1,20 @@
-import { Box, Container, IconButton } from "@mui/material"
+import {
+  Box,
+  Container,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { useFormik } from "formik"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import CustomerModal from "./CustomerModal"
 import { v4 as uuid } from "uuid"
 import database from "../database"
-import { AddCircle, Delete, Edit } from "@mui/icons-material"
-
-export type Customer = {
-  id: string
-  name: string
-  email: string
-  phone: string
-}
+import { AddCircle, Delete, Edit, MoreVert } from "@mui/icons-material"
+import useCustomers from "./useCustomers"
 
 const DEFAULT: Customer = {
   id: "",
@@ -22,15 +24,8 @@ const DEFAULT: Customer = {
 }
 
 const CustomerDatabase = (): JSX.Element => {
-  // rows
-  const [rows, setRows] = useState<Customer[]>([])
-  const fetchRows = async () => {
-    const customers = await database.customers.toArray()
-    setRows(customers)
-  }
-  useEffect(() => {
-    fetchRows()
-  }, [])
+  // customers
+  const { customers, loading } = useCustomers()
 
   // dialog
   const [open, setOpen] = useState(false)
@@ -44,15 +39,12 @@ const CustomerDatabase = (): JSX.Element => {
       },
     },
   )
-
-  // handlers
   const handleAdd = () => {
     setValues(DEFAULT)
     setOpen(true)
   }
   const handleDelete = async (customer: Customer) => {
     await database.customers.delete(customer.id)
-    fetchRows()
   }
   const handleEdit = (customer: Customer) => {
     setValues(customer)
@@ -60,6 +52,16 @@ const CustomerDatabase = (): JSX.Element => {
   }
   const handleClose = () => {
     setOpen(false)
+  }
+
+  // menu
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const openMenu = Boolean(anchorEl)
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleMenu = () => {
+    setAnchorEl(null)
   }
 
   // columns
@@ -88,12 +90,23 @@ const CustomerDatabase = (): JSX.Element => {
       ),
       renderCell: ({ row }) => (
         <>
-          <IconButton onClick={() => handleDelete(row)} color="error">
-            <Delete />
+          <IconButton onClick={handleClick}>
+            <MoreVert />
           </IconButton>
-          <IconButton onClick={() => handleEdit(row)} color="primary">
-            <Edit />
-          </IconButton>
+          <Menu anchorEl={anchorEl} open={openMenu} onClose={handleMenu}>
+            <MenuItem onClick={() => handleEdit(row)}>
+              <ListItemIcon>
+                <Edit color="primary" />
+              </ListItemIcon>
+              <ListItemText>Edit</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => handleDelete(row)}>
+              <ListItemIcon>
+                <Delete color="error" />
+              </ListItemIcon>
+              <ListItemText>Delete</ListItemText>
+            </MenuItem>
+          </Menu>
           ,
         </>
       ),
@@ -107,7 +120,12 @@ const CustomerDatabase = (): JSX.Element => {
   return (
     <Container>
       <Box paddingTop={2}>
-        <DataGrid rows={rows} columns={columns} autoHeight />
+        <DataGrid
+          rows={customers}
+          columns={columns}
+          autoHeight
+          loading={loading}
+        />
       </Box>
       <CustomerModal
         open={open}
