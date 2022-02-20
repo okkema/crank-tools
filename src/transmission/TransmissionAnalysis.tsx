@@ -1,4 +1,4 @@
-import { Container, useMediaQuery, useTheme } from "@mui/material"
+import { useMediaQuery, useTheme } from "@mui/material"
 import { useFormik } from "formik"
 import TransmissionForms from "./TransmissionForms"
 
@@ -28,7 +28,7 @@ const TransmissionAnalysis = (): JSX.Element => {
   const mobile = useMediaQuery(theme.breakpoints.down("sm"))
 
   return (
-    <Container sx={{ paddingTop: 2 }}>
+    <>
       {mobile ? (
         <TransmissionForms.Mobile
           values={values}
@@ -42,7 +42,7 @@ const TransmissionAnalysis = (): JSX.Element => {
           theme={theme}
         />
       )}
-    </Container>
+    </>
   )
 }
 
