@@ -11,6 +11,7 @@ import {
   ListItemIcon,
   ListItemText,
   LinearProgress,
+  Container,
 } from "@mui/material"
 import { Menu } from "@mui/icons-material"
 import { useLocation, Link, Route, Routes } from "react-router-dom"
@@ -83,12 +84,14 @@ const App = ({ routes, title = "Crank Tools" }: AppProps): JSX.Element => {
         </Box>
       </Drawer>
       <Suspense fallback={<LinearProgress />}>
-        <Routes>
-          {routes.map((route) => {
-            const { path, element } = route
-            return <Route key={path} path={path} element={element} />
-          })}
-        </Routes>
+        <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
+          <Routes>
+            {routes.map((route) => {
+              const { path, element } = route
+              return <Route key={path} path={path} element={element} />
+            })}
+          </Routes>
+        </Container>
       </Suspense>
     </>
   )

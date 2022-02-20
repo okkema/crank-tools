@@ -1,6 +1,4 @@
 import {
-  Box,
-  Container,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -15,6 +13,7 @@ import { v4 as uuid } from "uuid"
 import database from "../database"
 import { AddCircle, Delete, Edit, MoreVert } from "@mui/icons-material"
 import useCustomers from "./useCustomers"
+import { useAlert } from "../shared/AlertProvider"
 
 const DEFAULT: Customer = {
   id: "",
@@ -26,6 +25,9 @@ const DEFAULT: Customer = {
 const CustomerDatabase = (): JSX.Element => {
   // customers
   const { customers, loading } = useCustomers()
+
+  // alert
+  const alert = useAlert()
 
   // dialog
   const [open, setOpen] = useState(false)
@@ -44,9 +46,20 @@ const CustomerDatabase = (): JSX.Element => {
     setOpen(true)
   }
   const handleDelete = async (customer: Customer) => {
+    setAnchorEl(null)
     await database.customers.delete(customer.id)
+    alert.push({
+      message: "Customer deleted",
+      action: {
+        text: "undo",
+        onClick: () => {
+          database.customers.add(customer)
+        },
+      },
+    })
   }
   const handleEdit = (customer: Customer) => {
+    setAnchorEl(null)
     setValues(customer)
     setOpen(true)
   }
@@ -118,15 +131,15 @@ const CustomerDatabase = (): JSX.Element => {
   ]
 
   return (
-    <Container>
-      <Box paddingTop={2}>
-        <DataGrid
-          rows={customers}
-          columns={columns}
-          autoHeight
-          loading={loading}
-        />
-      </Box>
+    <>
+      <DataGrid
+        rows={customers}
+        columns={columns}
+        autoHeight
+        loading={loading}
+        density="compact"
+        rowsPerPageOptions={[10, 25, 100]}
+      />
       <CustomerModal
         open={open}
         customer={values}
@@ -134,7 +147,7 @@ const CustomerDatabase = (): JSX.Element => {
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
-    </Container>
+    </>
   )
 }
 

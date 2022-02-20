@@ -9,6 +9,7 @@ import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/700.css"
 import { BrowserRouter } from "react-router-dom"
 import { ThemeProvider, createTheme } from "@mui/material"
+import AlertProvider from "./shared/AlertProvider"
 
 const theme = createTheme()
 
@@ -17,7 +18,9 @@ ReactDOM.render(
     <CssBaseline />
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <App routes={routes} />
+        <AlertProvider>
+          <App routes={routes} />
+        </AlertProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
