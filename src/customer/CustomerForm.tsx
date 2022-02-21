@@ -1,4 +1,4 @@
-import { Button, Stack, TextField } from "@mui/material"
+import { Button, Stack, TextField, Typography } from "@mui/material"
 import { useFormik } from "formik"
 import { useEffect } from "react"
 import * as Yup from "yup"
@@ -45,6 +45,7 @@ const CustomerForm = ({ customer, onCancel, onSubmit }: CustomerFormProps) => {
 
   return (
     <Stack spacing={2}>
+      <Typography variant="h6">{customer ? "Edit" : "Add"} Customer</Typography>
       <TextField
         name="name"
         value={name}
