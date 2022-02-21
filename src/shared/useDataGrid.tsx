@@ -77,10 +77,10 @@ const useDataGrid = <T,>(
   // pagination
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-  const handlePageChange = (value: number) => {
+  const onPageChange = (value: number) => {
     setPage(value)
   }
-  const handlePageSizeChange = (value: number) => {
+  const onPageSizeChange = (value: number) => {
     setPageSize(value)
   }
 
@@ -94,8 +94,8 @@ const useDataGrid = <T,>(
     page,
     pageSize,
     rowsPerPageOptions,
-    handlePageChange,
-    handlePageSizeChange,
+    onPageChange,
+    onPageSizeChange,
   }
 }
 
