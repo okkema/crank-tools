@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle } from "@mui/material"
+import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material"
 import { useState } from "react"
 import { v4 as uuid } from "uuid"
 import database from "../database"
@@ -56,11 +56,13 @@ const CustomerDatabase = (): JSX.Element => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{customer ? "Edit" : "Add"} Customer</DialogTitle>
         <DialogContent>
-          <CustomerForm
-            customer={customer}
-            onSubmit={handleSubmit}
-            onCancel={handleClose}
-          />
+          <Box paddingTop={1}>
+            <CustomerForm
+              customer={customer}
+              onSubmit={handleSubmit}
+              onCancel={handleClose}
+            />
+          </Box>
         </DialogContent>
       </Dialog>
     </>
