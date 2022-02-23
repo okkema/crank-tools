@@ -10,7 +10,7 @@ const database = new Database("crank-tools")
 // v1
 const v1 = {
   customers: "id, name, email, phone",
-  service: "id, customer",
+  service: "id, date, customer",
 }
 database.version(1).stores(v1)
 
