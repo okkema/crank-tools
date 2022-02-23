@@ -3,10 +3,21 @@ import { useFormik } from "formik"
 import { useEffect } from "react"
 import * as Yup from "yup"
 import CustomerCombobox from "../customer/CustomerCombobox"
+import ServiceDetailTable from "./ServiceDetailTable"
+import { v4 as uuid } from "uuid"
 
 const validationSchema = Yup.object().shape({
   id: Yup.string().uuid(),
   date: Yup.string().required(),
+  details: Yup.array()
+    .of(
+      Yup.object().shape({
+        id: Yup.string().uuid().required(),
+        description: Yup.string().required(),
+        amount: Yup.string().required(),
+      }),
+    )
+    .min(1),
   customer: Yup.string().uuid().required(),
 })
 
@@ -14,33 +25,31 @@ const initialValues: Service = {
   id: "",
   date: "",
   status: "pending",
-  details: [],
+  details: [
+    {
+      id: uuid(),
+      description: "",
+      amount: "",
+    },
+  ],
   customer: "",
 }
 
-const options = [
-  {
-    name: "Ben Okkema",
-    id: "b314ceea-ea39-42a0-b617-c85715ad23ac",
-  },
-  {
-    name: "Yayi Saavedra",
-    id: "1e02ec42-8c96-4039-853c-f72bdf108201",
-  },
-] as Customer[]
-
 type ServiceFormProps = {
   date: string
+  customers: Customer[] | Promise<Customer[]>
   onSubmit: (service: Service) => void
   onCancel: () => void
 }
 
 const ServiceForm = ({
   date,
+  customers,
   onCancel,
   onSubmit,
 }: ServiceFormProps): JSX.Element => {
   const {
+    values: { details },
     setFieldValue,
     handleBlur,
     handleSubmit,
@@ -48,6 +57,7 @@ const ServiceForm = ({
     errors,
     touched,
     setValues,
+    handleChange,
   } = useFormik<Service>({
     initialValues,
     onSubmit,
@@ -58,15 +68,37 @@ const ServiceForm = ({
     setValues({ ...initialValues, date })
   }, [setValues, date])
 
+  const handleAdd = () => {
+    setValues((values) => ({
+      ...values,
+      details: [...values.details, { id: uuid(), description: "", amount: "" }],
+    }))
+  }
+  const handleDelete = (detail: ServiceDetail) => {
+    setValues((values) => ({
+      ...values,
+      details: values.details.filter(({ id }) => detail.id !== id),
+    }))
+  }
+
   return (
-    <Stack spacing={2} width="600px" maxWidth="100vw">
+    <Stack spacing={2}>
       <Typography variant="h6">Add Service</Typography>
       <CustomerCombobox
-        customers={options}
+        customers={customers}
         onChange={(customer) => setFieldValue("customer", customer?.id)}
         onBlur={handleBlur}
         required
         error={touched.customer && !!errors.customer}
+      />
+      <ServiceDetailTable
+        details={details}
+        onAdd={handleAdd}
+        onDelete={handleDelete}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        touched={touched.details}
+        errors={errors.details}
       />
       <Stack direction="row" justifyContent="end" spacing={1}>
         <Button onClick={onCancel}>Cancel</Button>

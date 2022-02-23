@@ -3,7 +3,7 @@ type ServiceStatus = "pending" | "active" | "issue" | "completed" | "delivered"
 type ServiceDetail = {
   id: string
   description: string
-  amount: number
+  amount: string
 }
 
 type Service = {

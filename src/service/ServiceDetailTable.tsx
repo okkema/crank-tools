@@ -8,11 +8,16 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { AddCircle, Delete, Edit } from "@mui/icons-material"
-import { useFormik } from "formik"
-import { useEffect, useState } from "react"
-import ServiceDetailModal from "./ServiceDetailModal"
-import { v4 as uuid } from "uuid"
+import { AddCircle } from "@mui/icons-material"
+import {
+  ChangeEvent,
+  FocusEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
+import { FormikErrors, FormikTouched } from "formik"
+import ServiceDetailTableRow from "./ServiceDetailTableRow"
 
 const calculateTotal = (details: ServiceDetail[]) =>
   details.reduce((total, { amount }) => total + +amount, 0)
@@ -24,136 +29,108 @@ const formatter = new Intl.NumberFormat("en-US", {
 
 type ServiceDetailProps = {
   details: ServiceDetail[]
+  selectable?: boolean
+  onAdd?: () => void
+  onDelete?: (detail: ServiceDetail) => void
+  onChange?: (event: ChangeEvent) => void
+  onBlur?: (event: FocusEvent) => void
+  touched?: FormikTouched<ServiceDetail[]>
+  errors?: FormikErrors<ServiceDetail[]> | string[] | string
 }
 
-const ServiceDetail = ({ details }: ServiceDetailProps) => {
-  // rows
-  const [rows, setRows] = useState<ServiceDetail[]>(details)
-
+const ServiceDetailTable = ({
+  details,
+  onAdd: handleAdd,
+  onDelete: handleDelete,
+  onChange: handleChange,
+  onBlur: handleBlur,
+  selectable = false,
+  touched,
+  errors,
+}: ServiceDetailProps) => {
   // selected
   const [selected, setSelected] = useState<string[]>([])
-  const isSelected = (id: string) => selected.includes(id)
-  const isAllSelected = selected.length === rows.length
+  const handleSelectAll = useCallback(() => {
+    setSelected((selected) => {
+      if (selected.length === details.length) {
+        return []
+      } else {
+        return details.map(({ id }) => id)
+      }
+    })
+  }, [details])
+  const handleSelect = ({ id }: ServiceDetail) => {
+    setSelected((selected) => {
+      if (selected.includes(id)) {
+        return selected.filter((value) => value !== id)
+      } else {
+        return [...selected, id]
+      }
+    })
+  }
 
   // total
   const [total, setTotal] = useState(0)
   useEffect(() => {
-    setTotal(calculateTotal(rows))
-  }, [JSON.stringify(rows)])
-
-  // modal
-  const [open, setOpen] = useState(false)
-  const { values, handleChange, setValues, handleSubmit } =
-    useFormik<ServiceDetail>({
-      initialValues: {} as ServiceDetail,
-      onSubmit: (values) => {
-        if (!values.id) {
-          values.id = uuid()
-          setRows([...rows, values])
-        } else {
-          const index = rows.findIndex((detail) => detail.id === values.id)
-          rows[index] = values
-          setRows(rows)
-        }
-        setOpen(false)
-      },
-    })
-
-  // handlers
-  const handleAdd = () => {
-    setValues({} as ServiceDetail)
-    setOpen(true)
-  }
-  const handleDelete = async (detail: ServiceDetail) => {
-    setRows(rows.filter(({ id }) => detail.id !== id))
-  }
-  const handleEdit = (detail: ServiceDetail) => {
-    setValues(detail)
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
-  const handleSelectAll = () => {
-    if (isAllSelected) {
-      setSelected([])
-    } else {
-      setSelected(rows.map(({ id }) => id))
-    }
-  }
-  const handleSelect = (id: string) => {
-    if (isSelected(id)) {
-      setSelected(selected.filter((value) => value !== id))
-    } else {
-      setSelected([...selected, id])
-    }
-  }
+    setTotal(calculateTotal(details))
+  }, [JSON.stringify(details)])
 
   return (
-    <>
-      <TableContainer>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
+    <TableContainer>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            {selectable && (
               <TableCell padding="checkbox">
-                <Checkbox checked={isAllSelected} onChange={handleSelectAll} />
+                <Checkbox
+                  checked={
+                    !!details.length && selected.length === details.length
+                  }
+                  onChange={handleSelectAll}
+                />
               </TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell align="right">Amount</TableCell>
+            )}
+            <TableCell>Description</TableCell>
+            <TableCell align="right">Amount</TableCell>
+            {handleAdd && (
               <TableCell align="right">
                 <IconButton onClick={handleAdd} color="success">
                   <AddCircle />
                 </IconButton>
               </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((detail, index) => {
-              const { description, amount, id } = detail
-              return (
-                <TableRow key={index}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected(id)}
-                      onChange={() => handleSelect(id)}
-                    />
-                  </TableCell>
-                  <TableCell>{description}</TableCell>
-                  <TableCell align="right">
-                    {formatter.format(amount)}
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      onClick={() => handleDelete(detail)}
-                      color="error"
-                    >
-                      <Delete />
-                    </IconButton>
-                    <IconButton onClick={() => handleEdit(detail)} color="info">
-                      <Edit />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
-            <TableRow>
-              <TableCell colSpan={2} align="right" variant="head">
-                Total
-              </TableCell>
-              <TableCell align="right">{formatter.format(total)}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <ServiceDetailModal
-        open={open}
-        detail={values}
-        onClose={handleClose}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
-    </>
+            )}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {details.map((detail, index) => (
+            <ServiceDetailTableRow
+              key={detail.id}
+              detail={detail}
+              name={`details[${index}]`}
+              selectable={selectable}
+              selected={selected.includes(detail.id)}
+              touched={touched?.[index]}
+              errors={errors?.[index]}
+              onSelect={handleSelect}
+              onDelete={handleDelete}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          ))}
+          <TableRow>
+            <TableCell
+              colSpan={selectable ? 2 : 1}
+              align="right"
+              variant="head"
+            >
+              Total
+            </TableCell>
+            <TableCell align="right">{formatter.format(total)}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
 
-export default ServiceDetail
+export default ServiceDetailTable

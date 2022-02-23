@@ -69,6 +69,9 @@ const ServiceViewer = (): JSX.Element => {
     database.service.where("date").equals(date!).toArray(),
   )
 
+  // customers
+  const customers = database.customers.orderBy("name").toArray()
+
   // form
   const [open, setOpen] = useState(false)
   const handleAdd = () => {
@@ -119,17 +122,23 @@ const ServiceViewer = (): JSX.Element => {
                     </Stack>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <ServiceDetailTable details={details} />
+                    <ServiceDetailTable details={details} selectable />
                   </AccordionDetails>
                 </Accordion>
               )
             })}
         </Box>
       </Stack>
-      <Drawer open={open} onClose={handleClose} anchor="right">
+      <Drawer
+        open={open}
+        onClose={handleClose}
+        anchor="right"
+        PaperProps={{ sx: { width: "1000px", maxWidth: "100vw" } }}
+      >
         <Box height={"100%"} padding={2}>
           <ServiceForm
             date={date!}
+            customers={customers ?? []}
             onSubmit={handleSubmit}
             onCancel={handleClose}
           />
