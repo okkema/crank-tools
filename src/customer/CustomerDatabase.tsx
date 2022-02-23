@@ -1,97 +1,67 @@
-import { IconButton } from "@mui/material"
-import { DataGrid, GridColDef } from "@mui/x-data-grid"
-import { useFormik } from "formik"
+import { Box, Drawer } from "@mui/material"
 import { useState } from "react"
-import CustomerModal from "./CustomerModal"
-import { AddCircle, Delete, Edit } from "@mui/icons-material"
-import useCustomers from "./useCustomers"
+import { v4 as uuid } from "uuid"
+import database from "../database"
+import { useAlert } from "../shared/AlertProvider"
+import CustomerForm from "./CustomerForm"
+import CustomerTable from "./CustomerTable"
 
 const CustomerDatabase = (): JSX.Element => {
-  // customers
-  const { customers, loading, put, remove } = useCustomers()
+  // alert
+  const alert = useAlert()
 
-  // dialog
+  // form
   const [open, setOpen] = useState(false)
-  const { values, handleChange, setValues, handleSubmit } = useFormik<Customer>(
-    {
-      initialValues: {} as Customer,
-      onSubmit: (customer) => {
-        put(customer)
-        setOpen(false)
-      },
-    },
-  )
-
-  // handlers
-  const handleAdd = () => {
-    setValues({} as Customer)
-    setOpen(true)
-  }
-  const handleDelete = remove
-  const handleEdit = (customer: Customer) => {
-    setValues(customer)
-    setOpen(true)
+  const [customer, setCustomer] = useState<Customer>()
+  const handleSubmit = async (customer: Customer) => {
+    if (!customer.id) customer.id = uuid()
+    await database.customers.put(customer, customer.id)
+    setOpen(false)
   }
   const handleClose = () => {
     setOpen(false)
   }
 
-  // columns
-  const columns: GridColDef[] = [
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "action",
-      renderHeader: () => (
-        <IconButton onClick={handleAdd} color="success">
-          <AddCircle />
-        </IconButton>
-      ),
-      renderCell: ({ row }) => (
-        <>
-          <IconButton onClick={() => handleDelete(row)} color="error">
-            <Delete />
-          </IconButton>
-          <IconButton onClick={() => handleEdit(row)} color="primary">
-            <Edit />
-          </IconButton>
-        </>
-      ),
-      disableColumnMenu: true,
-      sortable: false,
-      align: "center",
-      headerAlign: "center",
-    },
-  ]
+  // table
+  const customers = database.customers.toArray()
+  const handleAdd = () => {
+    setCustomer(undefined)
+    setOpen(true)
+  }
+  const handleDelete = async (customer: Customer) => {
+    await database.customers.delete(customer.id)
+    alert.push({
+      message: "Customer deleted",
+      action: {
+        text: "undo",
+        onClick: () => {
+          database.customers.add(customer)
+        },
+      },
+    })
+  }
+  const handleEdit = (customer: Customer) => {
+    setCustomer(customer)
+    setOpen(true)
+  }
 
   return (
     <>
-      <DataGrid
-        rows={customers}
-        columns={columns}
-        loading={loading}
-        autoHeight
+      <CustomerTable
+        customers={customers}
+        onAdd={handleAdd}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
       />
-      <CustomerModal
-        open={open}
-        customer={values}
-        onClose={handleClose}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
+      <Drawer open={open} onClose={handleClose} anchor="right">
+        <Box height={"100%"} padding={2}>
+          <CustomerForm
+            customer={customer}
+            onSubmit={handleSubmit}
+            onCancel={handleClose}
+          />
+        </Box>
+      </Drawer>
     </>
   )
 }

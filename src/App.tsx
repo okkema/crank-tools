@@ -10,11 +10,12 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  LinearProgress,
   Container,
 } from "@mui/material"
 import { Menu } from "@mui/icons-material"
 import { useLocation, Link, Route, Routes } from "react-router-dom"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 
 export type Route = {
   title: string
@@ -83,26 +84,28 @@ const App = ({ routes, title = "Crank Tools" }: AppProps): JSX.Element => {
           </List>
         </Box>
       </Drawer>
-      <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
-        <Routes>
-          {routes.map(({ path, element, children }) => {
-            if (!children)
-              return <Route key={path} path={path} element={element} />
-            return (
-              <Route key={path} path={path}>
-                <Route path={path} element={element} />
-                {children.map((child) => (
-                  <Route
-                    key={child.path}
-                    path={`${path}${child.path}`}
-                    element={child.element}
-                  />
-                ))}
-              </Route>
-            )
-          })}
-        </Routes>
-      </Container>
+      <Suspense fallback={<LinearProgress />}>
+        <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
+          <Routes>
+            {routes.map(({ path, element, children }) => {
+              if (!children)
+                return <Route key={path} path={path} element={element} />
+              return (
+                <Route key={path} path={path}>
+                  <Route path={path} element={element} />
+                  {children.map((child) => (
+                    <Route
+                      key={child.path}
+                      path={`${path}${child.path}`}
+                      element={child.element}
+                    />
+                  ))}
+                </Route>
+              )
+            })}
+          </Routes>
+        </Container>
+      </Suspense>
     </>
   )
 }

@@ -2,14 +2,19 @@ import {
   CalendarToday,
   PedalBike,
   QuestionMark,
+  Settings,
   Storage,
 } from "@mui/icons-material"
 import type { Route } from "./App"
-import About from "./about/About"
-import TransmissionAnalysis from "./transmission/TransmissionAnalysis"
-import CustomerDatabase from "./customer/CustomerDatabase"
-import ServiceScheduler from "./service/ServiceScheduler"
-import ServiceViewer from "./service/ServiceViewer"
+import { lazy } from "react"
+const About = lazy(() => import("./about/About"))
+const CustomerDatabase = lazy(() => import("./customer/CustomerDatabase"))
+const TransmissionAnalysis = lazy(
+  () => import("./transmission/TransmissionAnalysis"),
+)
+const SettingsPanel = lazy(() => import("./settings/SettingsPanel"))
+const ServiceScheduler = lazy(() => import("./service/ServiceScheduler"))
+const ServiceViewer = lazy(() => import("./service/ServiceViewer"))
 
 const routes: Route[] = [
   {
@@ -35,6 +40,12 @@ const routes: Route[] = [
     path: "/customer",
     element: <CustomerDatabase />,
     icon: <Storage />,
+  },
+  {
+    title: "Settings Panel",
+    path: "/settings",
+    element: <SettingsPanel />,
+    icon: <Settings />,
   },
   {
     title: "About",

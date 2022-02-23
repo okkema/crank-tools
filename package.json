@@ -28,6 +28,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@faker-js/faker": "^6.0.0-alpha.6",
     "@fontsource/roboto": "^4.5.2",
     "@fullcalendar/daygrid": "^5.10.1",
     "@fullcalendar/interaction": "^5.10.1",
@@ -45,7 +46,8 @@
     "remark-gfm": "^3.0.1",
     "uuid": "^8.3.2",
     "vite-plugin-markdown": "^2.0.2",
-    "vite-plugin-virtual-plain-text": "^1.1.0"
+    "vite-plugin-virtual-plain-text": "^1.1.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.11.3",
