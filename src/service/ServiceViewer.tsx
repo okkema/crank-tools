@@ -14,16 +14,18 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
+  Drawer,
   Stack,
   Typography,
 } from "@mui/material"
-import { useFormik } from "formik"
-import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import ServiceDetailTable from "./ServiceDetailTable"
 import { v4 as uuid } from "uuid"
-import ServiceModal from "./ServiceModal"
 import database from "../database"
+import ServiceForm from "./ServiceForm"
+import { useLiveQuery } from "dexie-react-hooks"
+import { useState } from "react"
 
 const renderTitle = (
   customer: string | Customer | undefined,
@@ -63,48 +65,19 @@ const ServiceViewer = (): JSX.Element => {
   const { date } = useParams<{ date: string }>()
 
   // service
-  const [service, setService] = useState<Service[]>([])
-  const fetchService = async () => {
-    if (date) {
-      const service = await database.service
-        .where("date")
-        .equals(date)
-        .toArray()
-      setService(service)
-    }
-  }
-  useEffect(() => {
-    fetchService()
-  }, [])
+  const service = useLiveQuery(() =>
+    database.service.where("date").equals(date!).toArray(),
+  )
 
-  // modal
+  // form
   const [open, setOpen] = useState(false)
-  const { values, handleChange, setValues, handleSubmit } = useFormik<Service>({
-    initialValues: {} as Service,
-    onSubmit: async (service) => {
-      if (!service.id) {
-        service.id = uuid()
-        service.details = []
-        service.status = "pending"
-        if (date) service.date = date
-        await database.service.put(service, service.id)
-      }
-      fetchService()
-      setOpen(false)
-    },
-  })
-  const [customers, setCustomers] = useState<Customer[]>([])
-  useEffect(() => {
-    ;(async () => {
-      const customers = await database.customers.toArray()
-      setCustomers(customers)
-    })()
-  }, [])
-
-  // handlers
   const handleAdd = () => {
-    setValues({} as Service)
     setOpen(true)
+  }
+  const handleSubmit = async (service: Service) => {
+    if (!service.id) service.id = uuid()
+    await database.service.put(service)
+    setOpen(false)
   }
   const handleClose = () => {
     setOpen(false)
@@ -128,37 +101,40 @@ const ServiceViewer = (): JSX.Element => {
           </Button>
         </Stack>
         <Box>
-          {service.map((service, index) => {
-            const { id, status, details } = service
-            return (
-              <Accordion key={id}>
-                <AccordionSummary>
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    width="100%"
-                  >
-                    <Typography>{renderTitle(undefined, index)}</Typography>
-                    <Box>{renderStatus(status)}</Box>
-                  </Stack>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ServiceDetailTable details={details} />
-                </AccordionDetails>
-              </Accordion>
-            )
-          })}
+          {!service && <CircularProgress />}
+          {service &&
+            service.map((service, index) => {
+              const { id, status, details } = service
+              return (
+                <Accordion key={id}>
+                  <AccordionSummary>
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      width="100%"
+                    >
+                      <Typography>{renderTitle(undefined, index)}</Typography>
+                      <Box>{renderStatus(status)}</Box>
+                    </Stack>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ServiceDetailTable details={details} />
+                  </AccordionDetails>
+                </Accordion>
+              )
+            })}
         </Box>
       </Stack>
-      <ServiceModal
-        open={open}
-        service={values}
-        customers={customers}
-        onChange={handleChange}
-        onClose={handleClose}
-        onSubmit={handleSubmit}
-      />
+      <Drawer open={open} onClose={handleClose} anchor="right">
+        <Box height={"100%"} padding={2}>
+          <ServiceForm
+            date={date!}
+            onSubmit={handleSubmit}
+            onCancel={handleClose}
+          />
+        </Box>
+      </Drawer>
     </>
   )
 }
