@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
 const initialValues: Service = {
   id: "",
   date: "",
-  status: "pending",
+  status: "active",
   details: [
     {
       id: uuid(),
