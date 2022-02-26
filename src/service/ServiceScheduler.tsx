@@ -5,6 +5,9 @@ import { useLiveQuery } from "dexie-react-hooks"
 import database from "../database"
 import ServiceCalendar from "./ServiceCalendar"
 import { CalendarApi } from "@fullcalendar/react"
+import { Box, Drawer } from "@mui/material"
+import ServiceForm from "./ServiceForm"
+import { v4 as uuid } from "uuid"
 
 export type ServiceSchedulerView = "day" | "week" | "month"
 
@@ -25,7 +28,7 @@ const DEFAULT: ServiceSchedulerMetadata = {
   endDate: TODAY,
 }
 
-const getKeyFromDate = (date: Date) => date.toISOString().split("T")[0]
+export const getKeyFromDate = (date: Date) => date.toISOString().split("T")[0]
 
 const ServiceScheduler = () => {
   // metadata
@@ -36,6 +39,9 @@ const ServiceScheduler = () => {
   }
 
   // toolbar
+  const handleClickAdd = () => {
+    setOpen(true)
+  }
   const handleClickToday = () => {
     calendar?.today()
   }
@@ -58,12 +64,7 @@ const ServiceScheduler = () => {
       () =>
         database.service
           .where("date")
-          .between(
-            getKeyFromDate(startDate),
-            getKeyFromDate(endDate),
-            true,
-            true,
-          )
+          .between(startDate, endDate, true, true)
           .toArray(),
       [startDate, endDate],
     ) ?? []
@@ -74,11 +75,26 @@ const ServiceScheduler = () => {
     navigate(`/service/${getKeyFromDate(date)}`)
   }
 
+  // customers
+  const customers = database.customers.orderBy("name").toArray()
+
+  // form
+  const [open, setOpen] = useState(false)
+  const handleSubmit = async (service: Service) => {
+    if (!service.id) service.id = uuid()
+    await database.service.put(service)
+    setOpen(false)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <>
       <ServiceToolbar
         title={title}
         view={view}
+        onClickAdd={handleClickAdd}
         onClickToday={handleClickToday}
         onClickWeek={handleClickWeek}
         onClickMonth={handleClickMonth}
@@ -90,6 +106,20 @@ const ServiceScheduler = () => {
         onChangeDate={handleChangeDate}
         onChangeMetadata={handleChangeMetadata}
       />
+      <Drawer
+        open={open}
+        onClose={handleClose}
+        anchor="right"
+        PaperProps={{ sx: { width: "1000px", maxWidth: "100vw" } }}
+      >
+        <Box height={"100%"} padding={2}>
+          <ServiceForm
+            customers={customers ?? []}
+            onSubmit={handleSubmit}
+            onCancel={handleClose}
+          />
+        </Box>
+      </Drawer>
     </>
   )
 }

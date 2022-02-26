@@ -8,7 +8,7 @@ import { v4 as uuid } from "uuid"
 
 const validationSchema = Yup.object().shape({
   id: Yup.string().uuid(),
-  date: Yup.string().required(),
+  date: Yup.date().required(),
   details: Yup.array()
     .of(
       Yup.object().shape({
@@ -23,8 +23,8 @@ const validationSchema = Yup.object().shape({
 
 const initialValues: Service = {
   id: "",
-  date: "",
-  status: "active",
+  date: new Date(),
+  status: "pending",
   details: [
     {
       id: uuid(),
@@ -36,7 +36,7 @@ const initialValues: Service = {
 }
 
 type ServiceFormProps = {
-  date: string
+  date?: Date
   customers: Customer[] | Promise<Customer[]>
   onSubmit: (service: Service) => void
   onCancel: () => void
@@ -65,7 +65,7 @@ const ServiceForm = ({
   })
 
   useEffect(() => {
-    setValues({ ...initialValues, date })
+    setValues({ ...initialValues })
   }, [setValues, date])
 
   const handleAdd = () => {
@@ -100,6 +100,7 @@ const ServiceForm = ({
         touched={touched.details}
         errors={errors.details}
       />
+      {JSON.stringify(errors)}
       <Stack direction="row" justifyContent="end" spacing={1}>
         <Button onClick={onCancel}>Cancel</Button>
         <Button

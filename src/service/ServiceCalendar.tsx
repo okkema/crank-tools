@@ -4,6 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction"
 import { Palette, useTheme } from "@mui/material"
 import {
+  getKeyFromDate,
   ServiceSchedulerMetadata,
   ServiceSchedulerView,
 } from "./ServiceScheduler"
@@ -44,9 +45,10 @@ const getEventsFromService = (
   return Object.entries(
     service.reduce((result, service) => {
       const { date, status } = service
-      if (!result[date]) result[date] = {}
-      if (!result[date][status]) result[date][status] = []
-      result[date][status].push(service)
+      const key = getKeyFromDate(date)
+      if (!result[key]) result[key] = {}
+      if (!result[key][status]) result[key][status] = []
+      result[key][status].push(service)
       return result
     }, {} as { [key: string]: { [key: string]: Service[] } }),
   )
@@ -81,7 +83,6 @@ const ServiceCalendar = ({
   onChangeMetadata: handleChangeMetadata,
 }: ServiceCalendarProps): JSX.Element => {
   // events
-  console.log(service)
   const { palette } = useTheme()
   const events = service ? getEventsFromService(service, palette) : []
 

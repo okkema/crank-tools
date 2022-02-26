@@ -12,6 +12,7 @@ import { ServiceSchedulerView } from "./ServiceScheduler"
 export type ServiceToolbarProps = {
   title?: string
   view: ServiceSchedulerView
+  onClickAdd: () => void
   onClickToday: () => void
   onClickWeek: () => void
   onClickMonth: () => void
@@ -22,6 +23,7 @@ export type ServiceToolbarProps = {
 const ServiceToolbar = ({
   title = "",
   view,
+  onClickAdd: handleClickAdd,
   onClickToday: handleClickToday,
   onClickWeek: handleClickWeek,
   onClickMonth: handleClickMonth,
@@ -37,7 +39,7 @@ const ServiceToolbar = ({
     >
       <Typography variant="h5">{title}</Typography>
       <Stack direction="row" spacing={2} alignItems="center">
-        <Button variant="contained" color="success">
+        <Button variant="contained" color="success" onClick={handleClickAdd}>
           <AddCircle />
         </Button>
         <ButtonGroup variant="contained">

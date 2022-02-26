@@ -15,17 +15,13 @@ import {
   Button,
   Chip,
   CircularProgress,
-  Drawer,
   Stack,
   Typography,
 } from "@mui/material"
 import { useParams } from "react-router-dom"
 import ServiceDetailTable from "./ServiceDetailTable"
-import { v4 as uuid } from "uuid"
 import database from "../database"
-import ServiceForm from "./ServiceForm"
 import { useLiveQuery } from "dexie-react-hooks"
-import { useState } from "react"
 
 const renderTitle = (
   customer: string | Customer | undefined,
@@ -69,23 +65,6 @@ const ServiceViewer = (): JSX.Element => {
     database.service.where("date").equals(date!).toArray(),
   )
 
-  // customers
-  const customers = database.customers.orderBy("name").toArray()
-
-  // form
-  const [open, setOpen] = useState(false)
-  const handleAdd = () => {
-    setOpen(true)
-  }
-  const handleSubmit = async (service: Service) => {
-    if (!service.id) service.id = uuid()
-    await database.service.put(service)
-    setOpen(false)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
-
   return (
     <>
       <Stack spacing={1}>
@@ -95,13 +74,6 @@ const ServiceViewer = (): JSX.Element => {
           alignItems="center"
         >
           <Typography variant="h6">{date}</Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddCircle />}
-            onClick={handleAdd}
-          >
-            Add Service
-          </Button>
         </Stack>
         <Box>
           {!service && <CircularProgress />}
@@ -129,21 +101,6 @@ const ServiceViewer = (): JSX.Element => {
             })}
         </Box>
       </Stack>
-      <Drawer
-        open={open}
-        onClose={handleClose}
-        anchor="right"
-        PaperProps={{ sx: { width: "1000px", maxWidth: "100vw" } }}
-      >
-        <Box height={"100%"} padding={2}>
-          <ServiceForm
-            date={date!}
-            customers={customers ?? []}
-            onSubmit={handleSubmit}
-            onCancel={handleClose}
-          />
-        </Box>
-      </Drawer>
     </>
   )
 }
