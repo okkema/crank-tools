@@ -72,7 +72,6 @@ const getEventsFromService = (
 }
 
 const ServiceCalendar = (): JSX.Element => {
-  console.log("ServiceCalendar")
   const {
     view: { onChangeView: handleChangeView, type, start },
     service,

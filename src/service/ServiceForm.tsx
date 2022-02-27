@@ -1,11 +1,25 @@
-import { Box, Button, Drawer, Stack, Typography } from "@mui/material"
+import {
+  Box,
+  Button,
+  Drawer,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material"
 import { useFormik } from "formik"
-import { useEffect } from "react"
 import * as Yup from "yup"
 import CustomerCombobox from "../customer/CustomerCombobox"
 import ServiceDetailTable from "./ServiceDetailTable"
 import { v4 as uuid } from "uuid"
 import { useServiceContext } from "./ServiceProvider"
+import { DatePicker } from "@mui/lab"
+import { startOfDay } from "date-fns"
+import ServiceStatusChip from "./ServiceStatusChip"
 
 const validationSchema = Yup.object().shape({
   id: Yup.string().uuid(),
@@ -24,7 +38,7 @@ const validationSchema = Yup.object().shape({
 
 const initialValues: Service = {
   id: "",
-  date: new Date(),
+  date: startOfDay(new Date()),
   status: "pending",
   details: [
     {
@@ -41,13 +55,13 @@ type ServiceFormProps = {
   customers: Customer[] | Promise<Customer[]>
 }
 
-const ServiceForm = ({ date, customers }: ServiceFormProps): JSX.Element => {
+const ServiceForm = ({ customers }: ServiceFormProps): JSX.Element => {
   const {
     form: { open, onCancel, onSubmit },
   } = useServiceContext()
 
   const {
-    values: { details },
+    values: { details, date, status },
     setFieldValue,
     handleBlur,
     handleSubmit,
@@ -62,9 +76,9 @@ const ServiceForm = ({ date, customers }: ServiceFormProps): JSX.Element => {
     validationSchema,
   })
 
-  useEffect(() => {
-    setValues({ ...initialValues })
-  }, [setValues, date])
+  // useEffect(() => {
+  //   setValues({ ...initialValues })
+  // }, [setValues, date])
 
   const handleAdd = () => {
     setValues((values) => ({
@@ -89,6 +103,29 @@ const ServiceForm = ({ date, customers }: ServiceFormProps): JSX.Element => {
       <Box height={"100%"} padding={2}>
         <Stack spacing={2}>
           <Typography variant="h6">Add Service</Typography>
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <DatePicker
+              label="Date"
+              value={date}
+              onChange={(date) => {
+                setFieldValue("date", date)
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <FormControl variant="outlined" sx={{ width: "160px" }}>
+              <InputLabel>Status</InputLabel>
+              <Select input={<OutlinedInput label="Status" />} value={status}>
+                <MenuItem value="pending">
+                  <ServiceStatusChip status="pending" />
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
           <CustomerCombobox
             customers={customers}
             onChange={(customer) => setFieldValue("customer", customer?.id)}

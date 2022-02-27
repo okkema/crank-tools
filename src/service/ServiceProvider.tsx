@@ -77,7 +77,6 @@ type ServiceProviderProps = {
 }
 
 const ServiceProvider = ({ children }: ServiceProviderProps): JSX.Element => {
-  console.log("ServiceProvider")
   // view
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -96,7 +95,6 @@ const ServiceProvider = ({ children }: ServiceProviderProps): JSX.Element => {
     [pathname, navigate],
   )
   useEffect(() => {
-    console.log("changeView")
     const { type, start } = view
     switch (type) {
       case "month":
@@ -127,7 +125,7 @@ const ServiceProvider = ({ children }: ServiceProviderProps): JSX.Element => {
 
   // form
   const [open, setOpen] = useState(false)
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(startOfDay(new Date()))
   const handleSubmit = async (service: Service) => {
     if (!service.id) service.id = uuid()
     await database.service.put(service)
