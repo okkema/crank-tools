@@ -15,6 +15,7 @@ const TransmissionAnalysis = lazy(
 const SettingsPanel = lazy(() => import("./settings/SettingsPanel"))
 const ServiceScheduler = lazy(() => import("./service/ServiceScheduler"))
 const ServiceViewer = lazy(() => import("./service/ServiceViewer"))
+const ServiceCalendar = lazy(() => import("./service/ServiceCalendar"))
 
 const routes: Route[] = [
   {
@@ -23,6 +24,10 @@ const routes: Route[] = [
     element: <ServiceScheduler />,
     icon: <CalendarToday />,
     children: [
+      {
+        path: "/",
+        element: <ServiceCalendar />,
+      },
       {
         path: "/:date",
         element: <ServiceViewer />,

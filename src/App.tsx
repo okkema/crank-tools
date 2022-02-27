@@ -88,20 +88,19 @@ const App = ({ routes, title = "Crank Tools" }: AppProps): JSX.Element => {
         <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
           <Routes>
             {routes.map(({ path, element, children }) => {
-              if (!children)
-                return <Route key={path} path={path} element={element} />
-              return (
-                <Route key={path} path={path}>
-                  <Route path={path} element={element} />
-                  {children.map((child) => (
-                    <Route
-                      key={child.path}
-                      path={`${path}${child.path}`}
-                      element={child.element}
-                    />
-                  ))}
-                </Route>
-              )
+              if (children)
+                return (
+                  <Route key={path} path={path} element={element}>
+                    {children.map((child) => (
+                      <Route
+                        key={child.path}
+                        path={`${path}${child.path}`}
+                        element={child.element}
+                      />
+                    ))}
+                  </Route>
+                )
+              return <Route key={path} path={path} element={element} />
             })}
           </Routes>
         </Container>

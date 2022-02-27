@@ -1,7 +1,7 @@
 import ServiceToolbar from "./ServiceToolbar"
 import database from "../database"
-import ServiceCalendar from "./ServiceCalendar"
 import ServiceForm from "./ServiceForm"
+import { Outlet } from "react-router-dom"
 import ServiceProvider from "./ServiceProvider"
 
 const ServiceScheduler = () => {
@@ -12,7 +12,7 @@ const ServiceScheduler = () => {
     <ServiceProvider>
       <>
         <ServiceToolbar />
-        <ServiceCalendar />
+        <Outlet />
         <ServiceForm customers={customers ?? []} />
       </>
     </ServiceProvider>
