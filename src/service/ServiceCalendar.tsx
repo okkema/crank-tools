@@ -5,13 +5,13 @@ import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction"
 import { Palette, useTheme } from "@mui/material"
 import {
   getKeyFromDate,
-  ServiceSchedulerMetadata,
-  ServiceSchedulerView,
-} from "./ServiceScheduler"
+  ServiceViewType,
+  useServiceContext,
+} from "./ServiceProvider"
 
 type ServiceCalendarView = "dayGridWeek" | "dayGridMonth"
 
-const getViewFromType = (type: ServiceCalendarView): ServiceSchedulerView => {
+const getViewFromType = (type: ServiceCalendarView): ServiceViewType => {
   switch (type) {
     case "dayGridWeek":
       return "week"
@@ -71,34 +71,33 @@ const getEventsFromService = (
     .flat()
 }
 
-type ServiceCalendarProps = {
-  service: Service[]
-  onChangeDate: (date: Date) => void
-  onChangeMetadata: (metadata: ServiceSchedulerMetadata) => void
-}
+const ServiceCalendar = (): JSX.Element => {
+  const {
+    view: { onChangeView: handleChangeView },
+    service,
+    toolbar: { onChangeTitle: handleChangeTitle },
+    calendar: { onClickDate: handleClickDate, onChangeApi: handleChangeApi },
+  } = useServiceContext()
 
-const ServiceCalendar = ({
-  service,
-  onChangeDate: handleChangeDate,
-  onChangeMetadata: handleChangeMetadata,
-}: ServiceCalendarProps): JSX.Element => {
   // events
   const { palette } = useTheme()
   const events = service ? getEventsFromService(service, palette) : []
 
-  const handleDateClick = ({ date }: DateClickArg) => handleChangeDate(date)
+  // view
+  const handleDateClick = ({ date }: DateClickArg) => handleClickDate(date)
   const handleDatesSet = ({
-    view: { title, type, calendar },
-    start: startDate,
-    end: endDate,
-  }: DatesSetArg) =>
-    handleChangeMetadata({
-      title,
-      startDate,
-      endDate,
-      view: getViewFromType(type as ServiceCalendarView),
-      calendar,
+    view: { title, type, calendar: api },
+    start,
+    end,
+  }: DatesSetArg) => {
+    handleChangeTitle(title)
+    handleChangeView({
+      type: getViewFromType(type as ServiceCalendarView),
+      start,
+      end,
     })
+    handleChangeApi(api)
+  }
 
   return (
     <FullCalendar

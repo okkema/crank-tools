@@ -1,35 +1,28 @@
 import {
   AddCircle,
   CalendarViewMonth,
+  CalendarViewWeek,
   ChevronLeft,
   ChevronRight,
   Today,
-  ViewWeek,
 } from "@mui/icons-material"
 import { Button, ButtonGroup, Stack, Typography } from "@mui/material"
-import { ServiceSchedulerView } from "./ServiceScheduler"
+import { useServiceContext } from "./ServiceProvider"
 
-export type ServiceToolbarProps = {
-  title?: string
-  view: ServiceSchedulerView
-  onClickAdd: () => void
-  onClickToday: () => void
-  onClickWeek: () => void
-  onClickMonth: () => void
-  onClickPrev: () => void
-  onClickNext: () => void
-}
+const ServiceToolbar = (): JSX.Element => {
+  const {
+    view: { type },
+    toolbar: {
+      title,
+      onClickAdd: handleClickAdd,
+      onClickToday: handleClickToday,
+      onClickWeek: handleClickWeek,
+      onClickMonth: handleClickMonth,
+      onClickPrev: handleClickPrev,
+      onClickNext: handleClickNext,
+    },
+  } = useServiceContext()
 
-const ServiceToolbar = ({
-  title = "",
-  view,
-  onClickAdd: handleClickAdd,
-  onClickToday: handleClickToday,
-  onClickWeek: handleClickWeek,
-  onClickMonth: handleClickMonth,
-  onClickPrev: handleClickPrev,
-  onClickNext: handleClickNext,
-}: ServiceToolbarProps): JSX.Element => {
   return (
     <Stack
       direction="row"
@@ -46,12 +39,12 @@ const ServiceToolbar = ({
           <Button variant="contained" onClick={handleClickToday}>
             <Today />
           </Button>
-          {view !== "week" && (
+          {type !== "week" && (
             <Button onClick={handleClickWeek}>
-              <ViewWeek />
+              <CalendarViewWeek />
             </Button>
           )}
-          {view !== "month" && (
+          {type !== "month" && (
             <Button onClick={handleClickMonth}>
               <CalendarViewMonth />
             </Button>

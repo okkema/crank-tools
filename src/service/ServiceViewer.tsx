@@ -1,6 +1,5 @@
 import {
   AccountCircle,
-  AddCircle,
   BuildCircle,
   CheckCircle,
   Error,
@@ -12,7 +11,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Button,
   Chip,
   CircularProgress,
   Stack,
@@ -58,11 +56,12 @@ const renderStatus = (status: ServiceStatus) => {
 
 const ServiceViewer = (): JSX.Element => {
   // parameters
-  const { date } = useParams<{ date: string }>()
+  const params = useParams<{ date: string }>()
+  const date = params.date ? new Date(params.date) : new Date()
 
   // service
   const service = useLiveQuery(() =>
-    database.service.where("date").equals(date!).toArray(),
+    database.service.where("date").equals(date).toArray(),
   )
 
   return (
@@ -73,7 +72,7 @@ const ServiceViewer = (): JSX.Element => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant="h6">{date}</Typography>
+          <Typography variant="h6">{date.toString()}</Typography>
         </Stack>
         <Box>
           {!service && <CircularProgress />}
