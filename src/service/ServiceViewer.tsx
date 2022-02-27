@@ -12,14 +12,14 @@ import {
   AccordionSummary,
   Box,
   Chip,
-  CircularProgress,
   Stack,
   Typography,
 } from "@mui/material"
 import { useParams } from "react-router-dom"
 import ServiceDetailTable from "./ServiceDetailTable"
-import database from "../database"
-import { useLiveQuery } from "dexie-react-hooks"
+import { useServiceContext } from "./ServiceProvider"
+import { useEffect } from "react"
+import { parse, startOfDay, endOfDay } from "date-fns"
 
 const renderTitle = (
   customer: string | Customer | undefined,
@@ -55,51 +55,48 @@ const renderStatus = (status: ServiceStatus) => {
 }
 
 const ServiceViewer = (): JSX.Element => {
+  console.log("ServiceViewer")
+  const {
+    service,
+    view: { onChangeView: handleChangeView },
+  } = useServiceContext()
   // parameters
-  const params = useParams<{ date: string }>()
-  const date = params.date ? new Date(params.date) : new Date()
-
-  // service
-  const service = useLiveQuery(() =>
-    database.service.where("date").equals(date).toArray(),
-  )
+  const { date } = useParams<{ date: string }>()
+  useEffect(() => {
+    if (date) {
+      const start = parse(date, "yyyy-MM-dd", new Date())
+      handleChangeView({
+        type: "day",
+        start: startOfDay(start),
+        end: endOfDay(start),
+      })
+    }
+  }, [date, handleChangeView])
 
   return (
     <>
-      <Stack spacing={1}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography variant="h6">{date.toString()}</Typography>
-        </Stack>
-        <Box>
-          {!service && <CircularProgress />}
-          {service &&
-            service.map((service, index) => {
-              const { id, status, details } = service
-              return (
-                <Accordion key={id}>
-                  <AccordionSummary>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="space-between"
-                      width="100%"
-                    >
-                      <Typography>{renderTitle(undefined, index)}</Typography>
-                      <Box>{renderStatus(status)}</Box>
-                    </Stack>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <ServiceDetailTable details={details} selectable />
-                  </AccordionDetails>
-                </Accordion>
-              )
-            })}
-        </Box>
-      </Stack>
+      {service &&
+        service.map((service, index) => {
+          const { id, status, details } = service
+          return (
+            <Accordion key={id}>
+              <AccordionSummary>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  width="100%"
+                >
+                  <Typography>{renderTitle(undefined, index)}</Typography>
+                  <Box>{renderStatus(status)}</Box>
+                </Stack>
+              </AccordionSummary>
+              <AccordionDetails>
+                <ServiceDetailTable details={details} selectable />
+              </AccordionDetails>
+            </Accordion>
+          )
+        })}
     </>
   )
 }

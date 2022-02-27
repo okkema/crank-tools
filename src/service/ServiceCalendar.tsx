@@ -72,12 +72,14 @@ const getEventsFromService = (
 }
 
 const ServiceCalendar = (): JSX.Element => {
+  console.log("ServiceCalendar")
   const {
-    view: { onChangeView: handleChangeView },
+    view: { onChangeView: handleChangeView, type, start },
     service,
     toolbar: { onChangeTitle: handleChangeTitle },
     calendar: { onClickDate: handleClickDate, onChangeApi: handleChangeApi },
   } = useServiceContext()
+  const initialView = type === "month" ? "dayGridMonth" : "dayGridWeek"
 
   // events
   const { palette } = useTheme()
@@ -102,7 +104,8 @@ const ServiceCalendar = (): JSX.Element => {
   return (
     <FullCalendar
       plugins={[dayGridPlugin, interactionPlugin]}
-      initialView={"dayGridMonth"}
+      initialView={initialView}
+      initialDate={start}
       datesSet={handleDatesSet}
       dateClick={handleDateClick}
       headerToolbar={false}
