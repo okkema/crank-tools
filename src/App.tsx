@@ -22,6 +22,10 @@ export type Route = {
   path: string
   element: JSX.Element
   icon?: JSX.Element
+  children?: {
+    path: string
+    element: JSX.Element
+  }[]
 }
 
 export type AppProps = {
@@ -35,10 +39,10 @@ const App = ({ routes, title = "Crank Tools" }: AppProps): JSX.Element => {
 
   // current route
   const { pathname } = useLocation()
-  const route = routes.find(({ path }) => path === pathname)
+  const route = routes.find(({ path }) => pathname.startsWith(path))
 
   return (
-    <>
+    <Box height={"100%"}>
       <AppBar position="static">
         <Toolbar variant="dense">
           <IconButton
@@ -69,31 +73,47 @@ const App = ({ routes, title = "Crank Tools" }: AppProps): JSX.Element => {
             </Typography>
           </Box>
           <List>
-            {routes.map((route) => {
-              const { title, path, icon } = route
-              return (
-                <ListItem key={path} disablePadding>
-                  <ListItemButton component={Link} to={path}>
-                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                    <ListItemText>{title}</ListItemText>
-                  </ListItemButton>
-                </ListItem>
-              )
-            })}
+            {routes.map(({ title, path, icon }) => (
+              <ListItem key={path} disablePadding>
+                <ListItemButton component={Link} to={path}>
+                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                  <ListItemText>{title}</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            ))}
           </List>
         </Box>
       </Drawer>
-      <Suspense fallback={<LinearProgress />}>
-        <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
-          <Routes>
-            {routes.map((route) => {
-              const { path, element } = route
-              return <Route key={path} path={path} element={element} />
-            })}
-          </Routes>
-        </Container>
-      </Suspense>
-    </>
+      <Box height={"calc(100% - 48px)"} overflow="auto">
+        <Suspense fallback={<LinearProgress />}>
+          <Container
+            sx={{
+              paddingTop: 2,
+              paddingBottom: 2,
+              height: "calc(100% - 48px)",
+            }}
+          >
+            <Routes>
+              {routes.map(({ path, element, children }) => {
+                if (children)
+                  return (
+                    <Route key={path} path={path} element={element}>
+                      {children.map((child) => (
+                        <Route
+                          key={child.path}
+                          path={`${path}${child.path}`}
+                          element={child.element}
+                        />
+                      ))}
+                    </Route>
+                  )
+                return <Route key={path} path={path} element={element} />
+              })}
+            </Routes>
+          </Container>
+        </Suspense>
+      </Box>
+    </Box>
   )
 }
 
