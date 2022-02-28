@@ -39,7 +39,10 @@ export type ServiceContext = {
   view: ServiceView & {
     onChangeView: (view: ServiceView) => void
   }
-  service: Service[]
+  service: {
+    loading: boolean
+    values: Service[]
+  }
   toolbar: {
     title?: string
     onChangeTitle: (title: string) => void
@@ -219,7 +222,10 @@ const ServiceProvider = ({ children }: ServiceProviderProps): JSX.Element => {
       ...view,
       onChangeView: handleChangeView,
     },
-    service,
+    service: {
+      loading: !service,
+      values: service ?? [],
+    },
     toolbar: {
       title,
       onChangeTitle: handleChangeTitle,

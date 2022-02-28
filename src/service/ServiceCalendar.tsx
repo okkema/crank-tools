@@ -74,7 +74,7 @@ const getEventsFromService = (
 const ServiceCalendar = (): JSX.Element => {
   const {
     view: { onChangeView: handleChangeView, type, start },
-    service,
+    service: { values: service },
     toolbar: { onChangeTitle: handleChangeTitle },
     calendar: { onClickDate: handleClickDate, onChangeApi: handleChangeApi },
   } = useServiceContext()
@@ -82,7 +82,7 @@ const ServiceCalendar = (): JSX.Element => {
 
   // events
   const { palette } = useTheme()
-  const events = service ? getEventsFromService(service, palette) : []
+  const events = getEventsFromService(service, palette)
 
   // view
   const handleDateClick = ({ date }: DateClickArg) => handleClickDate(date)

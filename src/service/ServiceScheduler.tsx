@@ -3,9 +3,9 @@ import ServiceForm from "./ServiceForm"
 import { Outlet } from "react-router-dom"
 import ServiceProvider from "./ServiceProvider"
 import { Suspense } from "react"
-import { Box, CircularProgress } from "@mui/material"
 import { LocalizationProvider } from "@mui/lab"
 import dateAdapter from "@mui/lab/AdapterDateFns"
+import Loading from "../shared/Loading"
 
 const ServiceScheduler = () => {
   return (
@@ -13,18 +13,7 @@ const ServiceScheduler = () => {
       <ServiceProvider>
         <>
           <ServiceToolbar />
-          <Suspense
-            fallback={
-              <Box
-                display="flex"
-                height="100%"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <CircularProgress />
-              </Box>
-            }
-          >
+          <Suspense fallback={<Loading />}>
             <Outlet />
           </Suspense>
           <ServiceForm />
