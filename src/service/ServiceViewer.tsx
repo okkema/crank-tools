@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom"
 import ServiceDetailTable from "./ServiceDetailTable"
 import { useServiceContext } from "./ServiceProvider"
 import { useEffect } from "react"
-import { parse, startOfDay, endOfDay } from "date-fns"
+import { parse, startOfDay, endOfDay, isValid } from "date-fns"
 import ServiceStatusChip from "./ServiceStatusChip"
 import Loading from "../shared/Loading"
 
@@ -25,20 +25,20 @@ const renderTitle = (
 const ServiceViewer = (): JSX.Element => {
   const {
     service: { loading, values },
-    view: { onChangeView: handleChangeView },
+    view: { type, onChangeView: handleChangeView },
   } = useServiceContext()
   // parameters
   const { date } = useParams<{ date: string }>()
-  // useEffect(() => {
-  //   if (date) {
-  //     const start = parse(date, "yyyy-MM-dd", new Date())
-  //     handleChangeView({
-  //       type: "day",
-  //       start: startOfDay(start),
-  //       end: endOfDay(start),
-  //     })
-  //   }
-  // }, [date, handleChangeView])
+  useEffect(() => {
+    if (date && isValid(date)) {
+      const start = parse(date, "yyyy-MM-dd", new Date())
+      handleChangeView({
+        type: "day",
+        start: startOfDay(start),
+        end: endOfDay(start),
+      })
+    }
+  }, [date, type, handleChangeView])
 
   return (
     <>
