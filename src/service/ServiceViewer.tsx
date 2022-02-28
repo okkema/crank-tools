@@ -41,28 +41,27 @@ const ServiceViewer = (): JSX.Element => {
 
   return (
     <>
-      {service &&
-        service.map((service, index) => {
-          const { id, status, details } = service
-          return (
-            <Accordion key={id}>
-              <AccordionSummary>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  width="100%"
-                >
-                  <Typography>{renderTitle(undefined, index)}</Typography>
-                  <ServiceStatusChip status={status} />
-                </Stack>
-              </AccordionSummary>
-              <AccordionDetails>
-                <ServiceDetailTable details={details} selectable />
-              </AccordionDetails>
-            </Accordion>
-          )
-        })}
+      {service.map((service, index) => {
+        const { id, status, details } = service
+        return (
+          <Accordion key={id}>
+            <AccordionSummary>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                width="100%"
+              >
+                <Typography>{renderTitle(undefined, index)}</Typography>
+                <ServiceStatusChip status={status} />
+              </Stack>
+            </AccordionSummary>
+            <AccordionDetails>
+              <ServiceDetailTable details={details} selectable />
+            </AccordionDetails>
+          </Accordion>
+        )
+      })}
     </>
   )
 }

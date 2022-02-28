@@ -1,5 +1,4 @@
 import ServiceToolbar from "./ServiceToolbar"
-import database from "../database"
 import ServiceForm from "./ServiceForm"
 import { Outlet } from "react-router-dom"
 import ServiceProvider from "./ServiceProvider"
@@ -9,9 +8,6 @@ import { LocalizationProvider } from "@mui/lab"
 import dateAdapter from "@mui/lab/AdapterDateFns"
 
 const ServiceScheduler = () => {
-  // customers
-  const customers = database.customers.orderBy("name").toArray()
-
   return (
     <LocalizationProvider dateAdapter={dateAdapter}>
       <ServiceProvider>
@@ -31,7 +27,7 @@ const ServiceScheduler = () => {
           >
             <Outlet />
           </Suspense>
-          <ServiceForm customers={customers ?? []} />
+          <ServiceForm />
         </>
       </ServiceProvider>
     </LocalizationProvider>

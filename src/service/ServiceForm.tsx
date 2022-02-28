@@ -20,6 +20,8 @@ import { useServiceContext } from "./ServiceProvider"
 import { DatePicker } from "@mui/lab"
 import { startOfDay } from "date-fns"
 import ServiceStatusChip from "./ServiceStatusChip"
+import database from "../database"
+import { useEffect } from "react"
 
 const validationSchema = Yup.object().shape({
   id: Yup.string().uuid(),
@@ -50,14 +52,17 @@ const initialValues: Service = {
   customer: "",
 }
 
-type ServiceFormProps = {
-  date?: Date
-  customers: Customer[] | Promise<Customer[]>
-}
+const statuses: ServiceStatus[] = [
+  "pending",
+  "active",
+  "issue",
+  "completed",
+  "delivered",
+]
 
-const ServiceForm = ({ customers }: ServiceFormProps): JSX.Element => {
+const ServiceForm = (): JSX.Element => {
   const {
-    form: { open, onCancel, onSubmit },
+    form: { open, onCancel, onSubmit, date: selectedDate },
   } = useServiceContext()
 
   const {
@@ -76,9 +81,11 @@ const ServiceForm = ({ customers }: ServiceFormProps): JSX.Element => {
     validationSchema,
   })
 
-  // useEffect(() => {
-  //   setValues({ ...initialValues })
-  // }, [setValues, date])
+  const customers = database.customers.orderBy("name").toArray()
+
+  useEffect(() => {
+    setValues({ ...initialValues, date: selectedDate })
+  }, [selectedDate, setValues])
 
   const handleAdd = () => {
     setValues((values) => ({
@@ -119,10 +126,17 @@ const ServiceForm = ({ customers }: ServiceFormProps): JSX.Element => {
             />
             <FormControl variant="outlined" sx={{ width: "160px" }}>
               <InputLabel>Status</InputLabel>
-              <Select input={<OutlinedInput label="Status" />} value={status}>
-                <MenuItem value="pending">
-                  <ServiceStatusChip status="pending" />
-                </MenuItem>
+              <Select
+                name="status"
+                input={<OutlinedInput label="Status" />}
+                value={status}
+                onChange={handleChange}
+              >
+                {statuses.map((status) => (
+                  <MenuItem key={status} value={status}>
+                    <ServiceStatusChip status={status} />
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Stack>

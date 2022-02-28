@@ -56,7 +56,7 @@ export type ServiceContext = {
     onClickDate: (date: Date) => void
   }
   form: {
-    date?: Date
+    date: Date
     open: boolean
     onSubmit: (service: Service) => void
     onCancel: () => void
