@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-import { plainText as README } from "@virtual:plain-text/README.md"
+import README from "@virtual:plain-text/README.md"
 import { Link } from "@mui/material"
 
 const About = (): JSX.Element => (

@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import plainText from "vite-plugin-virtual-plain-text"
@@ -11,4 +12,9 @@ export default defineConfig({
   assetsInclude: ["README.md"],
   clearScreen: false,
   envPrefix: "PUBLIC_",
+  test: {
+    environment: "jsdom",
+    setupFiles: ["@testing-library/jest-dom/extend-expect"],
+    globals: true,
+  },
 })
