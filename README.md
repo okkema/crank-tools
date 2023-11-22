@@ -16,6 +16,6 @@
 
 https://github.com/okkema/crank.tools
 
-Created with :heart: at [Okkema Labs](https://okkkema.org)
+Created with :heart: at [Okkema Labs](https://okkema.org)
 
 Crank Tools is dedicated to "El Luchito" and the terrible software we were forced to use.
