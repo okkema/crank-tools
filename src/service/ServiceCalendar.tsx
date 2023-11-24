@@ -1,5 +1,5 @@
-import "@fullcalendar/react/dist/vdom" // https://github.com/fullcalendar/fullcalendar-react/issues/150
-import FullCalendar, { DatesSetArg, EventInput } from "@fullcalendar/react"
+import FullCalendar from "@fullcalendar/react"
+import { DatesSetArg, EventInput } from "@fullcalendar/core"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction"
 import { Palette, useTheme } from "@mui/material"
@@ -43,14 +43,17 @@ const getEventsFromService = (
   palette: Palette,
 ): EventInput[] => {
   return Object.entries(
-    service.reduce((result, service) => {
-      const { date, status } = service
-      const key = getKeyFromDate(date)
-      if (!result[key]) result[key] = {}
-      if (!result[key][status]) result[key][status] = []
-      result[key][status].push(service)
-      return result
-    }, {} as { [key: string]: { [key: string]: Service[] } }),
+    service.reduce(
+      (result, service) => {
+        const { date, status } = service
+        const key = getKeyFromDate(date)
+        if (!result[key]) result[key] = {}
+        if (!result[key][status]) result[key][status] = []
+        result[key][status].push(service)
+        return result
+      },
+      {} as { [key: string]: { [key: string]: Service[] } },
+    ),
   )
     .map(([date, service]) =>
       Object.entries(service).map(([status, service]): EventInput => {

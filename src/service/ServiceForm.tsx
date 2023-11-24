@@ -119,10 +119,11 @@ const ServiceForm = (): JSX.Element => {
             <DatePicker
               label="Date"
               value={date}
-              onChange={(date) => {
+              onChange={(date: unknown) => {
                 setFieldValue("date", date)
               }}
-              renderInput={(params) => <TextField {...params} />}
+              // @ts-expect-error TODO change unknown
+              renderInput={(params: unknown) => <TextField {...params} />}
             />
             <FormControl variant="outlined" sx={{ width: "160px" }}>
               <InputLabel>Status</InputLabel>

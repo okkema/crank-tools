@@ -1,4 +1,4 @@
-import { CalendarApi } from "@fullcalendar/react"
+import { CalendarApi } from "@fullcalendar/core"
 import { useLiveQuery } from "dexie-react-hooks"
 import {
   createContext,

@@ -7,6 +7,7 @@ const About = (): JSX.Element => (
   <ReactMarkdown
     remarkPlugins={[remarkGfm]}
     components={{
+      // @ts-expect-error type mismatch
       a: (props) => <Link {...props} />,
     }}
   >

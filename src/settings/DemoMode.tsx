@@ -12,7 +12,7 @@ const DemoMode = (): JSX.Element => {
     ? "WARNING - Disabling Demo Mode reset all data."
     : "WARNING - Enabling Demo Mode will wipe data and populate Crank Tools with test data."
 
-  const handleChange = (_: any, checked: boolean) => {
+  const handleChange = (_: unknown, checked: boolean) => {
     if (storage.set(KEY, checked)) {
       setChecked(checked)
       import("../demo/toggleDemoMode").then(async (demo) => {

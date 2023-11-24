@@ -3,13 +3,13 @@ import ServiceForm from "./ServiceForm"
 import { Outlet } from "react-router-dom"
 import ServiceProvider from "./ServiceProvider"
 import { Suspense } from "react"
-import { LocalizationProvider } from "@mui/lab"
-import dateAdapter from "@mui/lab/AdapterDateFns"
+import { LocalizationProvider } from "@mui/x-date-pickers"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import Loading from "../shared/Loading"
 
 const ServiceScheduler = () => {
   return (
-    <LocalizationProvider dateAdapter={dateAdapter}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <ServiceProvider>
         <>
           <ServiceToolbar />

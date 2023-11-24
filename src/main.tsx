@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom"
+import { createRoot } from "react-dom/client"
 import App from "./App"
 import routes from "./routes"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -12,8 +12,8 @@ import { ThemeProvider, createTheme } from "@mui/material"
 import AlertProvider from "./shared/AlertProvider"
 
 const theme = createTheme()
-
-ReactDOM.render(
+const root = createRoot(document.getElementById("root")!)
+root.render(
   <React.StrictMode>
     <CssBaseline />
     <BrowserRouter>
@@ -24,5 +24,4 @@ ReactDOM.render(
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById("root"),
 )

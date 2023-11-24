@@ -10,8 +10,6 @@ const config = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:prettier/recommended",
-    "react-app",
-    "react-app/jest",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
   ],

@@ -14,7 +14,7 @@ export default defineConfig({
   envPrefix: "PUBLIC_",
   test: {
     environment: "jsdom",
-    setupFiles: ["@testing-library/jest-dom/extend-expect"],
     globals: true,
+    setupFiles: ["./setup.ts"],
   },
 })
