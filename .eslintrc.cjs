@@ -12,6 +12,7 @@ const config = {
     "plugin:prettier/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
+    "plugin:storybook/recommended"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
