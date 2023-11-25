@@ -7,14 +7,13 @@ import plainText from "vite-plugin-virtual-plain-text"
 export default defineConfig({
   plugins: [react(), plainText()],
   server: {
-    port: 5000,
+    port: 8788,
   },
   assetsInclude: ["README.md"],
   clearScreen: false,
-  envPrefix: "PUBLIC_",
   test: {
     environment: "jsdom",
     globals: true,
-    setupFiles: ["./setup.ts"],
+    setupFiles: ["./vitest.setup.ts"],
   },
 })
