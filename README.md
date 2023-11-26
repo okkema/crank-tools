@@ -12,9 +12,9 @@
 - [ ] Register and Receipts
 - [ ] Wheel Builder
 
-## Source Code
+## About
 
-https://github.com/okkema/crank.tools
+The source code can be found on [GitHub](https://github.com/okkema/crank-tools)
 
 Created with :heart: at [Okkema Labs](https://okkema.org)
 
