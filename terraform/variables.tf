@@ -11,6 +11,11 @@ variable "ACTIONS_GITHUB_TOKEN" {
 }
 
 # Environment Variables
+variable "SENTRY_ORG" {}
+variable "SENTYR_PROJECT" {}
 variable "SENTRY_DSN" {
+  sensitive = true
+}
+variable "SENTRY_AUTH_TOKEN" {
   sensitive = true
 }

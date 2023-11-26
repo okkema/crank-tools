@@ -28,6 +28,9 @@ module "page" {
   destination_dir = "dist/vite"
   pages_hostname  = "@"
   production_secrets = {
-    SENTRY_DSN = var.SENTRY_DSN
+    VITE_SENTRY_DSN   = var.SENTRY_DSN
+    SENTRY_ORG        = var.SENTRY_ORG
+    SENTRY_PROJECT    = var.SENTYR_PROJECT
+    SENTRY_AUTH_TOKEN = var.SENTRY_AUTH_TOKEN
   }
 }

@@ -1,27 +1,23 @@
 {
   "type": "module",
-  "name": "crank.tools",
+  "name": "crank-tools",
   "version": "0.0.0",
-  "author": {
-    "name": "Okkema Labs",
-    "email": "correos@okkema.org",
-    "url": "https://okkema.org"
-  },
+  "author": "Okkema Labs <correos@okkema.org>",
   "license": "MIT",
+  "homepage": "https://crank.tools",
   "scripts": {
     "build": "npm-run-all build:typescript build:vite build:storybook",
     "build:storybook": "storybook build -o dist/storybook",
     "build:typescript": "tsc",
-    "build:vite": "vite build --outDir dist/vite",
+    "build:vite": "vite build",
     "clean": "rm -rf dist node_modules/.vite",
-    "deploy:pages": "npm-run-all build",
     "lint": "eslint '**/*.{js,jsx,ts,tsx,json}'",
     "lint:fix": "eslint '**/*.{js,jsx,ts,tsx,json}' --fix",
     "lint:staged": "lint-staged",
     "precommit": "npm-run-all clean lint:staged build test",
     "preview": "vite preview",
     "prepare": "husky install",
-    "start": "npm-run-all start",
+    "start": "npm-run-all start:vite",
     "start:vite": "vite",
     "start:storybook": "storybook dev -p 6006 --no-open",
     "test": "vitest run",
@@ -43,6 +39,8 @@
     "@mui/material": "^5.14.18",
     "@mui/x-data-grid": "^6.18.1",
     "@mui/x-date-pickers": "^6.18.1",
+    "@sentry/react": "^7.81.1",
+    "@sentry/vite-plugin": "^2.10.1",
     "@vitejs/plugin-react": "^4.2.0",
     "date-fns": "^2.30.0",
     "dexie": "^3.2.4",
@@ -94,10 +92,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/okkema/crank.tools"
+    "url": "https://github.com/okkema/crank-tools"
   },
   "bugs": {
-    "url": "https://github.com/okkema/crank.tools/issues"
+    "url": "https://github.com/okkema/crank-tools/issues"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json}": [
