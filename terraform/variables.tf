@@ -12,7 +12,7 @@ variable "ACTIONS_GITHUB_TOKEN" {
 
 # Environment Variables
 variable "SENTRY_ORG" {}
-variable "SENTYR_PROJECT" {}
+variable "SENTRY_PROJECT" {}
 variable "SENTRY_DSN" {
   sensitive = true
 }

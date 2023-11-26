@@ -36,6 +36,11 @@ const config = {
       },
     },
   ],
+  settings: {
+    react: {
+      version: "detect"
+    }
+  }
 }
 
 module.exports = config

@@ -30,7 +30,7 @@ module "page" {
   production_secrets = {
     VITE_SENTRY_DSN   = var.SENTRY_DSN
     SENTRY_ORG        = var.SENTRY_ORG
-    SENTRY_PROJECT    = var.SENTYR_PROJECT
+    SENTRY_PROJECT    = var.SENTRY_PROJECT
     SENTRY_AUTH_TOKEN = var.SENTRY_AUTH_TOKEN
   }
 }

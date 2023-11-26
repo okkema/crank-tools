@@ -6,15 +6,18 @@
   "license": "MIT",
   "homepage": "https://crank.tools",
   "scripts": {
-    "build": "npm-run-all build:typescript build:vite build:storybook",
+    "build": "npm-run-all build:vite build:storybook",
     "build:storybook": "storybook build -o dist/storybook",
-    "build:typescript": "tsc",
     "build:vite": "vite build",
+    "check": "npm-run-all check:typescript check:eslint check:terraform",
+    "check:eslint": "eslint '**/*.{js,jsx,ts,tsx,json}'",
+    "check:terraform": "terraform -chdir=terraform fmt -recursive -check",
+    "check:typescript": "tsc",
     "clean": "rm -rf dist node_modules/.vite",
-    "lint": "eslint '**/*.{js,jsx,ts,tsx,json}'",
-    "lint:fix": "eslint '**/*.{js,jsx,ts,tsx,json}' --fix",
-    "lint:staged": "lint-staged",
-    "precommit": "npm-run-all clean lint:staged build test",
+    "format": "npm-run-all format:eslint format:terraform",
+    "format:eslint": "eslint '**/*.{js,jsx,ts,tsx,json}' --fix",
+    "format:terraform": "terraform -chdir=terraform fmt -recursive",
+    "precommit": "npm-run-all check test clean build",
     "preview": "vite preview",
     "prepare": "husky install",
     "start": "npm-run-all start:vite",
@@ -84,7 +87,6 @@
     "eslint-plugin-storybook": "^0.6.15",
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
-    "lint-staged": "^15.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.1.0",
     "storybook": "^7.5.3",
@@ -96,10 +98,5 @@
   },
   "bugs": {
     "url": "https://github.com/okkema/crank-tools/issues"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json}": [
-      "npm run lint:fix"
-    ]
   }
 }
