@@ -5,7 +5,7 @@ class Database extends Dexie {
   service!: Table<Service>
 }
 
-const database = new Database("crank-tools")
+export const database = new Database("crank-tools")
 
 // v1
 const v1 = {

@@ -7,9 +7,7 @@ import {
   useEffect,
   useState,
 } from "react"
-import database from "../database"
-import { v4 as uuid } from "uuid"
-import { useLocation, useNavigate } from "react-router-dom"
+import { database } from "../database"
 import {
   addDays,
   endOfDay,
@@ -58,12 +56,6 @@ export type ServiceContext = {
     onChangeApi: (api: CalendarApi) => void
     onClickDate: (date: Date) => void
   }
-  form: {
-    date: Date
-    open: boolean
-    onSubmit: (service: Service) => void
-    onCancel: () => void
-  }
 }
 
 const ServiceContext = createContext<ServiceContext | undefined>(undefined)
@@ -76,13 +68,21 @@ export const useServiceContext = () => {
 }
 
 type ServiceProviderProps = {
-  children: JSX.Element
+  children: JSX.Element | JSX.Element[]
+  pathname: string
+  navigate: (path: string) => void
+  setDate: (date: Date) => void
+  setOpen: (open: boolean) => void
 }
 
-const ServiceProvider = ({ children }: ServiceProviderProps): JSX.Element => {
+export function ServiceProvider({
+  children,
+  pathname,
+  navigate,
+  setDate,
+  setOpen,
+}: ServiceProviderProps): JSX.Element {
   // view
-  const { pathname } = useLocation()
-  const navigate = useNavigate()
   const [view, setView] = useState<ServiceView>({
     type: "month",
     start: startOfMonth(new Date()),
@@ -125,18 +125,6 @@ const ServiceProvider = ({ children }: ServiceProviderProps): JSX.Element => {
         .between(start, end, true, true)
         .toArray()
     }, [start, end]) ?? []
-
-  // form
-  const [open, setOpen] = useState(false)
-  const [date, setDate] = useState(startOfDay(new Date()))
-  const handleSubmit = async (service: Service) => {
-    if (!service.id) service.id = uuid()
-    await database.service.put(service)
-    setOpen(false)
-  }
-  const handleCancel = () => {
-    setOpen(false)
-  }
 
   // calendar
   const [api, setApi] = useState<CalendarApi>()
@@ -241,12 +229,6 @@ const ServiceProvider = ({ children }: ServiceProviderProps): JSX.Element => {
       onChangeApi: handleChangeApi,
       onClickDate: handleClickDate,
     },
-    form: {
-      date,
-      open,
-      onSubmit: handleSubmit,
-      onCancel: handleCancel,
-    },
   }
 
   return (
@@ -255,5 +237,3 @@ const ServiceProvider = ({ children }: ServiceProviderProps): JSX.Element => {
     </ServiceContext.Provider>
   )
 }
-
-export default ServiceProvider

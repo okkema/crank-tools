@@ -10,7 +10,7 @@ import ServiceDetailTable from "./ServiceDetailTable"
 import { useServiceContext } from "./ServiceProvider"
 import { useEffect } from "react"
 import { parse, startOfDay, endOfDay, isValid } from "date-fns"
-import ServiceStatusChip from "./ServiceStatusChip"
+import { ServiceStatusChip } from "./ServiceStatusChip"
 import Loading from "../shared/Loading"
 
 const renderTitle = (

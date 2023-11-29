@@ -12,7 +12,9 @@ type ServiceStatusChipProps = {
   status: ServiceStatus
 }
 
-const ServiceStatusChip = ({ status }: ServiceStatusChipProps): JSX.Element => {
+export function ServiceStatusChip({
+  status,
+}: ServiceStatusChipProps): JSX.Element {
   switch (status) {
     case "pending":
       return <Chip color="info" icon={<Pending />} label={status} />
@@ -35,5 +37,3 @@ const ServiceStatusChip = ({ status }: ServiceStatusChipProps): JSX.Element => {
       return <Chip icon={<Help />} label="unknown" />
   }
 }
-
-export default ServiceStatusChip

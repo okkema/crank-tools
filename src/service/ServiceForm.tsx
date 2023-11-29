@@ -1,7 +1,5 @@
 import {
-  Box,
   Button,
-  Drawer,
   FormControl,
   InputLabel,
   MenuItem,
@@ -16,14 +14,12 @@ import * as Yup from "yup"
 import CustomerCombobox from "../customer/CustomerCombobox"
 import ServiceDetailTable from "./ServiceDetailTable"
 import { v4 as uuid } from "uuid"
-import { useServiceContext } from "./ServiceProvider"
 import { DatePicker } from "@mui/lab"
 import { startOfDay } from "date-fns"
-import ServiceStatusChip from "./ServiceStatusChip"
-import database from "../database"
+import { ServiceStatusChip } from "./ServiceStatusChip"
 import { useEffect } from "react"
 
-const validationSchema = Yup.object().shape({
+const ServiceSchema = Yup.object().shape({
   id: Yup.string().uuid(),
   date: Yup.date().required(),
   details: Yup.array()
@@ -60,11 +56,19 @@ const statuses: ServiceStatus[] = [
   "delivered",
 ]
 
-const ServiceForm = (): JSX.Element => {
-  const {
-    form: { open, onCancel, onSubmit, date: selectedDate },
-  } = useServiceContext()
+export type ServiceFormProps = {
+  onSubmit: (service: Service) => void
+  onCancel: () => void
+  date: Date
+  customers: Customer[] | Promise<Customer[]>
+}
 
+export function ServiceForm({
+  onSubmit,
+  onCancel,
+  date: initialDate,
+  customers,
+}: ServiceFormProps): JSX.Element {
   const {
     values: { details, date, status },
     setFieldValue,
@@ -78,14 +82,12 @@ const ServiceForm = (): JSX.Element => {
   } = useFormik<Service>({
     initialValues,
     onSubmit,
-    validationSchema,
+    validationSchema: ServiceSchema,
   })
 
-  const customers = database.customers.orderBy("name").toArray()
-
   useEffect(() => {
-    setValues({ ...initialValues, date: selectedDate })
-  }, [selectedDate, setValues])
+    setValues({ ...initialValues, date })
+  }, [initialDate, setValues])
 
   const handleAdd = () => {
     setValues((values) => ({
@@ -101,75 +103,66 @@ const ServiceForm = (): JSX.Element => {
   }
 
   return (
-    <Drawer
-      open={open}
-      onClose={onCancel}
-      anchor="right"
-      PaperProps={{ sx: { width: "1000px", maxWidth: "100vw" } }}
-    >
-      <Box height={"100%"} padding={2}>
-        <Stack spacing={2}>
-          <Typography variant="h6">Add Service</Typography>
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <DatePicker
-              label="Date"
-              value={date}
-              onChange={(date: unknown) => {
-                setFieldValue("date", date)
-              }}
-              // @ts-expect-error TODO change unknown
-              renderInput={(params: unknown) => <TextField {...params} />}
-            />
-            <FormControl variant="outlined" sx={{ width: "160px" }}>
-              <InputLabel>Status</InputLabel>
-              <Select
-                name="status"
-                input={<OutlinedInput label="Status" />}
-                value={status}
-                onChange={handleChange}
-              >
-                {statuses.map((status) => (
-                  <MenuItem key={status} value={status}>
-                    <ServiceStatusChip status={status} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Stack>
-          <CustomerCombobox
-            customers={customers}
-            onChange={(customer) => setFieldValue("customer", customer?.id)}
-            onBlur={handleBlur}
-            required
-            error={touched.customer && !!errors.customer}
-          />
-          <ServiceDetailTable
-            details={details}
-            onAdd={handleAdd}
-            onDelete={handleDelete}
+    <Stack spacing={2}>
+      <Typography variant="h6">Add Service</Typography>
+      <Stack
+        direction="row"
+        spacing={2}
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <DatePicker
+          label="Date"
+          value={date}
+          onChange={(date: unknown) => {
+            setFieldValue("date", date)
+          }}
+          // @ts-expect-error TODO change unknown
+          renderInput={(params: unknown) => <TextField {...params} />}
+        />
+        <FormControl variant="outlined" sx={{ width: "160px" }}>
+          <InputLabel>Status</InputLabel>
+          <Select
+            name="status"
+            input={<OutlinedInput label="Status" />}
+            value={status}
             onChange={handleChange}
-            onBlur={handleBlur}
-            touched={touched.details}
-            errors={errors.details}
-          />
-          <Stack direction="row" justifyContent="end" spacing={1}>
-            <Button onClick={onCancel}>Cancel</Button>
-            <Button
-              variant="contained"
-              disabled={!isValid}
-              onClick={() => handleSubmit()}
-            >
-              Submit
-            </Button>
-          </Stack>
-        </Stack>
-      </Box>
-    </Drawer>
+          >
+            {statuses.map((status) => (
+              <MenuItem key={status} value={status}>
+                <ServiceStatusChip status={status} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Stack>
+      <CustomerCombobox
+        customers={customers}
+        onChange={(customer) => setFieldValue("customer", customer?.id)}
+        onBlur={handleBlur}
+        required
+        error={touched.customer && !!errors.customer}
+      />
+      <ServiceDetailTable
+        details={details}
+        onAdd={handleAdd}
+        onDelete={handleDelete}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        touched={touched.details}
+        errors={errors.details}
+      />
+      <Stack direction="row" justifyContent="end" spacing={1}>
+        <Button onClick={onCancel}>Cancel</Button>
+        <Button
+          variant="contained"
+          disabled={!isValid}
+          onClick={() => handleSubmit()}
+        >
+          Submit
+        </Button>
+      </Stack>
+    </Stack>
   )
 }
 
