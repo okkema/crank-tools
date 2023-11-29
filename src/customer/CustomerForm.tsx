@@ -3,14 +3,14 @@ import { useFormik } from "formik"
 import { useEffect } from "react"
 import * as Yup from "yup"
 
-const SCHEMA = Yup.object().shape({
+const CustomerSchema = Yup.object().shape({
   id: Yup.string().uuid(),
   name: Yup.string().required(),
   email: Yup.string().email().required(),
   phone: Yup.string().required(),
 })
 
-const DEFAULT: Customer = {
+export const DefaultCustomer: Customer = {
   id: "",
   name: "",
   email: "",
@@ -23,7 +23,11 @@ type CustomerFormProps = {
   onCancel: () => void
 }
 
-const CustomerForm = ({ customer, onCancel, onSubmit }: CustomerFormProps) => {
+export function CustomerForm({
+  customer,
+  onCancel,
+  onSubmit,
+}: CustomerFormProps): JSX.Element {
   const {
     values: { name, email, phone },
     handleChange,
@@ -34,13 +38,13 @@ const CustomerForm = ({ customer, onCancel, onSubmit }: CustomerFormProps) => {
     touched,
     isValid,
   } = useFormik<Customer>({
-    initialValues: DEFAULT,
+    initialValues: DefaultCustomer,
     onSubmit,
-    validationSchema: SCHEMA,
+    validationSchema: CustomerSchema,
   })
 
   useEffect(() => {
-    setValues(customer ?? DEFAULT)
+    setValues(customer ?? DefaultCustomer)
   }, [customer, setValues])
 
   return (
@@ -86,5 +90,3 @@ const CustomerForm = ({ customer, onCancel, onSubmit }: CustomerFormProps) => {
     </Stack>
   )
 }
-
-export default CustomerForm

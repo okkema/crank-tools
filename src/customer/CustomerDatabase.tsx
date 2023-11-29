@@ -3,7 +3,7 @@ import { useState } from "react"
 import { v4 as uuid } from "uuid"
 import database from "../database"
 import { useAlert } from "../shared/AlertProvider"
-import CustomerForm from "./CustomerForm"
+import { CustomerForm } from "./CustomerForm"
 import CustomerTable from "./CustomerTable"
 
 const CustomerDatabase = (): JSX.Element => {
