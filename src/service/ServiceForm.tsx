@@ -6,7 +6,6 @@ import {
   OutlinedInput,
   Select,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material"
 import { useFormik } from "formik"
@@ -14,10 +13,9 @@ import * as Yup from "yup"
 import CustomerCombobox from "../customer/CustomerCombobox"
 import ServiceDetailTable from "./ServiceDetailTable"
 import { v4 as uuid } from "uuid"
-import { DatePicker } from "@mui/lab"
+import { DatePicker } from "@mui/x-date-pickers"
 import { startOfDay } from "date-fns"
 import { ServiceStatusChip } from "./ServiceStatusChip"
-import { useEffect } from "react"
 
 const ServiceSchema = Yup.object().shape({
   id: Yup.string().uuid(),
@@ -34,7 +32,7 @@ const ServiceSchema = Yup.object().shape({
   customer: Yup.string().uuid().required(),
 })
 
-const initialValues: Service = {
+const DefaultService: Service = {
   id: "",
   date: startOfDay(new Date()),
   status: "pending",
@@ -80,14 +78,10 @@ export function ServiceForm({
     setValues,
     handleChange,
   } = useFormik<Service>({
-    initialValues,
+    initialValues: { ...DefaultService, date: startOfDay(initialDate) },
     onSubmit,
     validationSchema: ServiceSchema,
   })
-
-  useEffect(() => {
-    setValues({ ...initialValues, date })
-  }, [initialDate, setValues])
 
   const handleAdd = () => {
     setValues((values) => ({
@@ -117,8 +111,13 @@ export function ServiceForm({
           onChange={(date: unknown) => {
             setFieldValue("date", date)
           }}
-          // @ts-expect-error TODO change unknown
-          renderInput={(params: unknown) => <TextField {...params} />}
+        />
+        <CustomerCombobox
+          customers={customers}
+          onChange={(customer) => setFieldValue("customer", customer?.id)}
+          onBlur={handleBlur}
+          required
+          error={touched.customer && !!errors.customer}
         />
         <FormControl variant="outlined" sx={{ width: "160px" }}>
           <InputLabel>Status</InputLabel>
@@ -136,13 +135,6 @@ export function ServiceForm({
           </Select>
         </FormControl>
       </Stack>
-      <CustomerCombobox
-        customers={customers}
-        onChange={(customer) => setFieldValue("customer", customer?.id)}
-        onBlur={handleBlur}
-        required
-        error={touched.customer && !!errors.customer}
-      />
       <ServiceDetailTable
         details={details}
         onAdd={handleAdd}
