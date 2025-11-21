@@ -1,0 +1,68 @@
+---
+import NavigationDrawer from "../components/NavigationDrawer.svelte";
+import NavigationBar from "../components/NavigationBar.svelte";
+
+interface Props {
+	title: string;
+}
+
+const version = "development";
+const { title } = Astro.props;
+const items = [
+	{ href: "/", text: "About" },
+	{ href: "/settings", text: "Settings" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Crank Tools - {title}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Icons&display=swap"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/svelte-material-ui@8.0.0/themes/material.min.css"
+			media="(prefers-color-scheme: light)"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/svelte-material-ui@8.0.0/themes/material-dark.min.css"
+			media="screen and (prefers-color-scheme: dark)"
+		/>
+		<style>
+			html,
+			body {
+				height: 100%;
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<NavigationDrawer
+			title="Crank Tools"
+			subtitle={`Version: ${version}`}
+			active={Astro.url.pathname}
+			{items}
+			client:load
+		>
+			<NavigationBar {title} client:load />
+			<slot />
+		</NavigationDrawer>
+	</body>
+</html>
