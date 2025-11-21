@@ -9,7 +9,7 @@
     } from "@smui/drawer";
     import List, { Graphic, Item, Text } from "@smui/list";
     import type { Snippet } from "svelte";
-    import navigation from "../state/NavigationState.svelte"
+    import navigation from "../state/NavigationState.svelte";
 
     interface Props {
         title: string;
@@ -36,7 +36,9 @@
         <List>
             {#each items as item}
                 <Item href={item.href} activated={item.href == active}>
-                    <Graphic class="material-icons" aria-hidden="true">{item.icon}</Graphic>
+                    <Graphic class="material-icons" aria-hidden="true"
+                        >{item.icon}</Graphic
+                    >
                     <Text>{item.text}</Text>
                 </Item>
             {/each}

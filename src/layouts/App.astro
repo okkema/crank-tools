@@ -1,17 +1,16 @@
 ---
 import NavigationDrawer from "../components/NavigationDrawer.svelte";
 import NavigationBar from "../components/NavigationBar.svelte";
+import NavigationMenu from "../components/NavigationMenu.svelte";
+import pkg from "../../package.json";
 
 interface Props {
 	title: string;
 }
 
-const version = "development";
+const version = pkg.version;
 const { title } = Astro.props;
-const items = [
-	{ href: "/", text: "About", icon: "info" },
-	{ href: "/settings", text: "Settings", icon: "settings" },
-];
+const items = [{ href: "/", text: "About", icon: "info" }];
 ---
 
 <!doctype html>
@@ -61,7 +60,9 @@ const items = [
 			{items}
 			client:load
 		>
-			<NavigationBar {title} client:load />
+			<NavigationBar {title} client:load>
+				<NavigationMenu client:load />
+			</NavigationBar>
 			<slot />
 		</NavigationDrawer>
 	</body>

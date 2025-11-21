@@ -2,12 +2,14 @@
     import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
     import IconButton from "@smui/icon-button";
     import navigation from "../state/NavigationState.svelte";
+    import type { Snippet } from "svelte";
 
     interface Props {
         title: string;
+        children: Snippet;
     }
 
-    const { title }: Props = $props();
+    const { title, children }: Props = $props();
 </script>
 
 <TopAppBar variant="static">
@@ -16,9 +18,12 @@
             <IconButton
                 class="material-icons"
                 onclick={() => (navigation.open = !navigation.open)}
-                >menu</IconButton
+                aria-label="Toggle navigation menu">menu</IconButton
             >
             <Title>{title}</Title>
+        </Section>
+        <Section align="end" toolbar>
+            {@render children()}
         </Section>
     </Row>
 </TopAppBar>
