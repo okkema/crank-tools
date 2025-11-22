@@ -18,7 +18,10 @@
     "@smui/menu-surface": "^8.0.3",
     "@smui/top-app-bar": "^8.0.3",
     "astro": "^5.15.8",
+    "drizzle-kit": "^0.31.7",
+    "drizzle-orm": "^0.44.7",
     "svelte": "^5.43.10",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "zod": "^3.25.76"
   }
 }
