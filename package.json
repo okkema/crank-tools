@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/svelte": "^7.2.2",
+    "@libsql/client": "^0.15.15",
     "@smui/button": "^8.0.3",
     "@smui/drawer": "^8.0.3",
     "@smui/icon-button": "^8.0.3",
@@ -22,6 +23,7 @@
     "drizzle-orm": "^0.44.7",
     "svelte": "^5.43.10",
     "typescript": "^5.9.3",
+    "vitest": "^4.0.13",
     "zod": "^3.25.76"
   }
 }
