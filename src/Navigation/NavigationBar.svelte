@@ -1,15 +1,15 @@
 <script lang="ts">
     import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
     import IconButton from "@smui/icon-button";
-    import navigation from "../state/NavigationState.svelte";
+    import navigation from "./NavigationState.svelte";
     import type { Snippet } from "svelte";
 
     interface Props {
-        title: string;
+        page: string;
         children: Snippet;
     }
 
-    const { title, children }: Props = $props();
+    const { page, children }: Props = $props();
 </script>
 
 <TopAppBar variant="static">
@@ -20,7 +20,7 @@
                 onclick={() => (navigation.open = !navigation.open)}
                 aria-label="Toggle navigation menu">menu</IconButton
             >
-            <Title>{title}</Title>
+            <Title>{page}</Title>
         </Section>
         <Section align="end" toolbar>
             {@render children()}

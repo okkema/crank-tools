@@ -1,15 +1,13 @@
 ---
-import NavigationDrawer from "../components/NavigationDrawer.svelte";
-import NavigationBar from "../components/NavigationBar.svelte";
-import NavigationMenu from "../components/NavigationMenu.svelte";
-import pkg from "../../package.json";
+import { NavigationBar, NavigationDrawer, NavigationMenu } from "./Navigation";
+import pkg from "../package.json";
 
 interface Props {
-	title: string;
+	page: string;
 }
 
 const version = pkg.version;
-const { title } = Astro.props;
+const { page } = Astro.props;
 const items = [{ href: "/", text: "About", icon: "info" }];
 ---
 
@@ -19,7 +17,7 @@ const items = [{ href: "/", text: "About", icon: "info" }];
 		<meta charset="utf-8" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Crank Tools - {title}</title>
+		<title>Crank Tools - {page}</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link
 			rel="preconnect"
@@ -60,7 +58,7 @@ const items = [{ href: "/", text: "About", icon: "info" }];
 			{items}
 			client:load
 		>
-			<NavigationBar {title} client:load>
+			<NavigationBar {page} client:load>
 				<NavigationMenu client:load />
 			</NavigationBar>
 			<slot />

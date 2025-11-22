@@ -9,7 +9,7 @@
     } from "@smui/drawer";
     import List, { Graphic, Item, Text } from "@smui/list";
     import type { Snippet } from "svelte";
-    import navigation from "../state/NavigationState.svelte";
+    import navigation from "./NavigationState.svelte";
 
     interface Props {
         title: string;
