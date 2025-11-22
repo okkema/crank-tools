@@ -6,7 +6,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "start": "astro dev",
-    "test": "vitest run"
+    "test": "vitest"
   },
   "dependencies": {
     "@astrojs/svelte": "^7.2.2",
