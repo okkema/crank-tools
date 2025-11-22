@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 import { CustomerRepository } from "./CustomerRepository";
 import { Customers } from "./CustomerSchema";
-import { createMemoryDatabase } from "../Database/MemoryDatabase";
+import { createMemoryDatabase } from "../Database";
 
 it("should list the customers", async function() {
     const db = await createMemoryDatabase(CustomerRepository.schema);
