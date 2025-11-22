@@ -1,15 +1,10 @@
 import { expect, it } from "vitest";
 import { CustomerRepository } from "./CustomerRepository";
-import { createClient } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql";
-import { migrate } from "drizzle-orm/libsql/migrator";
 import { Customers } from "./CustomerSchema";
+import { createMemoryDatabase } from "../Database/MemoryDatabase";
 
 it("should list the customers", async function() {
-    const db = drizzle(createClient({
-        url: ":memory:",
-    }), { schema: CustomerRepository.schema });
-    await migrate(db, { migrationsFolder: "./migrations" })
+    const db = await createMemoryDatabase(CustomerRepository.schema);
     await db.insert(Customers).values([{
         id: "123",
         name: "Test Customer",
