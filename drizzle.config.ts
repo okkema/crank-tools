@@ -4,7 +4,7 @@ import { LocalDatabase, MigrationsFolder } from "./src/Database";
 export default defineConfig({
     dialect: "sqlite",
     schema: [
-        "./src/**/*Schema.ts",
+        "./src/schema.ts",
     ],
     out: MigrationsFolder,
     dbCredentials: {
