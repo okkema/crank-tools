@@ -1,10 +1,10 @@
+import type { Database } from "../Database";
 import { type Customer, Customers } from "./CustomerSchema";
-import { type BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 
 export class CustomerRepository  {
     public static schema = { Customers }
-    private db: BaseSQLiteDatabase<"async", any, typeof CustomerRepository.schema>;
-    constructor(db: BaseSQLiteDatabase<"async", any, typeof CustomerRepository.schema>) {
+    private db: Database<typeof CustomerRepository.schema>;
+    constructor(db: Database<typeof CustomerRepository.schema>) {
         this.db = db;
     }
     public list(): Promise<Customer[]> {
