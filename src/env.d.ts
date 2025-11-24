@@ -2,12 +2,25 @@
 /// <reference types="astro/client" />
 
 export interface Environment {
-  ENVIRONMENT: "demo" | "local"
+  ENVIRONMENT: "cloud" | "demo" | "local"
 }
+
+export interface LocalEnvironment extends Environment {
+  DATABASE_URL: string
+}
+
+export interface CloudEnvironment extends Environment {
+  CLOUDFLARE_ACCOUNT_ID: string
+  CLOUDFLARE_DATABASE_ID: string
+  CLOUDFLARE_MIGRATION_TOKEN: string
+  DATABASE: import("@cloudflare/workers-types").D1Database
+}
+
+type Runtime = import("@astrojs/cloudflare").Runtime<CloudEnvironment>;
 
 declare global {
   namespace App {
-    interface Locals {
+    interface Locals extends Runtime {
       db: import("./Database").Database<typeof import("./schema").schema>
     }
   }
@@ -15,6 +28,6 @@ declare global {
 
 declare global {
   namespace NodeJS {
-    interface ProcessEnv extends Environment {}
+    interface ProcessEnv extends LocalEnvironment, CloudEnvironment {}
   }
 }
