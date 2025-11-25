@@ -13,7 +13,7 @@ export interface CloudEnvironment extends Environment {
   CLOUDFLARE_ACCOUNT_ID: string
   CLOUDFLARE_DATABASE_ID: string
   CLOUDFLARE_MIGRATION_TOKEN: string
-  DATABASE: import("@cloudflare/workers-types").D1Database
+  DATABASE: D1Database
 }
 
 type Runtime = import("@astrojs/cloudflare").Runtime<CloudEnvironment>;
