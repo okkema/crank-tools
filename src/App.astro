@@ -1,5 +1,6 @@
 ---
 import { NavigationBar, NavigationDrawer, NavigationMenu } from "./Navigation";
+import { Notification } from "./Notifications";
 import pkg from "../package.json";
 
 interface Props {
@@ -62,6 +63,7 @@ const items = [{ href: "/", text: "About", icon: "info" }];
 				<NavigationMenu client:load />
 			</NavigationBar>
 			<slot />
+			<Notification client:load />
 		</NavigationDrawer>
 	</body>
 </html>
