@@ -1,8 +1,9 @@
 import { sequence } from "astro:middleware";
 import { router } from "@okkema/worker/web";
 import { database } from "./Database";
-import { schema } from "./schema"
+import { schema } from "./schema";
+import { notification } from "./Notifications";
 
 export const onRequest = router({
-    "*": sequence(database(schema)),
+    "*": sequence(notification, database(schema)),
 });
