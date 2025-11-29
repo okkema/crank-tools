@@ -1,7 +1,12 @@
 ---
 import App from "../App.astro";
-import { Content } from "../../README.md";
+import LayoutGrid, { Cell } from "@smui/layout-grid";
+import { Content,  } from "../../README.md";
 ---
 <App page="About">
-    <Content />
+    <LayoutGrid>
+        <Cell span={12}>
+            <Content />
+        </Cell>
+    </LayoutGrid>
 </App>
