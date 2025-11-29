@@ -11,6 +11,7 @@
     }
 
     const { action, method, children, handleResult }: Props = $props();
+    let form: HTMLFormElement;
 
     async function onSubmit(event: SubmitEvent) {
         event.preventDefault();
@@ -39,8 +40,12 @@
             if (handleResult) await handleResult(result);
         }
     }
+
+    export function reset() {
+        form.reset();
+    }
 </script>
 
-<form onsubmit={onSubmit} {action}>
+<form onsubmit={onSubmit} {action} bind:this={form}>
     {@render children()}
 </form>
