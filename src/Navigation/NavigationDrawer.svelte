@@ -46,6 +46,6 @@
     </Content>
 </Drawer>
 <Scrim fixed={false} />
-<AppContent>
+<AppContent style="height: 100%;">
     {@render children()}
 </AppContent>
