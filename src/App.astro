@@ -9,7 +9,10 @@ interface Props {
 
 const version = pkg.version;
 const { page } = Astro.props;
-const items = [{ href: "/", text: "About", icon: "info" }];
+const items = [
+	{ href: "/customers", text: "Customers", icon: "groups" },
+	{ href: "/", text: "About", icon: "info" },
+];
 ---
 
 <!doctype html>
