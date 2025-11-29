@@ -1,6 +1,7 @@
 <script lang="ts">
     import LayoutGrid, { Cell as Item } from "@smui/layout-grid";
     import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
+    import LinearProgress from "@smui/linear-progress";
     import { FormInput } from "../Forms";
     import type { Snippet } from "svelte";
 
@@ -8,10 +9,11 @@
         label: string;
         columns: string[];
         rows: Record<string, any>[];
+        loading?: boolean;
         children: Snippet;
     }
 
-    const { label, columns, rows, children }: Props = $props();
+    const { label, columns, rows, loading = false, children }: Props = $props();
 
     function getColumnName(column: string) {
         return column.charAt(0).toUpperCase() + column.slice(1);
@@ -22,7 +24,11 @@
     <Item spanDevices={{ desktop: 6, tablet: 4, phone: 2 }}>
         <FormInput label="Search" name="search" />
     </Item>
-    <Item align="middle" spanDevices={{ desktop: 6, tablet: 4, phone: 2 }} style="justify-self: end;">
+    <Item
+        align="middle"
+        spanDevices={{ desktop: 6, tablet: 4, phone: 2 }}
+        style="justify-self: end;"
+    >
         {@render children()}
     </Item>
     <Item span={12}>
@@ -43,6 +49,12 @@
                     </Row>
                 {/each}
             </Body>
+            {#snippet progress()}
+                <LinearProgress
+                    indeterminate
+                    closed={!loading}
+                />
+            {/snippet}
         </DataTable>
     </Item>
 </LayoutGrid>

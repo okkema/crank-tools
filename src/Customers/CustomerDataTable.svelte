@@ -11,10 +11,13 @@
   let open = $state(false);
   let rows = $state<Customer[]>([]);
   let current = $state<Customer>();
+  let loading = $state(false);
 
   async function getData() {
+    loading = true;
     const response = await fetch("/api/customers");
     rows = await response.json<Customer[]>();
+    loading = false;
   }
 
   onMount(getData);
@@ -28,13 +31,18 @@
   }
 </script>
 
-<DataTable label="Customers" {columns} {rows}>
+<DataTable label="Customers" {columns} {rows} {loading}>
   <Button variant="raised" onclick={() => (open = true)}>
     <Label>New</Label>
     <Icon class="material-icons">add</Icon>
   </Button>
 </DataTable>
-<FormHandler action="/api/customers" method="POST" bind:this={form}>
+<FormHandler
+  action="/api/customers"
+  method={current ? "PUT" : "POST"}
+  bind:this={form}
+  handleResult={getData}
+>
   <FormModal title="Add new customer" bind:open {handleClose}>
     <input type="hidden" name="id" value={current?.id} />
     <FormInput label="Name" name="name" value={current?.name} required />

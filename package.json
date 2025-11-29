@@ -21,6 +21,7 @@
     "@smui/drawer": "^8.0.3",
     "@smui/icon-button": "^8.0.3",
     "@smui/layout-grid": "^8.0.3",
+    "@smui/linear-progress": "^8.0.3",
     "@smui/list": "^8.0.3",
     "@smui/menu": "^8.0.3",
     "@smui/menu-surface": "^8.0.3",
