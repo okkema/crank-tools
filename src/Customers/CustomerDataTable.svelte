@@ -32,7 +32,7 @@
   }
 </script>
 
-<DataTable label="Customers" {columns} {rows} {loading} bind:selected={selected}>
+<DataTable label="Customers" {columns} {rows} {loading} bind:selected>
   <Button variant="raised" onclick={() => open = true} disabled={!!selected.length}>
     <Label>Create</Label>
     <Icon class="material-icons">add</Icon>
