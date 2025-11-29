@@ -8,22 +8,21 @@
         title: string;
         open: boolean;
         children: Snippet;
-        handleClose: (event: CustomEvent<{ action: string; }>) => void;
     }
 
-    let { title, open = $bindable(), children, handleClose }: Props = $props();
+    let { title, open = $bindable(), children }: Props = $props();
 </script>
 
-<Dialog bind:open fullscreen onSMUIDialogClosed={handleClose}>
+<Dialog bind:open fullscreen>
     <Header>
         <Title>{title}</Title>
-        <IconButton action="close" class="material-icons" type="reset">close</IconButton>
+        <IconButton action="close" class="material-icons" type="button">close</IconButton>
     </Header>
     <Content>
         {@render children()}
     </Content>
     <Actions>
-        <Button action="close" type="reset">
+        <Button action="close" type="button">
             <Label>Close</Label>
         </Button>
         <Button action="" defaultAction variant="raised" type="submit">

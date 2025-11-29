@@ -10,11 +10,15 @@
 
   let open = $state(false);
   let rows = $state<Customer[]>([]);
-  let current = $state<Customer>();
   let loading = $state(false);
+  let selected = $state<Customer[]>([]);
+  let current = $derived.by<Customer>(function() {
+    return selected[0];
+  });
 
   async function getData() {
     loading = true;
+    selected = [];
     const response = await fetch("/api/customers");
     rows = await response.json<Customer[]>();
     loading = false;
@@ -22,28 +26,29 @@
 
   onMount(getData);
 
-  function handleClose(event: CustomEvent<{ action: string }>) {
-    switch (event.detail.action) {
-      case "close":
-        form.reset();
-        break;
-    }
+  async function handleResult() {
+    open = false;
+    await getData();
   }
 </script>
 
-<DataTable label="Customers" {columns} {rows} {loading}>
-  <Button variant="raised" onclick={() => (open = true)}>
-    <Label>New</Label>
+<DataTable label="Customers" {columns} {rows} {loading} bind:selected={selected}>
+  <Button variant="raised" onclick={() => open = true} disabled={!!selected.length}>
+    <Label>Create</Label>
     <Icon class="material-icons">add</Icon>
+  </Button>
+  <Button variant="raised" onclick={() => open = true} disabled={!(selected.length == 1)}>
+    <Label>Update</Label>
+    <Icon class="material-icons">edit</Icon>
   </Button>
 </DataTable>
 <FormHandler
   action="/api/customers"
   method={current ? "PUT" : "POST"}
   bind:this={form}
-  handleResult={getData}
+  {handleResult}
 >
-  <FormModal title="Add new customer" bind:open {handleClose}>
+  <FormModal title="Add new customer" bind:open>
     <input type="hidden" name="id" value={current?.id} />
     <FormInput label="Name" name="name" value={current?.name} required />
     <FormInput
