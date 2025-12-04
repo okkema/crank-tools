@@ -1,11 +1,8 @@
 import type { APIRoute } from "astro";
 import { CustomerRepository, type Customer } from "../../Customers";
+import { json } from "../../Api";
 
 export const prerender = false;
-
-function json(data: any) {
-    return new Response(JSON.stringify(data), { headers: { "Content-Type": "application/json" } });
-}
 
 export const GET: APIRoute = async function(context) {
     const repo = new CustomerRepository(context.locals.db);
