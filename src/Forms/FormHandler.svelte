@@ -40,10 +40,6 @@
             if (handleResult) await handleResult(result);
         }
     }
-
-    export function reset() {
-        form.reset();
-    }
 </script>
 
 <form onsubmit={onSubmit} {action} bind:this={form}>

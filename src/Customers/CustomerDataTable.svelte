@@ -6,7 +6,6 @@
   import type { Customer } from "./CustomerSchema";
 
   const columns = ["name", "email"];
-  let form: FormHandler;
 
   let open = $state(false);
   let rows = $state<Customer[]>([]);
@@ -45,7 +44,6 @@
 <FormHandler
   action="/api/customers"
   method={current ? "PUT" : "POST"}
-  bind:this={form}
   {handleResult}
 >
   <FormModal title="Add new customer" bind:open>
