@@ -1,7 +1,8 @@
 import { CustomerTable } from "./Customers/CustomerSchema";
-import { ServiceTable } from "./Service/ServiceSchema";
+import { ServiceRelations, ServiceTable } from "./Service/ServiceSchema";
 
 export {
     CustomerTable,
+    ServiceRelations,
     ServiceTable,
 };
