@@ -21,7 +21,7 @@ type Runtime = import("@astrojs/cloudflare").Runtime<CloudEnvironment>;
 declare global {
   namespace App {
     interface Locals extends Runtime {
-      db: import("./Database").Database<typeof import("./schema").schema>
+      db: import("./Database").Database<typeof import("./schema")>
     }
   }
 }

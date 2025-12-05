@@ -1,5 +1,7 @@
-import { Customers } from "./Customers";
+import { CustomerTable } from "./Customers/CustomerSchema";
+import { ServiceTable } from "./Service/ServiceSchema";
 
-export const schema = {
-    Customers,
+export {
+    CustomerTable,
+    ServiceTable,
 };

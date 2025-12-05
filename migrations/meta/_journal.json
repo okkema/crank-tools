@@ -8,6 +8,13 @@
       "when": 1763780042359,
       "tag": "0000_add_customers",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1764905750751,
+      "tag": "0001_add_service",
+      "breakpoints": true
     }
   ]
 }
