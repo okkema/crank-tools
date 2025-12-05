@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const Customers = sqliteTable("customers", {
+export const CustomerTable = sqliteTable("customers", {
     id: text("id").primaryKey(),
     name: text("name").notNull(),
     email: text("email").notNull(),
