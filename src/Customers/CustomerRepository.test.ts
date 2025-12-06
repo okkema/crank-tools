@@ -15,11 +15,11 @@ beforeEach(async function () {
 
 it("should list the customers", async function () {
   await db.insert(CustomerTable).values([{
-    id: "123",
+    id: "84cddd47-7290-4c49-a316-76042706fddd",
     name: "Test Customer",
     email: "test@example.com",
   }, {
-    id: "124",
+    id: "433da797-36b9-42b0-b4c5-ba29bf2c4c63",
     name: "New Customer",
     email: "new@example.com",
   }]);
@@ -28,12 +28,12 @@ it("should list the customers", async function () {
     [
       {
         "email": "test@example.com",
-        "id": "123",
+        "id": "84cddd47-7290-4c49-a316-76042706fddd",
         "name": "Test Customer",
       },
       {
         "email": "new@example.com",
-        "id": "124",
+        "id": "433da797-36b9-42b0-b4c5-ba29bf2c4c63",
         "name": "New Customer",
       },
     ]
@@ -44,7 +44,7 @@ it("should create a customer", async function () {
   const initialCount = await getCount(db, CustomerTable);
   expect(initialCount).toBe(0);
   const result = await repo.create({
-    id: "123",
+    id: "84cddd47-7290-4c49-a316-76042706fddd",
     name: "Test Customer",
     email: "test@example.com",
   });
@@ -53,7 +53,7 @@ it("should create a customer", async function () {
   expect(result).toMatchInlineSnapshot(`
     {
       "email": "test@example.com",
-      "id": "123",
+      "id": "84cddd47-7290-4c49-a316-76042706fddd",
       "name": "Test Customer",
     }
   `);
@@ -61,7 +61,7 @@ it("should create a customer", async function () {
 
 it("should update the customer", async function () {
   const customers = await db.insert(CustomerTable).values([{
-    id: "123",
+    id: "84cddd47-7290-4c49-a316-76042706fddd",
     name: "Test Customer",
     email: "test@example.com",
   }]).returning();
@@ -74,7 +74,7 @@ it("should update the customer", async function () {
   expect(result).toMatchInlineSnapshot(`
     {
       "email": "new@example.com",
-      "id": "123",
+      "id": "84cddd47-7290-4c49-a316-76042706fddd",
       "name": "Test Customer",
     }
   `);

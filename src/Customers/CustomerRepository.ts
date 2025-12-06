@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import type { Database } from "@/Database";
-import { type Customer, CustomerTable } from "./CustomerSchema";
+import { type Customer, CustomerSchema, CustomerTable } from "./CustomerSchema";
 
 export class CustomerRepository  {
     public static schema = { CustomerTable }
@@ -12,9 +12,11 @@ export class CustomerRepository  {
         return this.db.query.CustomerTable.findMany();
     }
     public create(customer: Customer): Promise<Customer> {
+        CustomerSchema.parse(customer);
         return this.db.insert(CustomerTable).values([customer]).returning().then(x => x[0]);
     }
     public update(customer: Customer): Promise<Customer> {
+        CustomerSchema.parse(customer);
         return this.db.update(CustomerTable).set(customer).where(eq(CustomerTable.id, customer.id)).returning().then(x => x[0]);
     }
 }
