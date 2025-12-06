@@ -15,6 +15,13 @@
       "when": 1764905750751,
       "tag": "0001_add_service",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1765051923247,
+      "tag": "0002_add_service_status",
+      "breakpoints": true
     }
   ]
 }

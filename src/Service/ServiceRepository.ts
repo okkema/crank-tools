@@ -1,6 +1,6 @@
 import { and, eq, gte, lte } from "drizzle-orm";
 import type { Database } from "@/Database";
-import { type Service, ServiceRelations, ServiceTable} from "./ServiceSchema";
+import { type Service, ServiceRelations, ServiceSchema, ServiceTable} from "./ServiceSchema";
 import { CustomerTable } from "@/Customers/CustomerSchema";
 
 export class ServiceRepository {
@@ -18,6 +18,7 @@ export class ServiceRepository {
         });
     }
     public create(service: Service): Promise<Service> {
+        ServiceSchema.parse(service);
         return this.db.insert(ServiceTable).values([{
             ...service,
             customer: service.customer.id
@@ -25,6 +26,7 @@ export class ServiceRepository {
             .then(x => ({ ...x[0], customer: service.customer }));
     }
     public update(service: Service): Promise<Service> {
+        ServiceSchema.parse(service);
         return this.db.update(ServiceTable).set({
             ...service,
             customer: service.customer.id
