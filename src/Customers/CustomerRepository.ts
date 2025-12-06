@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import type { Database } from "../Database";
+import type { Database } from "@/Database";
 import { type Customer, CustomerTable } from "./CustomerSchema";
 
 export class CustomerRepository  {

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import { pushProblem } from "../Notifications";
+    import { pushProblem } from "@/Notifications";
     import { Problem } from '@okkema/worker';
 
     interface Props {

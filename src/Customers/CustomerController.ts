@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { json } from "../Api";
+import { json } from "@/Api";
 import { CustomerRepository } from "./CustomerRepository";
 import type { Customer } from "./CustomerSchema";
 

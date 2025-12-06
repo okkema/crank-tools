@@ -1,11 +1,11 @@
 import { beforeEach, expect, it } from "vitest";
 import { ServiceRepository } from "./ServiceRepository";
 import { ServiceTable } from "./ServiceSchema";
-import { createMemoryDatabase } from "../Database/MemoryDatabase";
-import type { Database } from "../Database/DatabaseSchema";
-import { getCount } from "../Database/DatabaseUtilities";
-import { CustomerTable } from "../Customers/CustomerSchema";
-import * as schema from "../schema";
+import { createMemoryDatabase } from "@/Database/MemoryDatabase";
+import type { Database } from "@/Database/DatabaseSchema";
+import { getCount } from "@/Database/DatabaseUtilities";
+import { CustomerTable } from "@/Customers/CustomerSchema";
+import * as schema from "@/schema";
 let db: Database<typeof schema>;
 let repo: ServiceRepository;
 

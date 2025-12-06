@@ -1,7 +1,7 @@
 import { and, eq, gte, lte } from "drizzle-orm";
-import type { Database } from "../Database";
+import type { Database } from "@/Database";
 import { type Service, ServiceRelations, ServiceTable} from "./ServiceSchema";
-import { CustomerTable } from "../Customers/CustomerSchema";
+import { CustomerTable } from "@/Customers/CustomerSchema";
 
 export class ServiceRepository {
     public static schema = { CustomerTable, ServiceRelations, ServiceTable }

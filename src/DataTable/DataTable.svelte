@@ -10,7 +10,7 @@
     } from "@smui/data-table";
     import IconButton from "@smui/icon-button";
     import LinearProgress from "@smui/linear-progress";
-    import { FormInput } from "../Forms";
+    import { FormInput } from "@/Forms";
     import type { Snippet } from "svelte";
     import Checkbox from "@smui/checkbox";
 

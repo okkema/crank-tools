@@ -1,5 +1,5 @@
-import { CustomerTable } from "./Customers/CustomerSchema";
-import { ServiceRelations, ServiceTable } from "./Service/ServiceSchema";
+import { CustomerTable } from "@/Customers/CustomerSchema";
+import { ServiceRelations, ServiceTable } from "@/Service/ServiceSchema";
 
 export {
     CustomerTable,

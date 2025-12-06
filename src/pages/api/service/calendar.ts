@@ -1,4 +1,4 @@
-import { ServiceController } from "../../../Service";
+import { ServiceController } from "@/Service";
 
 export const prerender = false;
 

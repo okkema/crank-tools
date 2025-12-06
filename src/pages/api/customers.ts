@@ -1,4 +1,4 @@
-import { CustomerController } from "../../Customers";
+import { CustomerController } from "@/Customers";
 
 export const prerender = false;
 

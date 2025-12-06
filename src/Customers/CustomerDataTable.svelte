@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Button, { Icon, Label } from "@smui/button";
-  import { DataTable } from "../DataTable";
-  import { FormHandler, FormInput, FormModal } from "../Forms";
+  import { DataTable } from "@/DataTable";
+  import { FormHandler, FormInput, FormModal } from "@/Forms";
   import type { Customer } from "./CustomerSchema";
 
   const columns = ["name", "email"];

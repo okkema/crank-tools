@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { CustomerSchema, CustomerTable } from "../Customers/CustomerSchema";
+import { CustomerSchema, CustomerTable } from "@/Customers/CustomerSchema";
 import { relations } from "drizzle-orm";
 
 export const ServiceTable = sqliteTable("service", {

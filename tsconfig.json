@@ -4,6 +4,9 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "types": ["./worker-configuration.d.ts"]
+    "types": ["./worker-configuration.d.ts"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }

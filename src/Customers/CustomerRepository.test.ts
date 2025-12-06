@@ -1,9 +1,9 @@
 import { beforeEach, expect, it } from "vitest";
 import { CustomerRepository } from "./CustomerRepository";
 import { CustomerTable } from "./CustomerSchema";
-import { createMemoryDatabase } from "../Database/MemoryDatabase";
-import type { Database } from "../Database/DatabaseSchema";
-import { getCount } from "../Database/DatabaseUtilities";
+import { createMemoryDatabase } from "@/Database/MemoryDatabase";
+import type { Database } from "@/Database/DatabaseSchema";
+import { getCount } from "@/Database/DatabaseUtilities";
 
 let db: Database<typeof CustomerRepository.schema>;
 let repo: CustomerRepository;

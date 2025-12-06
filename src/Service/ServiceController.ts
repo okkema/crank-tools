@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { ServiceRepository } from "./ServiceRepository";
-import { json } from "../Api";
+import { json } from "@/Api";
 import { Problem } from "@okkema/worker";
 
 export const listCalendar: APIRoute = async function (context) {
