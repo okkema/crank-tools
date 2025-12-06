@@ -1,11 +1,11 @@
 import { beforeEach, expect, it } from "vitest";
 import { ServiceRepository } from "./ServiceRepository";
-import { ServiceRelations, ServiceTable } from "./ServiceSchema";
+import { ServiceTable } from "./ServiceSchema";
 import { createMemoryDatabase } from "../Database/MemoryDatabase";
 import type { Database } from "../Database/DatabaseSchema";
 import { getCount } from "../Database/DatabaseUtilities";
 import { CustomerTable } from "../Customers/CustomerSchema";
-const schema = { CustomerTable, ServiceRelations, ServiceTable };
+import * as schema from "../schema";
 let db: Database<typeof schema>;
 let repo: ServiceRepository;
 
