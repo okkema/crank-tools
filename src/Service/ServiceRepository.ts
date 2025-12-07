@@ -33,4 +33,12 @@ export class ServiceRepository {
         }).where(eq(ServiceTable.id, service.id)).returning()
             .then(x => ({ ...x[0], customer: service.customer }));
     }
+    public get(id: string): Promise<Service | undefined> {
+        return this.db.query.ServiceTable.findFirst({ 
+            where: eq(ServiceTable.id, id),
+            with: {
+                customer: true,
+            }
+        });
+    }
 }
