@@ -9,13 +9,19 @@
         required?: boolean;
     }
 
-    let { label, name, value = $bindable(""), type = "text", required }: Props = $props();
+    let {
+        label,
+        name,
+        value = $bindable(""),
+        type = "text",
+        required,
+    }: Props = $props();
 </script>
 
 <TextField
     {label}
     input$name={name}
-    {value}
+    bind:value
     {type}
     style="width: 100%;"
     helperLine$style="width: 100%;"

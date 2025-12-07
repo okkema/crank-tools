@@ -1,0 +1,15 @@
+---
+import App from "@/App.astro";
+import { ServiceForm, ServiceRepository } from "@/Service";
+
+export const prerender = false;
+
+const { id } = Astro.params;
+if (!id) return Astro.redirect("/service");
+const repo = new ServiceRepository(Astro.locals.db);
+const service = await repo.get(id);
+if (!service) return Astro.redirect("/service");
+---
+<App page="Update Service">
+    <ServiceForm {service} client:load />
+</App>
