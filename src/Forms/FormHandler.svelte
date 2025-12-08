@@ -33,8 +33,16 @@
         });
         if (button) button.removeAttribute("disabled");
         if (!response.ok) {
-            const problem = await response.json<Problem>();
-            pushProblem(problem);
+            try {
+                const problem = await response.json<Problem>();
+                pushProblem(problem);
+            } catch (error: any) {
+                pushProblem(new Problem({
+                    title: "Form Handler Error",
+                    detail: error.message,
+                    status: response.status,
+                }));
+            }
         } else {
             const result = await response.json();
             if (handleResult) await handleResult(result);
