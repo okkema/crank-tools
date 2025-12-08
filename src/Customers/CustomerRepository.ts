@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, like, or } from "drizzle-orm";
 import type { Database } from "@/Database";
 import { type Customer, CustomerSchema, CustomerTable } from "./CustomerSchema";
 
@@ -18,5 +18,13 @@ export class CustomerRepository  {
     public update(customer: Customer): Promise<Customer> {
         CustomerSchema.parse(customer);
         return this.db.update(CustomerTable).set(customer).where(eq(CustomerTable.id, customer.id)).returning().then(x => x[0]);
+    }
+    public search(query: string): Promise<Customer[]> {
+        return this.db.query.CustomerTable.findMany({
+            where: or(
+                like(CustomerTable.name, query),
+                like(CustomerTable.email, query),
+            ), 
+        });
     }
 }
