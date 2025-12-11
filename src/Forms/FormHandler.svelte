@@ -18,7 +18,15 @@
         const form = event.target as HTMLFormElement;
         // @ts-expect-error Element to HTMLInputElement
         const data = [...form.elements].reduce(function(result, element: HTMLInputElement) {
-            if (element.name && element.value) result[element.name] = element.value;
+            if (element.name && element.value) {
+                let value;
+                try {
+                    value = JSON.parse(element.value);
+                } catch {
+                    value = element.value;
+                }
+                result[element.name] = value;
+            }
             return result;
         }, {} as Record<string, any>);
         const button = event.submitter;

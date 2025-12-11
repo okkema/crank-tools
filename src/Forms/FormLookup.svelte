@@ -5,15 +5,17 @@
 
   interface Props {
     label: string;
+    name: string;
     getLabel: (option: T) => string;
     url: string;
+    value?: T;
     required?: boolean;
   }
 
-  let { label, getLabel, url,  required }: Props = $props();
-  let value = $state<any>();
+  let { label, name, getLabel, url, value = $bindable(), required }: Props = $props();
   let counter = 0;
   let controller: AbortController | undefined;
+  let hidden = $derived(JSON.stringify(value));
 
   async function search(input: string) {
     if (input === "") return [];
@@ -45,7 +47,6 @@
   style="width: 100%;"
   textfield$style="width: 100%;"
   textfield$required={required}
-  
 >
   {#snippet loading()}
     <Text
@@ -55,3 +56,4 @@
     </Text>
   {/snippet}
 </Autocomplete>
+<input type="hidden" {name} value={hidden} />

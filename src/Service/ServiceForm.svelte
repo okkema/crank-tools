@@ -19,6 +19,7 @@
 </script>
 
 <FormHandler action="/api/service" method={service ? "PUT" : "POST"}>
+    <input name="id" type="hidden" value={service?.id} />
     <LayoutGrid>
         <Cell>
             <FormInput
@@ -41,10 +42,12 @@
         <Cell>
             <FormLookup
                 label="Customer"
+                name="customer"
                 url="/api/customers/search"
                 getLabel={(option: Customer) =>
                     option.name + " - " + option.email}
                 required
+                value={service?.customer}
             />
         </Cell>
         <Cell>

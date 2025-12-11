@@ -7,7 +7,11 @@
         firstDay: 1, // Monday
         eventSources: [{
             url: "/api/service/calendar",
-        }]
+        }],
+        eventClick(info) {
+            const { origin } = window.location;
+            window.location.href = `${origin}/service/${info.event.id}`;
+        },
     });
 </script>
 
