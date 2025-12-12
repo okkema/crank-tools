@@ -79,3 +79,34 @@ it("should update the customer", async function () {
     }
   `);
 });
+
+it("should search the customers by name or email", async function () {
+    await db.insert(CustomerTable).values([{
+        id: "84cddd47-7290-4c49-a316-76042706fddd",
+        name: "Test Customer",
+        email: "example@tld.com",
+    }, {
+        id: "433da797-36b9-42b0-b4c5-ba29bf2c4c63",
+        name: "Another Customer",
+        email: "test@example.com",
+    }, {
+        id: "4200ffe0-1c19-4ecc-848f-f40674ba1b5e",
+        name: "Skipped Customer",
+        email: "skipped@example.com",
+    }]);
+    const result = await repo.search("%test%");
+    expect(result).toMatchInlineSnapshot(`
+      [
+        {
+          "email": "example@tld.com",
+          "id": "84cddd47-7290-4c49-a316-76042706fddd",
+          "name": "Test Customer",
+        },
+        {
+          "email": "test@example.com",
+          "id": "433da797-36b9-42b0-b4c5-ba29bf2c4c63",
+          "name": "Another Customer",
+        },
+      ]
+    `);
+});
