@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1763780042359,
+      "tag": "0000_add_customers",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1764905750751,
+      "tag": "0001_add_service",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1765051923247,
+      "tag": "0002_add_service_status",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1765507618031,
+      "tag": "0003_update_table_name",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1765509220871,
+      "tag": "0004_add_product_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1765680865775,
+      "tag": "0005_add_inventory_table",
+      "breakpoints": true
+    }
+  ]
+}
