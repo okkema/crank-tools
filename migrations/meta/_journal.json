@@ -36,6 +36,13 @@
       "when": 1765509220871,
       "tag": "0004_add_product_table",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1765680865775,
+      "tag": "0005_add_inventory_table",
+      "breakpoints": true
     }
   ]
 }
